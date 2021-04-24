@@ -202,11 +202,13 @@ GCC_BUILD_DIR1:=$(TOOL_BUILD_DIR)/gcc-$(GCC_VERSION)-initial
 # The --without-headers option stopped working with gcc 3.0 and has never been
 # fixed, so we need to actually have working C library header files prior to
 # the step or libgcc will not build...
+		#####MAKEINFO=true
 
 $(GCC_BUILD_DIR1)/.configured: $(GCC_DIR)/.patched
 	mkdir -p $(GCC_BUILD_DIR1)
 	(cd $(GCC_BUILD_DIR1); rm -rf config.cache; \
 		$(HOST_CONFIGURE_OPTS) \
+		MAKEINFO=missing \
 		$(GCC_DIR)/configure \
 		--prefix=$(STAGING_DIR)/usr \
 		--build=$(GNU_HOST_NAME) \
@@ -283,6 +285,7 @@ $(GCC_BUILD_DIR2)/.configured: $(GCC_SRC_DIR)/.patched $(GCC_STAGING_PREREQ)
 	#ln -snf ../lib $(STAGING_DIR)/usr/$(REAL_GNU_TARGET_NAME)/lib
 	(cd $(GCC_BUILD_DIR2); rm -rf config.cache; \
 		$(HOST_CONFIGURE_OPTS) \
+		MAKEINFO=missing \
 		$(GCC_SRC_DIR)/configure \
 		--prefix=$(BR2_SYSROOT_PREFIX)/usr \
 		--build=$(GNU_HOST_NAME) \
@@ -410,6 +413,7 @@ $(GCC_BUILD_DIR3)/.prepared: $(PROJECT_BUILD_DIR)/autotools-stamps/gcc_libs_targ
 $(GCC_BUILD_DIR3)/.configured: $(GCC_BUILD_DIR3)/.prepared
 	(cd $(GCC_BUILD_DIR3); rm -rf config.cache; \
 		$(TARGET_CONFIGURE_OPTS) \
+		MAKEINFO=missing \
 		$(TARGET_CONFIGURE_ARGS) \
 		$(TARGET_GCC_FLAGS) \
 		$(GCC_SRC_DIR)/configure \
