@@ -5,7 +5,6 @@
 /.auto.deps
 /.config.cmd
 /.config.old
-/.config
 *.depend
 *.o
 *.orig
