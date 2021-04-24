@@ -207,9 +207,9 @@ GCC_BUILD_DIR1:=$(TOOL_BUILD_DIR)/gcc-$(GCC_VERSION)-initial
 $(GCC_BUILD_DIR1)/.configured: $(GCC_DIR)/.patched
 	mkdir -p $(GCC_BUILD_DIR1)
 	(cd $(GCC_BUILD_DIR1); rm -rf config.cache; \
-		$(HOST_CONFIGURE_OPTS) CFLAGS=' -g  -O2  -DIN_GCC  -DCROSS_DIRECTORY_STRUCTURE  -W  -Wall  -Wwrite-strings  -Wstrict-prototypes  -Wmissing-prototypes  -Wold-style-definition  -Wmissing-format-attribute  -pedantic  -Wno-long-long  -Wno-variadic-macros  -Wno-overlength-strings     -fgnu89-inline   '   \
+		$(HOST_CONFIGURE_OPTS) CFLAGS='  -DIN_GCC  -DCROSS_DIRECTORY_STRUCTURE  -W  -Wall  -Wwrite-strings  -Wstrict-prototypes  -Wmissing-prototypes  -Wold-style-definition  -Wmissing-format-attribute  -pedantic  -Wno-long-long  -Wno-variadic-macros  -Wno-overlength-strings     -std=gnu99 -fgnu89-inline  '   \
 		MAKEINFO=missing \
-		$(GCC_DIR)/configure \
+		$(GCC_DIR)/configure --disable-libmudflap --disable-libgomp \
 		--prefix=$(STAGING_DIR)/usr \
 		--build=$(GNU_HOST_NAME) \
 		--host=$(GNU_HOST_NAME) \
@@ -284,9 +284,9 @@ $(GCC_BUILD_DIR2)/.configured: $(GCC_SRC_DIR)/.patched $(GCC_STAGING_PREREQ)
 	#-rmdir $(STAGING_DIR)/usr/$(REAL_GNU_TARGET_NAME)/lib
 	#ln -snf ../lib $(STAGING_DIR)/usr/$(REAL_GNU_TARGET_NAME)/lib
 	(cd $(GCC_BUILD_DIR2); rm -rf config.cache; \
-		$(HOST_CONFIGURE_OPTS) CFLAGS=' -g  -O2  -DIN_GCC  -DCROSS_DIRECTORY_STRUCTURE  -W  -Wall  -Wwrite-strings  -Wstrict-prototypes  -Wmissing-prototypes  -Wold-style-definition  -Wmissing-format-attribute  -pedantic  -Wno-long-long  -Wno-variadic-macros  -Wno-overlength-strings     -fgnu89-inline   '   \
+		$(HOST_CONFIGURE_OPTS) CFLAGS='  -DIN_GCC  -DCROSS_DIRECTORY_STRUCTURE  -W  -Wall  -Wwrite-strings  -Wstrict-prototypes  -Wmissing-prototypes  -Wold-style-definition  -Wmissing-format-attribute  -pedantic  -Wno-long-long  -Wno-variadic-macros  -Wno-overlength-strings     -std=gnu99 -fgnu89-inline  '   \
 		MAKEINFO=missing \
-		$(GCC_SRC_DIR)/configure \
+		$(GCC_SRC_DIR)/configure --disable-libmudflap --disable-libgomp \
 		--prefix=$(BR2_SYSROOT_PREFIX)/usr \
 		--build=$(GNU_HOST_NAME) \
 		--host=$(GNU_HOST_NAME) \
@@ -412,11 +412,11 @@ $(GCC_BUILD_DIR3)/.prepared: $(PROJECT_BUILD_DIR)/autotools-stamps/gcc_libs_targ
 
 $(GCC_BUILD_DIR3)/.configured: $(GCC_BUILD_DIR3)/.prepared
 	(cd $(GCC_BUILD_DIR3); rm -rf config.cache; \
-		$(TARGET_CONFIGURE_OPTS) CFLAGS=' -g  -O2  -DIN_GCC  -DCROSS_DIRECTORY_STRUCTURE  -W  -Wall  -Wwrite-strings  -Wstrict-prototypes  -Wmissing-prototypes  -Wold-style-definition  -Wmissing-format-attribute  -pedantic  -Wno-long-long  -Wno-variadic-macros  -Wno-overlength-strings     -fgnu89-inline   '   \
+		$(TARGET_CONFIGURE_OPTS) CFLAGS='  -DIN_GCC  -DCROSS_DIRECTORY_STRUCTURE  -W  -Wall  -Wwrite-strings  -Wstrict-prototypes  -Wmissing-prototypes  -Wold-style-definition  -Wmissing-format-attribute  -pedantic  -Wno-long-long  -Wno-variadic-macros  -Wno-overlength-strings     -std=gnu99 -fgnu89-inline  '   \
 		MAKEINFO=missing \
 		$(TARGET_CONFIGURE_ARGS) \
 		$(TARGET_GCC_FLAGS) \
-		$(GCC_SRC_DIR)/configure \
+		$(GCC_SRC_DIR)/configure --disable-libmudflap --disable-libgomp \
 		--prefix=/usr \
 		--build=$(GNU_HOST_NAME) \
 		--host=$(REAL_GNU_TARGET_NAME) \

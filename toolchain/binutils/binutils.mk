@@ -87,7 +87,7 @@ $(BINUTILS_DIR)/.patched: $(BINUTILS_DIR)/.unpacked
 $(BINUTILS_DIR1)/.configured: $(BINUTILS_DIR)/.patched
 	mkdir -p $(BINUTILS_DIR1)
 	(cd $(BINUTILS_DIR1); rm -rf config.cache; \
-		$(HOST_CONFIGURE_OPTS) \
+		$(HOST_CONFIGURE_OPTS) CFLAGS='  -DIN_GCC  -DCROSS_DIRECTORY_STRUCTURE  -W  -Wall  -Wwrite-strings  -Wstrict-prototypes  -Wmissing-prototypes  -Wold-style-definition  -Wmissing-format-attribute  -pedantic  -Wno-long-long  -Wno-variadic-macros  -Wno-overlength-strings     -std=gnu99 -fgnu89-inline  '  \
 		$(BINUTILS_DIR)/configure \
 		--prefix=$(BR2_SYSROOT_PREFIX)/usr \
 		--build=$(GNU_HOST_NAME) \
@@ -142,7 +142,7 @@ BINUTILS_DIR2:=$(BUILD_DIR)/binutils-$(BINUTILS_VERSION)-target
 $(BINUTILS_DIR2)/.configured: $(BINUTILS_DIR)/.patched
 	mkdir -p $(BINUTILS_DIR2)
 	(cd $(BINUTILS_DIR2); rm -rf config.cache; \
-		$(TARGET_CONFIGURE_OPTS) \
+		$(TARGET_CONFIGURE_OPTS) CFLAGS='  -DIN_GCC  -DCROSS_DIRECTORY_STRUCTURE  -W  -Wall  -Wwrite-strings  -Wstrict-prototypes  -Wmissing-prototypes  -Wold-style-definition  -Wmissing-format-attribute  -pedantic  -Wno-long-long  -Wno-variadic-macros  -Wno-overlength-strings     -std=gnu99 -fgnu89-inline  ' \
 		$(BINUTILS_DIR)/configure \
 		--prefix=/usr \
 		--exec-prefix=/usr \
