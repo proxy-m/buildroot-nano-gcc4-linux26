@@ -1,0 +1,11 @@
+--- a/libcpp/system.h	2021-04-25 01:02:55.471157004 +0300
++++ b/libcpp/system.h	2021-04-25 00:59:27.481415501 +0300
+@@ -32,7 +32,7 @@
+ #endif
+ 
+ #include <stdio.h>
+-
++#define uchar  unsigned char
+ /* Define a generic NULL if one hasn't already been defined.  */
+ #ifndef NULL
+ #define NULL 0
