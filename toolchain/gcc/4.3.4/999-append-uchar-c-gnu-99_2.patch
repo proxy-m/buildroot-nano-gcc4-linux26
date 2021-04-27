@@ -1,0 +1,11 @@
+--- a/libcpp/include/cpp-id-data.h.orig	2021-04-25 01:24:10.298995762 +0300
++++ b/libcpp/include/cpp-id-data.h	2021-04-25 01:24:36.152209632 +0300
+@@ -18,7 +18,7 @@
+ 
+ #include "cpplib.h"
+ 
+-#if !defined (HAVE_UCHAR) && !defined (IN_GCC)
++#if !defined (HAVE_UCHAR) && !defined (IN_GCC) && !defined (uchar)
+ typedef unsigned char uchar;
+ #endif
+ 
