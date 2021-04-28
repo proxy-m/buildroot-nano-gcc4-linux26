@@ -1,0 +1,15 @@
+--- a/backwards_compat.c	2021-04-28 14:56:59.599783154 +0300
++++ b/backwards_compat.c	2021-04-28 14:35:44.112724111 +0300
+@@ -53,9 +53,9 @@
+ static void try_old_version(const char *progname, char *argv[])
+ {
+ 	errno = 0;
+-	if (create_module(NULL, 0) >= 0 /* Uh oh, what have I just done? */
+-	    || errno != ENOSYS)
+-		exec_old(progname, argv);
++///	if (create_module(NULL, 0) >= 0 /* Uh oh, what have I just done? */
++///	    || errno != ENOSYS)
++///		exec_old(progname, argv);
+ }
+ #else /* CONFIG_NO_BACKWARDS_COMPAT */
+ static inline void try_old_version(const char *progname, char *argv[])
