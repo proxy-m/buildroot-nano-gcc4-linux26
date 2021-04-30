@@ -7,7 +7,7 @@ SED_VERSION:=4.1.5
 SED_SOURCE:=sed-$(SED_VERSION).tar.gz
 SED_SITE:=$(BR2_GNU_MIRROR)/sed
 SED_CAT:=$(ZCAT)
-SED_DIR1:=$(TOOL_BUILD_DIR)/sed-$(SED_VERSION)
+SED_DIR1:=$(TOOLCHAIN_DIR)/sed-$(SED_VERSION)
 SED_DIR2:=$(BUILD_DIR)/sed-$(SED_VERSION)
 SED_BINARY:=sed/sed
 SED_TARGET_BINARY:=bin/sed
@@ -15,7 +15,7 @@ ifeq ($(BR2_LARGEFILE),y)
 SED_CPPFLAGS=-D_FILE_OFFSET_BITS=64
 endif
 #HOST_SED_DIR:=$(STAGING_DIR)
-HOST_SED_DIR:=$(TOOL_BUILD_DIR)
+HOST_SED_DIR:=$(TOOLCHAIN_DIR)
 SED:=$(HOST_SED_DIR)/bin/sed -i -e
 HOST_SED_BINARY=$(shell package/sed/sedcheck.sh)
 HOST_SED_IF_ANY=$(shell toolchain/dependencies/check-host-sed.sh)
@@ -33,16 +33,16 @@ sed-source: $(DL_DIR)/$(SED_SOURCE)
 #
 #############################################################
 $(SED_DIR1)/.unpacked: $(DL_DIR)/$(SED_SOURCE)
-	mkdir -p $(TOOL_BUILD_DIR)
+	mkdir -p $(TOOLCHAIN_DIR)
 	mkdir -p $(HOST_SED_DIR)/bin
-	$(SED_CAT) $(DL_DIR)/$(SED_SOURCE) | tar -C $(TOOL_BUILD_DIR) $(TAR_OPTIONS) -
+	$(SED_CAT) $(DL_DIR)/$(SED_SOURCE) | tar -C $(TOOLCHAIN_DIR) $(TAR_OPTIONS) -
 	toolchain/patch-kernel.sh $(SED_DIR1) package/sed/ configure.patch
 	$(CONFIG_UPDATE) $(SED_DIR1)/config
 	touch $@
 
 $(SED_DIR1)/.configured: $(SED_DIR1)/.unpacked
 	(cd $(SED_DIR1); rm -rf config.cache; \
-		./configure \
+		./configure $(QUIET) \
 		--prefix=/usr \
 	)
 	touch $@
@@ -114,7 +114,7 @@ $(SED_DIR2)/.configured: $(SED_DIR2)/.unpacked
 		$(TARGET_CONFIGURE_OPTS) \
 		$(TARGET_CONFIGURE_ARGS) \
 		CPPFLAGS="$(SED_CPPFLAGS)" \
-		./configure \
+		./configure $(QUIET) \
 		--target=$(GNU_TARGET_NAME) \
 		--host=$(GNU_TARGET_NAME) \
 		--build=$(GNU_HOST_NAME) \
@@ -159,7 +159,7 @@ ifneq ($(BR2_HAVE_MANPAGES),y)
 	rm -rf $(TARGET_DIR)/usr/share/man
 endif
 
-sed: uclibc sed-target_binary
+sed: sed-target_binary
 
 sed-clean:
 	$(MAKE) DESTDIR=$(TARGET_DIR) CC=$(TARGET_CC) -C $(SED_DIR2) uninstall

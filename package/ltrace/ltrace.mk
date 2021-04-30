@@ -11,7 +11,8 @@ LTRACE_DIR=$(BUILD_DIR)/ltrace-$(LTRACE_VERSION)
 LTRACE_BINARY=ltrace
 LTRACE_TARGET_BINARY=usr/bin/ltrace
 
-LTRACE_ARCH:=$(KERNEL_ARCH)
+# ltrace uses arch=ppc for powerpc
+LTRACE_ARCH:=$(KERNEL_ARCH:powerpc=ppc)
 ifeq ("$(strip $(ARCH))","armeb")
 LTRACE_ARCH:=arm
 endif
@@ -42,7 +43,7 @@ $(LTRACE_DIR)/.configured: $(LTRACE_DIR)/.patched
 	(cd $(LTRACE_DIR); rm -rf config.cache; \
 		$(TARGET_CONFIGURE_OPTS) \
 		$(TARGET_CONFIGURE_ARGS) \
-		./configure \
+		./configure $(QUIET) \
 		--target=$(GNU_TARGET_NAME) \
 		--host=$(GNU_TARGET_NAME) \
 		--build=$(GNU_HOST_NAME) \
@@ -65,7 +66,7 @@ ifeq ($(BR2_HAVE_MANPAGES),y)
 endif
 	$(STRIPCMD) $(STRIP_STRIP_ALL) $@
 
-ltrace: uclibc libelf $(TARGET_DIR)/$(LTRACE_TARGET_BINARY)
+ltrace: libelf $(TARGET_DIR)/$(LTRACE_TARGET_BINARY)
 
 ltrace-source: $(DL_DIR)/$(LTRACE_SOURCE) $(LTRACE_PATCH_FILE)
 

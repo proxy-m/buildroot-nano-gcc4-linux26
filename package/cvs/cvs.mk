@@ -57,7 +57,7 @@ $(CVS_DIR)/.configured: $(CVS_DIR)/.unpacked
 		$(TARGET_CONFIGURE_OPTS) \
 		$(TARGET_CONFIGURE_ARGS) \
 		cvs_cv_func_printf_ptr=yes \
-		./configure \
+		./configure $(QUIET) \
 		--target=$(GNU_TARGET_NAME) \
 		--host=$(GNU_TARGET_NAME) \
 		--build=$(GNU_HOST_NAME) \
@@ -75,7 +75,7 @@ $(TARGET_DIR)/$(CVS_TARGET_BINARY): $(CVS_DIR)/$(CVS_BINARY)
 	install -D $(CVS_DIR)/$(CVS_BINARY) $(TARGET_DIR)/$(CVS_TARGET_BINARY)
 	$(STRIPCMD) $(STRIP_STRIP_ALL) $(TARGET_DIR)/$(CVS_TARGET_BINARY)
 
-cvs: uclibc ncurses $(TARGET_DIR)/$(CVS_TARGET_BINARY)
+cvs: ncurses $(TARGET_DIR)/$(CVS_TARGET_BINARY)
 
 cvs-clean:
 	-$(MAKE) -C $(CVS_DIR) clean

@@ -25,7 +25,7 @@ $(GZIP_DIR)/.configured: $(GZIP_DIR)/.unpacked
 	(cd $(GZIP_DIR); rm -rf config.cache; \
 		$(TARGET_CONFIGURE_OPTS) \
 		$(TARGET_CONFIGURE_ARGS) \
-		./configure \
+		./configure $(QUIET) \
 		--target=$(GNU_TARGET_NAME) \
 		--host=$(GNU_TARGET_NAME) \
 		--build=$(GNU_HOST_NAME) \
@@ -48,7 +48,7 @@ ifneq ($(BR2_HAVE_MANPAGES),y)
 	rm -rf $(TARGET_DIR)/usr/share/man
 endif
 
-gzip: uclibc $(GZIP_TARGET_BINARY)
+gzip: $(GZIP_TARGET_BINARY)
 
 gzip-clean:
 	$(MAKE) DESTDIR=$(TARGET_DIR) CC=$(TARGET_CC) -C $(GZIP_DIR) uninstall

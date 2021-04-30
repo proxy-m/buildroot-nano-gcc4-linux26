@@ -21,12 +21,9 @@ SOCAT_DIR=$(BUILD_DIR)/socat-$(SOCAT_MAJOR_VERSION)
 SOCAT_WORKDIR=$(SOCAT_DIR)
 
 # SOCAT Configure opts taken from Config/config.Linux-2.6.24.h
-CRDLY_SHIFT := $(strip $(subst ",,$(BR2_PACKAGE_SOCAT_PREDEF_CRDLY_SHIFT)))
-#"))
-TABDLY_SHIFT := $(strip $(subst ",,$(BR2_PACKAGE_SOCAT_PREDEF_TABDLY_SHIFT)))
-#"))
-CSIZE_SHIFT := $(strip $(subst ",,$(BR2_PACKAGE_SOCAT_PREDEF_CSIZE_SHIFT)))
-#"))
+CRDLY_SHIFT := $(call qstrip,$(BR2_PACKAGE_SOCAT_PREDEF_CRDLY_SHIFT))
+TABDLY_SHIFT := $(call qstrip,$(BR2_PACKAGE_SOCAT_PREDEF_TABDLY_SHIFT))
+CSIZE_SHIFT := $(call qstrip,$(BR2_PACKAGE_SOCAT_PREDEF_CSIZE_SHIFT))
 
 SOCAT_CONFIGURE_OPTS :=
 ifneq ($(CRDLY_SHIFT),)
@@ -54,7 +51,7 @@ $(SOCAT_WORKDIR)/Makefile: $(SOCAT_DIR)/.unpacked
 		$(TARGET_CONFIGURE_OPTS) \
 		$(TARGET_CONFIGURE_ARGS) \
 		$(SOCAT_CONFIGURE_OPTS) \
-		$(SOCAT_DIR)/configure \
+		$(SOCAT_DIR)/configure $(QUIET) \
 		--target=$(GNU_TARGET_NAME) \
 		--host=$(GNU_TARGET_NAME) \
 		--build=$(GNU_HOST_NAME) \
@@ -86,7 +83,7 @@ $(TARGET_DIR)/usr/bin/socat: $(SOCAT_WORKDIR)/socat
 	$(MAKE) -C $(SOCAT_WORKDIR) install prefix=$(TARGET_DIR)/usr DESTDIR=$(TARGET_DIR)
 	touch $@
 
-socat: uclibc $(TARGET_DIR)/usr/bin/socat
+socat: $(TARGET_DIR)/usr/bin/socat
 
 socat-source: $(DL_DIR)/$(SOCAT_SOURCE)
 

@@ -24,7 +24,7 @@ $(LIBDRM_DIR)/.configured: $(LIBDRM_DIR)/.unpacked
 	$(TARGET_CONFIGURE_OPTS) \
 	CFLAGS="$(TARGET_CFLAGS) " \
 	LDFLAGS="$(TARGET_LDFLAGS)" \
-	./configure \
+	./configure $(QUIET) \
 		--target=$(GNU_TARGET_NAME) \
 		--host=$(GNU_TARGET_NAME) \
 		--build=$(GNU_HOST_NAME) \
@@ -61,7 +61,7 @@ $(TARGET_DIR)/usr/lib/libdrm.so: $(STAGING_DIR)/usr/lib/libdrm.so
 	cp -dpf $(STAGING_DIR)/usr/lib/libdrm.so* $(TARGET_DIR)/usr/lib/
 	-$(STRIPCMD) $(STRIP_STRIP_UNNEEDED) $(TARGET_DIR)/usr/lib/libdrm.so
 
-libdrm: uclibc host-pkgconfig $(TARGET_DIR)/usr/lib/libdrm.so
+libdrm: host-pkgconfig $(TARGET_DIR)/usr/lib/libdrm.so
 
 libdrm-clean:
 	-$(MAKE) DESTDIR=$(TARGET_DIR) CC=$(TARGET_CC) -C $(LIBDRM_DIR) uninstall

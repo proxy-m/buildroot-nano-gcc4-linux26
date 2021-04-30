@@ -4,8 +4,7 @@
 #
 #############################################################
 
-HASERL_VERSION:=$(strip $(subst ",,$(BR2_PACKAGE_HASERL_VERSION)))
-#"))
+HASERL_VERSION:=$(call qstrip,$(BR2_PACKAGE_HASERL_VERSION))
 HASERL_SOURCE:=haserl-$(HASERL_VERSION).tar.gz
 HASERL_SITE:=http://$(BR2_SOURCEFORGE_MIRROR).dl.sourceforge.net/sourceforge/haserl/
 HASERL_AUTORECONF:=no
@@ -19,8 +18,6 @@ endif
 HASERL_CONF_ENV = ac_cv_path_install=./install-sh
 # the above doesn't interact nicely with a shared cache, so disable for now
 HASERL_USE_CONFIG_CACHE = NO
-
-HASERL_DEPENDENCIES:=uclibc
 
 $(eval $(call AUTOTARGETS,package,haserl))
 

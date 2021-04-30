@@ -80,7 +80,7 @@ $(CUPS_DIR)/.configured: $(CUPS_DIR)/.unpacked
 		$(TARGET_CONFIGURE_ARGS) \
 		$(CUPS_CONF_ENV) \
 		CFLAGS="$(CUPS_CFLAGS)" \
-		./configure \
+		./configure $(QUIET) \
 		--target=$(GNU_TARGET_NAME) \
 		--host=$(GNU_TARGET_NAME) \
 		--build=$(GNU_HOST_NAME) \
@@ -110,7 +110,7 @@ $(CUPS_DIR)/.installed: $(CUPS_DIR)/.compiled
 	$(SED) "s,^libdir=.*,libdir=\'$(STAGING_DIR)/usr/lib\',g" $(STAGING_DIR)/usr/bin/cups-config
 	touch $@
 
-cups: uclibc host-autoconf $(CUPS_DEPENDENCIES) $(CUPS_DIR)/.installed
+cups: host-autoconf $(CUPS_DEPENDENCIES) $(CUPS_DIR)/.installed
 
 cups-source: $(DL_DIR)/$(CUPS_SOURCE)
 

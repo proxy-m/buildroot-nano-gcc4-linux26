@@ -24,7 +24,7 @@ $(LIBCGICC_DIR)/.configured: $(LIBCGICC_DIR)/.unpacked
 	(cd $(LIBCGICC_DIR); rm -f config.cache; \
 		$(TARGET_CONFIGURE_OPTS) \
 		$(TARGET_CONFIGURE_ARGS) \
-		./configure \
+		./configure $(QUIET) \
 		--target=$(GNU_TARGET_NAME) \
 		--host=$(GNU_TARGET_NAME) \
 		--build=$(GNU_HOST_NAME) \
@@ -47,7 +47,7 @@ $(STAGING_DIR)/usr/lib/libcgicc.so: $(LIBCGICC_DIR)/.compiled
 $(TARGET_DIR)/usr/lib/libcgicc.so: $(STAGING_DIR)/usr/lib/libcgicc.so
 	cp -dpf $(STAGING_DIR)/usr/lib/libcgicc.so* $(TARGET_DIR)/usr/lib/
 
-libcgicc: uclibc $(TARGET_DIR)/usr/lib/libcgicc.so
+libcgicc: $(TARGET_DIR)/usr/lib/libcgicc.so
 
 libcgicc-unpacked: $(LIBCGICC_DIR)/.unpacked
 

@@ -27,7 +27,7 @@ $(GAWK_DIR)/.configured: $(GAWK_DIR)/.unpacked
 		$(TARGET_CONFIGURE_OPTS) \
 		$(TARGET_CONFIGURE_ARGS) \
 		ac_cv_func_getpgrp_void=yes \
-		./configure \
+		./configure $(QUIET) \
 		--target=$(GNU_TARGET_NAME) \
 		--host=$(GNU_TARGET_NAME) \
 		--build=$(GNU_HOST_NAME) \
@@ -65,7 +65,7 @@ endif
 	rm -rf $(TARGET_DIR)/share/locale
 	rm -rf $(TARGET_DIR)/usr/share/doc
 
-gawk: uclibc $(TARGET_DIR)/$(GAWK_TARGET_BINARY)
+gawk: $(TARGET_DIR)/$(GAWK_TARGET_BINARY)
 
 gawk-clean:
 	$(MAKE) DESTDIR=$(TARGET_DIR) CC=$(TARGET_CC) -C $(GAWK_DIR) uninstall

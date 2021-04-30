@@ -42,7 +42,7 @@ $(VIM_DIR)/.configured: $(VIM_DIR)/.patched
 		STRIP="$(TARGET_STRIP)" \
 		PKG_CONFIG_ALLOW_SYSTEM_CFLAGS=1 \
 		PKG_CONFIG_ALLOW_SYSTEM_LIBS=1 \
-		./configure --prefix=/usr \
+		./configure $(QUIET) --prefix=/usr \
 		--target=$(GNU_TARGET_NAME) \
 		--host=$(GNU_TARGET_NAME) \
 		--build=$(GNU_HOST_NAME) \
@@ -75,7 +75,7 @@ ifeq ($(BR2_PACKAGE_VIM_RUNTIME),y)
 	)
 endif
 
-vim: uclibc host-pkgconfig ncurses vim-source $(TARGET_DIR)/usr/bin/vim
+vim: host-pkgconfig ncurses vim-source $(TARGET_DIR)/usr/bin/vim
 
 #############################################################
 #

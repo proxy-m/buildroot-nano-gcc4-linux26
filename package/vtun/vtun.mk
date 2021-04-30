@@ -34,7 +34,7 @@ $(VTUN_DIR)/.configured: $(VTUN_DIR)/.patched
 	(cd $(VTUN_DIR); rm -rf config.cache; \
 		$(TARGET_CONFIGURE_OPTS) \
 		$(TARGET_CONFIGURE_ARGS) \
-		./configure \
+		./configure $(QUIET) \
 		--target=$(GNU_TARGET_NAME) \
 		--host=$(GNU_TARGET_NAME) \
 		--build=$(GNU_HOST_NAME) \
@@ -63,7 +63,7 @@ $(TARGET_DIR)/$(VTUN_TARGET_BINARY): $(VTUN_DIR)/$(VTUN_BINARY)
 	rm -rf $(TARGET_DIR)/share/locale $(TARGET_DIR)/usr/info \
 		$(TARGET_DIR)/usr/man $(TARGET_DIR)/usr/share/doc
 
-vtun: uclibc zlib lzo openssl $(TARGET_DIR)/$(VTUN_TARGET_BINARY)
+vtun: zlib lzo openssl $(TARGET_DIR)/$(VTUN_TARGET_BINARY)
 
 vtun-unpacked: $(VTUN_DIR)/.unpacked
 

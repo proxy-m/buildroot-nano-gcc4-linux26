@@ -25,7 +25,7 @@ $(WGET_DIR)/.configured: $(WGET_DIR)/.unpacked
 	(cd $(WGET_DIR); rm -rf config.cache; \
 		$(TARGET_CONFIGURE_OPTS) \
 		$(TARGET_CONFIGURE_ARGS) \
-		./configure \
+		./configure $(QUIET) \
 		--target=$(GNU_TARGET_NAME) \
 		--host=$(GNU_TARGET_NAME) \
 		--build=$(GNU_HOST_NAME) \
@@ -42,7 +42,7 @@ $(WGET_DIR)/$(WGET_BINARY): $(WGET_DIR)/.configured
 $(TARGET_DIR)/$(WGET_TARGET_BINARY): $(WGET_DIR)/$(WGET_BINARY)
 	install -D $(WGET_DIR)/$(WGET_BINARY) $(TARGET_DIR)/$(WGET_TARGET_BINARY)
 
-wget: uclibc $(TARGET_DIR)/$(WGET_TARGET_BINARY)
+wget: $(TARGET_DIR)/$(WGET_TARGET_BINARY)
 
 wget-clean:
 	rm -f $(TARGET_DIR)/$(WGET_TARGET_BINARY)

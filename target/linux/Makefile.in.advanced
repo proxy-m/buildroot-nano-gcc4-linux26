@@ -20,8 +20,7 @@ endif
 # 4. Use default (2.6.22.1)
 ifeq ($(DOWNLOAD_LINUX26_VERSION),)
 ifneq ($(BR2_DOWNLOAD_LINUX26_VERSION),)
-DOWNLOAD_LINUX26_VERSION:=$(strip $(subst ",,$(BR2_DOWNLOAD_LINUX26_VERSION)))
-#"))
+DOWNLOAD_LINUX26_VERSION:=$(call qstrip,$(BR2_DOWNLOAD_LINUX26_VERSION))
 else
 DOWNLOAD_LINUX26_VERSION:=$(LINUX_HEADERS_VERSION)
 endif
@@ -35,8 +34,7 @@ endif
 # 4. Use default (2.6.22.1)
 ifeq ($(LINUX26_VERSION),)
 ifneq ($(BR2_LINUX26_VERSION),)
-LINUX26_VERSION:=$(strip $(subst ",,$(BR2_LINUX26_VERSION)))
-#"))
+LINUX26_VERSION:=$(call qstrip,$(BR2_LINUX26_VERSION))
 else
 LINUX26_VERSION:=$(LINUX_HEADERS_VERSION)
 endif
@@ -46,12 +44,11 @@ endif
 LINUX26_VERSION_PROBED = `$(MAKE) $(LINUX26_MAKE_FLAGS) -C $(LINUX26_DIR) -s kernelrelease`
 
 ifeq ($(BOARD_PATH),)
-BOARD_PATH:=$(strip $(subst ",,$(BR2_BOARD_PATH)))
-#"))
+BOARD_PATH:=$(call qstrip,$(BR2_BOARD_PATH))
 endif
 
 # Version of Linux AFTER patches
-LINUX26_DIR:=$(PROJECT_BUILD_DIR)/linux-$(LINUX26_VERSION)
+LINUX26_DIR:=$(BUILD_DIR)/linux-$(LINUX26_VERSION)
 
 # for packages that need it
 LINUX_VERSION:=$(LINUX26_VERSION)
@@ -60,16 +57,12 @@ LINUX_DIR:=$(LINUX26_DIR)
 # -----------------------------------------------------------------------------
 # Define source name and sites
 LINUX26_SOURCE:=linux-$(DOWNLOAD_LINUX26_VERSION).tar.bz2
-LINUX26_SITE:=$(strip $(subst ",,$(BR2_KERNEL_SITE)))
-#"))
+LINUX26_SITE:=$(call qstrip,$(BR2_KERNEL_SITE))
 
-LINUX26_PATCH_SOURCE:=$(strip $(subst ",,$(BR2_KERNEL_PATCH)))
-#"))
-LINUX26_PATCH_SITE:=$(strip $(subst ",,$(BR2_KERNEL_PATCH_SITE)))
-#"))
+LINUX26_PATCH_SOURCE:=$(call qstrip,$(BR2_KERNEL_PATCH))
+LINUX26_PATCH_SITE:=$(call qstrip,$(BR2_KERNEL_PATCH_SITE))
 
-LINUX26_BSP_PATCH:=$(strip $(subst ",,$(BR2_LINUX_BSP_PATCH)))
-#"))
+LINUX26_BSP_PATCH:=$(call qstrip,$(BR2_LINUX_BSP_PATCH))
 
 ifneq ($(LINUX26_BSP_PATCH),)
 LINUX_HEADERS_DEPENDS:=  $(DL_DIR)/$(LINUX26_BSP_PATCH)
@@ -86,8 +79,7 @@ LINUX26_PATCH_DIR:=$(BOARD_PATH)/kernel-patches/
 endif
 
 # kernel architecture patches provided by buildroot
-KERNEL_ARCH_PATCH_DIR:=$(strip $(subst ",,$(BR2_KERNEL_ARCH_PATCH_DIR)))
-#"))
+KERNEL_ARCH_PATCH_DIR:=$(call qstrip,$(BR2_KERNEL_ARCH_PATCH_DIR))
 
 
 
@@ -98,10 +90,8 @@ KERNEL_ARCH_PATCH_DIR:=$(strip $(subst ",,$(BR2_KERNEL_ARCH_PATCH_DIR)))
 # Has to be set by the target/device
 # If it is not set by the target/device, then pick the one from .config
 ifndef LINUX26_KCONFIG
-ifneq ($(strip $(subst ",,$(BR2_PACKAGE_LINUX_KCONFIG))),)
-LINUX26_KCONFIG:=$(strip $(subst ",,$(BR2_PACKAGE_LINUX_KCONFIG)))
-#"))
-#"))
+ifneq ($(call qstrip,$(BR2_PACKAGE_LINUX_KCONFIG)),)
+LINUX26_KCONFIG:=$(call qstrip,$(BR2_PACKAGE_LINUX_KCONFIG))
 else
 ifeq ($(BR2_i386),y)
 LINUX26_KCONFIG:=$(BOARD_PATH)/linux26.config
@@ -111,18 +101,15 @@ endif
 endif
 endif
 
-KERNEL_CONFIG_METHOD:=$(strip $(subst ",,$(BR2_KERNEL_CONFIG_METHOD)))
-#"))
+KERNEL_CONFIG_METHOD:=$(call qstrip,$(BR2_KERNEL_CONFIG_METHOD))
 ifeq ($(KERNEL_CONFIG_METHOD),)
 KERNEL_CONFIG_METHOD:=menuconfig
 endif
 
 # -----------------------------------------------------------------------------
 ifndef LINUX26_FORMAT
-ifneq ($(strip $(subst ",,$(BR2_PACKAGE_LINUX_FORMAT))),)
-#"))
-LINUX26_FORMAT:=$(strip $(subst ",,$(BR2_PACKAGE_LINUX_FORMAT)))
-#"))
+ifneq ($(call qstrip,$(BR2_PACKAGE_LINUX_FORMAT)),)
+LINUX26_FORMAT:=$(call qstrip,$(BR2_PACKAGE_LINUX_FORMAT))
 else
 LINUX26_FORMAT:=zImage
 endif
@@ -145,7 +132,7 @@ endif
 # --------------
 # UIMAGE
 ifeq ($(LINUX26_FORMAT),uImage)
-LINUX26_MKIMAGE_DIR:=$(PROJECT_BUILD_DIR)/u-boot-tools
+LINUX26_MKIMAGE_DIR:=$(BUILD_DIR)/u-boot-tools
 LINUX26_MKIMAGE_DEP:=$(LINUX26_MKIMAGE_DIR)/mkimage
 ifeq ($(LINUX26_BINLOC),)
 LINUX26_BINLOC:=arch/$(KERNEL_ARCH)/boot/$(LINUX26_FORMAT)
@@ -168,8 +155,7 @@ LINUX26_BINLOC:=arch/$(KERNEL_ARCH)/boot/bzImage
 endif
 endif
 
-ROOTFS_STRIPPED_SUFFIX=$(strip $(subst ",,$(ROOTFS_SUFFIX)))
-#"))
+ROOTFS_STRIPPED_SUFFIX=$(call qstrip,$(ROOTFS_SUFFIX))
 # -----------------------------------------------------------------------------
 # File name for the Linux kernel binary
 LINUX26_KERNEL_NAME:=$(LINUX26_FORMAT)$(ROOTFS_STRIPPED_SUFFIX)
@@ -214,17 +200,17 @@ endif
 $(LINUX26_DIR)/.unpacked: $(DL_DIR)/$(LINUX26_SOURCE)
 	rm -rf $(LINUX26_DIR)
 	@echo "*** Unpacking kernel source"
-	$(LINUX26_BZCAT) $(DL_DIR)/$(LINUX26_SOURCE) | tar -C $(PROJECT_BUILD_DIR) $(TAR_OPTIONS) -
+	$(LINUX26_BZCAT) $(DL_DIR)/$(LINUX26_SOURCE) | tar -C $(BUILD_DIR) $(TAR_OPTIONS) -
 ifneq ($(DOWNLOAD_LINUX26_VERSION),$(LINUX26_VERSION))
 	# Rename the dir from the downloaded version to the AFTER patch version
-	mv -f $(PROJECT_BUILD_DIR)/linux-$(DOWNLOAD_LINUX26_VERSION) $(LINUX26_DIR)
-	echo $(LINUX26_VERSION_PROBED) > $(PROJECT_BUILD_DIR)/.linux-version
+	mv -f $(BUILD_DIR)/linux-$(DOWNLOAD_LINUX26_VERSION) $(LINUX26_DIR)
+	echo $(LINUX26_VERSION_PROBED) > $(BUILD_DIR)/.linux-version
 endif
 	touch $@
 
 
 # -----------------------------------------------------------------------------
-LINUX26_TARGETS+=$(LINUX26_KERNEL) $(PROJECT_BUILD_DIR)/.linux-version
+LINUX26_TARGETS+=$(LINUX26_KERNEL) $(BUILD_DIR)/.linux-version
 
 ifeq ($(BR2_LINUX_COPYTO_ROOTFS),y)
 LINUX26_TARGETS+=$(TARGET_DIR)/boot/$(LINUX26_KERNEL_NAME)
@@ -234,10 +220,8 @@ ifeq ($(BR2_LINUX_COPYTO_TFTPBOOT),y)
 LINUX26_TARGETS+=/tftpboot/$(LINUX26_KERNEL_NAME)
 endif
 
-ifneq ($(strip $(subst ",,$(BR2_LINUX_COPYTO))),)
-LINUX_COPYTO:=$(strip $(subst ",,$(BR2_LINUX_COPYTO)))
-#"))
-#"))
+ifneq ($(call qstrip,$(BR2_LINUX_COPYTO)),)
+LINUX_COPYTO:=$(call qstrip,$(BR2_LINUX_COPYTO))
 LINUX26_TARGETS+=$(LINUX_COPYTO)/$(LINUX26_KERNEL_NAME)
 endif
 
@@ -294,8 +278,7 @@ endif
 # =============================================================================
 linux_patch: $(LINUX26_DIR)/.patched.board
 
-KERNEL_EXTRA_VERSION:=$(strip $(subst ",,$(BR2_EXTRA_VERSION)))
-#"))
+KERNEL_EXTRA_VERSION:=$(call qstrip,$(BR2_EXTRA_VERSION))
 
 lxcf:	$(LINUX26_DIR)/.config
 
@@ -337,7 +320,7 @@ ifeq ($(BR2_PACKAGE_LINUX_USE_KCONFIG),y)
 		$(MAKE) $(LINUX26_MAKE_FLAGS) -C $(LINUX26_DIR) $(KERNEL_CONFIG_METHOD) ; \
 	fi
 endif
-ifneq ($(strip $(subst ",,$(BR2_EXTRA_VERSION))),)
+ifneq ($(call qstrip,$(BR2_EXTRA_VERSION)),)
 	$(SED) 's,^EXTRAVERSION.*,EXTRAVERSION = $(KERNEL_EXTRA_VERSION),g' $(LINUX26_DIR)/Makefile
 endif
 # $(strip $(subst ",, - ))
@@ -398,7 +381,7 @@ $(LINUX26_KERNEL): $(LINUX26_DIR)/$(LINUX26_BINLOC)
 	touch $@
 
 # -----------------------------------------------------------------------------
-$(PROJECT_BUILD_DIR)/autotools-stamps/linux_modules_target_installed: $(LINUX26_DIR)/.depend_done
+$(STAMP_DIR)/linux_modules_target_installed: $(LINUX26_DIR)/.depend_done
 	rm -rf $(TARGET_DIR)/lib/modules/$(LINUX26_VERSION_PROBED)
 	rm -f $(TARGET_DIR)/sbin/cardmgr
 	# Make Linux depend on modules only if enabled in the .config.
@@ -458,8 +441,8 @@ $(LINUX_COPYTO)/$(LINUX26_KERNEL_NAME): $(LINUX26_KERNEL)
 	touch $@
 endif
 
-$(PROJECT_BUILD_DIR)/.linux-version: $(LINUX26_KERNEL)
-	echo $(LINUX26_VERSION_PROBED) > $(PROJECT_BUILD_DIR)/.linux-version
+$(BUILD_DIR)/.linux-version: $(LINUX26_KERNEL)
+	echo $(LINUX26_VERSION_PROBED) > $(BUILD_DIR)/.linux-version
 	echo LINUX_MODULES=`$(LINUX26_VERSION_PROBED)`
 
 $(LINUX26_MKIMAGE_DIR)/mkimage:	$(U_BOOT_TOOLS)
@@ -468,9 +451,9 @@ $(LINUX26_MKIMAGE_DIR)/mkimage:	$(U_BOOT_TOOLS)
 
 linux26: $(LINUX26_TARGETS)
 
-linux26-version: $(PROJECT_BUILD_DIR)/.linux-version
+linux26-version: $(BUILD_DIR)/.linux-version
 
-linux26-modules: cross-depmod26 $(PROJECT_BUILD_DIR)/autotools-stamps/linux_modules_target_installed
+linux26-modules: cross-depmod26 $(STAMP_DIR)/linux_modules_target_installed
 
 linux26-source: $(DL_DIR)/$(LINUX26_SOURCE)
 
@@ -487,7 +470,7 @@ linux26-force:
 
 # This has been renamed so we do _NOT_ by default run this on 'make clean'
 linux26clean:
-	rm -f $(PROJECT_BUILD_DIR)/autotools-stamps/linux_modules_target_installed
+	rm -f $(STAMP_DIR)/linux_modules_target_installed
 	rm -f $(LINUX26_KERNEL) $(LINUX26_DIR)/.configured
 	-$(MAKE) PATH=$(TARGET_PATH) -C $(LINUX26_DIR) clean
 
@@ -548,7 +531,7 @@ linux-status:
 	@echo LINUX26_TARGETS=$(LINUX26_TARGETS)
 	@echo LINUX26_VERSION=$(LINUX26_VERSION)
 	@echo LINUX26_MAKE_FLAGS=$(LINUX26_MAKE_FLAGS)
-	@echo PROJECT_BUILD_DIR=$(PROJECT_BUILD_DIR)
+	@echo BUILD_DIR=$(BUILD_DIR)
 	@echo TARGETS=$(TARGETS)
 
 endif

@@ -45,7 +45,7 @@ $(DMALLOC_DIR)/.configured: $(DMALLOC_DIR)/.unpacked
 		$(TARGET_CONFIGURE_ARGS) \
 		CFLAGS="-g" \
 		LDFLAGS="-g" \
-		./configure \
+		./configure $(QUIET) \
 		--target=$(GNU_TARGET_NAME) \
 		--host=$(GNU_TARGET_NAME) \
 		--build=$(GNU_HOST_NAME) \
@@ -82,7 +82,7 @@ $(TARGET_DIR)/$(DMALLOC_TARGET_BINARY): $(DMALLOC_DIR)/$(DMALLOC_BINARY)
 	cp -dpf $(STAGING_DIR)/usr/bin/dmalloc $(TARGET_DIR)/$(DMALLOC_TARGET_BINARY)
 	$(STRIPCMD) $(STRIP_STRIP_ALL) $(TARGET_DIR)/$(DMALLOC_TARGET_BINARY)
 
-dmalloc: uclibc $(TARGET_DIR)/$(DMALLOC_TARGET_BINARY)
+dmalloc: $(TARGET_DIR)/$(DMALLOC_TARGET_BINARY)
 
 dmalloc-clean:
 	-rm -f $(TARGET_DIR)/usr/lib/libdmalloc*

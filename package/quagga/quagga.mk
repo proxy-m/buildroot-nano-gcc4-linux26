@@ -10,6 +10,8 @@ QUAGGA_DIR:=$(BUILD_DIR)/quagga-$(QUAGGA_VERSION)
 QUAGGA_CAT:=$(ZCAT)
 
 QUAGGA_CONFIGURE:=
+QUAGGA_DEPENDENCIES:=
+
 ifeq ($(BR2_PACKAGE_QUAGGA_ZEBRA),y)
 QUAGGA_CONFIGURE+=--enable-zebra
 ifndef QUAGGA_TARGET_BINARY
@@ -96,6 +98,7 @@ QUAGGA_CONFIGURE+=--disable-netlink
 endif
 ifeq ($(BR2_PACKAGE_QUAGGA_SNMP),y)
 QUAGGA_CONFIGURE+=--enable-snmp
+QUAGGA_DEPENDENCIES+=netsnmp
 else
 QUAGGA_CONFIGURE+=--disable-snmp
 endif
@@ -109,9 +112,6 @@ QUAGGA_CONFIGURE+=--enable-opaque-lsa
 else
 QUAGGA_CONFIGURE+=--disable-opaque-lsa
 endif
-
-QUAGGA_CONFIGURE+=$(subst ",,$(BR2_PACKAGE_QUAGGA_CONFIGURE))
-# ")
 
 $(DL_DIR)/$(QUAGGA_SOURCE):
 	$(call DOWNLOAD,$(QUAGGA_SITE),$(QUAGGA_SOURCE))
@@ -138,7 +138,7 @@ $(QUAGGA_DIR)/.configured: $(QUAGGA_DIR)/.unpacked
 	(cd $(QUAGGA_DIR); rm -rf config.cache; \
 		$(TARGET_CONFIGURE_OPTS) \
 		$(TARGET_CONFIGURE_ARGS) \
-		./configure \
+		./configure $(QUIET) \
 		--target=$(GNU_TARGET_NAME) \
 		--host=$(GNU_TARGET_NAME) \
 		--build=$(GNU_HOST_NAME) \
@@ -166,7 +166,7 @@ ifneq ($(BR2_HAVE_INFOPAGES),y)
 	rm -rf $(TARGET_DIR)/usr/info
 endif
 
-quagga: uclibc $(TARGET_DIR)/usr/sbin/$(QUAGGA_TARGET_BINARY)
+quagga: $(QUAGGA_DEPENDENCIES) $(TARGET_DIR)/usr/sbin/$(QUAGGA_TARGET_BINARY)
 
 quagga-clean:
 	-$(MAKE) DESTDIR=$(TARGET_DIR) -C $(QUAGGA_DIR) uninstall

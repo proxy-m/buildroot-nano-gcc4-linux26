@@ -36,7 +36,7 @@ $(PPTP_LINUX_DIR)/.configured: $(PPTP_LINUX_DIR)/.unpacked
 	(cd $(PPTP_LINUX_DIR); rm -rf config.cache; \
 		$(TARGET_CONFIGURE_OPTS) \
 		$(TARGET_CONFIGURE_ARGS) \
-		./configure \
+		./configure $(QUIET) \
 		--target=$(GNU_TARGET_NAME) \
 		--host=$(GNU_TARGET_NAME) \
 		--build=$(GNU_HOST_NAME) \
@@ -57,7 +57,7 @@ ifeq ($(BR2_HAVE_MANPAGES),y)
 endif
 	$(STRIPCMD) $(STRIP_STRIP_ALL) $@
 
-pptp-linux: uclibc $(TARGET_DIR)/$(PPTP_LINUX_TARGET_BINARY)
+pptp-linux: $(TARGET_DIR)/$(PPTP_LINUX_TARGET_BINARY)
 
 pptp-linux-source: $(DL_DIR)/$(PPTP_LINUX_SOURCE) $(PPTP_LINUX_PATCH_FILE)
 

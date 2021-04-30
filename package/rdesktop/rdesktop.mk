@@ -22,7 +22,7 @@ $(RDESKTOP_DIR)/.configured: $(RDESKTOP_DIR)/.unpacked
 	(cd $(RDESKTOP_DIR); rm -rf config.cache; \
 		$(TARGET_CONFIGURE_OPTS) \
 		$(TARGET_CONFIGURE_ARGS) \
-		./configure \
+		./configure $(QUIET) \
 		--target=$(GNU_TARGET_NAME) \
 		--host=$(GNU_TARGET_NAME) \
 		--build=$(GNU_HOST_NAME) \
@@ -38,7 +38,7 @@ $(RDESKTOP_DIR)/rdesktop: $(RDESKTOP_DIR)/.configured
 $(TARGET_DIR)/usr/bin/rdesktop: $(RDESKTOP_DIR)/rdesktop
 	cp $^ $@
 
-rdesktop: uclibc openssl xserver_xorg-server $(TARGET_DIR)/usr/bin/rdesktop
+rdesktop: openssl xserver_xorg-server $(TARGET_DIR)/usr/bin/rdesktop
 
 rdesktop-source: $(DL_DIR)/$(RDESKTOP_SOURCE)
 

@@ -16,7 +16,7 @@ $(TN5250_DIR)/.configured: $(TN5250_DIR)/.dist
 	(cd $(TN5250_DIR); rm -rf config.cache; \
 		$(TARGET_CONFIGURE_OPTS) \
 		$(TARGET_CONFIGURE_ARGS) \
-		./configure \
+		./configure $(QUIET) \
 		--target=$(GNU_TARGET_NAME) \
 		--host=$(GNU_TARGET_NAME) \
 		--build=$(GNU_HOST_NAME) \
@@ -42,7 +42,7 @@ $(TN5250_DIR)/src/tn5250: $(TN5250_DIR)/.configured
 $(TARGET_DIR)/usr/bin/tn5250: $(TN5250_DIR)/src/tn5250
 	install -c $(TN5250_DIR)/src/tn5250 $(TARGET_DIR)/usr/bin/tn5250
 
-tn5250: uclibc slang $(TARGET_DIR)/usr/bin/tn5250
+tn5250: slang $(TARGET_DIR)/usr/bin/tn5250
 
 tn5250-source: $(DL_DIR)/$(TN5250_SOURCE)
 

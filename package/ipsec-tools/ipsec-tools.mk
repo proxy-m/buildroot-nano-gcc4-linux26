@@ -81,7 +81,7 @@ $(IPSEC_TOOLS_DIR)/.configured: $(IPSEC_TOOLS_DIR)/.patched
 	( cd $(IPSEC_TOOLS_DIR); rm -rf config.cache; \
 		$(TARGET_CONFIGURE_OPTS) \
 		$(TARGET_CONFIGURE_ARGS) \
-	  ./configure \
+	  ./configure $(QUIET) \
 	  --target=$(GNU_TARGET_NAME) \
 	  --host=$(GNU_TARGET_NAME) \
 	  --build=$(GNU_HOST_NAME) \
@@ -145,7 +145,7 @@ ifeq ($(BR2_PACKAGE_IPSEC_TOOLS_ADMINPORT), y)
 IPSEC_TOOLS_PROGS+= $(TARGET_DIR)/$(IPSEC_TOOLS_TARGET_BINARY_RACOONCTL)
 endif
 
-ipsec-tools: uclibc openssl flex $(IPSEC_TOOLS_PROGS)
+ipsec-tools: openssl flex $(IPSEC_TOOLS_PROGS)
 
 ipsec-tools-source: $(DL_DIR)/$(IPSEC_TOOLS_SOURCE)
 

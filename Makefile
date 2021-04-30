@@ -22,7 +22,7 @@
 # Just run 'make menuconfig', configure stuff, then run 'make'.
 # You shouldn't need to mess with anything beyond this point...
 #--------------------------------------------------------------
-TOPDIR=./
+TOPDIR:=.
 CONFIG_CONFIG_IN=Config.in
 CONFIG_DEFCONFIG=.defconfig
 CONFIG=package/config
@@ -32,13 +32,9 @@ noconfig_targets:=menuconfig xconfig config oldconfig randconfig \
 	defconfig allyesconfig allnoconfig release tags \
 	source-check help
 
-
-# Use shell variables, if defined
-ifneq ($(BUILDROOT_LOCAL),)
-BR2_LOCAL:=$(BUILDROOT_LOCAL)
-else
-BR2_LOCAL:=$(TOPDIR)/local
-endif
+# Strip quotes and then whitespaces
+qstrip=$(strip $(subst ",,$(1)))
+#"))
 
 # Variables for use in Make constructs
 comma:=,
@@ -48,20 +44,13 @@ space:=$(empty) $(empty)
 # $(shell find . -name *_defconfig |sed 's/.*\///')
 # Pull in the user's configuration file
 ifeq ($(filter $(noconfig_targets),$(MAKECMDGOALS)),)
-ifeq ($(BOARD),)
-# if "make BOARD=xyz" command
 -include .config
-else
-# if "make" command
--include $(BR2_LOCAL)/$(BOARD)/$(BOARD).config
-endif
 endif
 
 # Override BR2_DL_DIR if shell variable defined
 ifneq ($(BUILDROOT_DL_DIR),)
 BR2_DL_DIR:=$(BUILDROOT_DL_DIR)
 endif
-LOCAL:=$(BR2_LOCAL)
 
 # To put more focus on warnings, be less verbose as default
 # Use 'make V=1' to see the full commands
@@ -213,10 +202,67 @@ BASE_TARGETS:=uclibc
 endif
 TARGETS:=
 
-# setup our paths
-include project/Makefile.in
+# silent mode requested?
+QUIET:=$(if $(findstring s,$(MAKEFLAGS)),-q)
 
-BR2_DEPENDS_DIR=$(PROJECT_BUILD_DIR)/buildroot-config
+# Strip off the annoying quoting
+ARCH:=$(call qstrip,$(BR2_ARCH))
+ifeq ($(ARCH),xtensa)
+ARCH:=$(ARCH)_$(call qstrip,$(BR2_xtensa_core_name))
+endif
+WGET:=$(call qstrip,$(BR2_WGET)) $(SPIDER) $(QUIET)
+SVN_CO:=$(call qstrip,$(BR2_SVN_CO)) $(QUIET)
+SVN_UP:=$(call qstrip,$(BR2_SVN_UP)) $(QUIET)
+BZR_CO:=$(call qstrip,$(BR2_BZR_CO)) $(QUIET)
+BZR_UP:=$(call qstrip,$(BR2_BZR_UP)) $(QUIET)
+GIT:=$(call qstrip,$(BR2_GIT)) $(QUIET)
+ZCAT:=$(call qstrip,$(BR2_ZCAT))
+BZCAT:=$(call qstrip,$(BR2_BZCAT))
+TAR_OPTIONS=$(call qstrip,$(BR2_TAR_OPTIONS)) -xf
+
+ifneq ("$(origin O)", "command line")
+O:=output
+else
+# other packages might also support Linux-style out of tree builds
+# with the O=<dir> syntax (E.G. Busybox does). As make automatically
+# forwards command line variable definitions those packages get very
+# confused. Fix this by telling make to not do so
+MAKEOVERRIDES =
+endif
+
+BASE_DIR := $(shell mkdir -p $(O) && cd $(O) && pwd)
+$(if $(BASE_DIR),, $(error output directory "$(O)" does not exist))
+
+DL_DIR=$(call qstrip,$(BR2_DL_DIR))
+ifeq ($(DL_DIR),)
+DL_DIR:=$(TOPDIR)/dl
+endif
+
+BUILD_DIR:=$(BASE_DIR)/build
+
+GNU_TARGET_SUFFIX:=-$(call qstrip,$(BR2_GNU_TARGET_SUFFIX))
+
+STAGING_DIR:=$(call qstrip,$(BR2_STAGING_DIR))
+
+# packages compiled for the host goes here
+HOST_DIR:=$(BASE_DIR)/host
+
+# stamp (dependency) files go here
+STAMP_DIR:=$(BASE_DIR)/stamps
+
+BINARIES_DIR:=$(BASE_DIR)/images
+TARGET_DIR:=$(BASE_DIR)/target
+
+# define values for prepatched source trees for toolchains
+VENDOR_SITE:=$(call qstrip,$(BR2_VENDOR_SITE))
+VENDOR_SUFFIX:=$(call qstrip,$(BR2_VENDOR_SUFFIX))
+VENDOR_BINUTILS_RELEASE:=$(call qstrip,$(BR2_VENDOR_BINUTILS_RELEASE))
+VENDOR_GCC_RELEASE:=$(call qstrip,$(BR2_VENDOR_GCC_RELEASE))
+VENDOR_UCLIBC_RELEASE:=$(call qstrip,$(BR2_VENDOR_UCLIBC_RELEASE))
+VENDOR_GDB_RELEASE:=$(call qstrip,$(BR2_VENDOR_GDB_RELEASE))
+VENDOR_PATCH_DIR:=$(call qstrip,$(BR2_VENDOR_PATCH_DIR))
+
+BR2_DEPENDS_DIR=$(BUILD_DIR)/buildroot-config
 
 include toolchain/Makefile.in
 include package/Makefile.in
@@ -232,8 +278,6 @@ all: world
 
 # In this section, we need .config
 include .config.cmd
-
-include project/*.mk
 
 # We also need the various per-package makefiles, which also add
 # each selected package to TARGETS if that package was selected
@@ -285,21 +329,19 @@ $(BR2_DEPENDS_DIR): .config
 	mkdir -p $(@D)
 	cp -dpRf $(CONFIG)/buildroot-config $@
 
-dirs: $(DL_DIR) $(TOOL_BUILD_DIR) $(BUILD_DIR) $(STAGING_DIR) $(TARGET_DIR) \
-	$(HOST_DIR) $(BR2_DEPENDS_DIR) $(BINARIES_DIR) $(PROJECT_BUILD_DIR) \
-	$(PROJECT_BUILD_DIR)/autotools-stamps $(STAMP_DIR)
+dirs: $(DL_DIR) $(TOOLCHAIN_DIR) $(BUILD_DIR) $(STAGING_DIR) $(TARGET_DIR) \
+	$(HOST_DIR) $(BR2_DEPENDS_DIR) $(BINARIES_DIR) $(STAMP_DIR)
 
 $(BASE_TARGETS): dirs
 
-world: dependencies dirs target-host-info $(BASE_TARGETS) $(TARGETS_ALL)
+world: dependencies dirs $(BASE_TARGETS) $(TARGETS_ALL)
 
 
 .PHONY: all world dirs clean dirclean distclean source \
 	$(BASE_TARGETS) $(TARGETS) $(TARGETS_ALL) \
 	$(TARGETS_CLEAN) $(TARGETS_DIRCLEAN) $(TARGETS_SOURCE) \
-	$(DL_DIR) $(TOOL_BUILD_DIR) $(BUILD_DIR) $(STAGING_DIR) $(TARGET_DIR) \
-	$(HOST_DIR) $(BR2_DEPENDS_DIR) $(BINARIES_DIR) $(PROJECT_BUILD_DIR) \
-	$(PROJECT_BUILD_DIR)/autotools-stamps $(STAMP_DIR)
+	$(DL_DIR) $(TOOLCHAIN_DIR) $(BUILD_DIR) $(STAGING_DIR) $(TARGET_DIR) \
+	$(HOST_DIR) $(BR2_DEPENDS_DIR) $(BINARIES_DIR) $(STAMP_DIR)
 
 #############################################################
 #
@@ -307,8 +349,7 @@ world: dependencies dirs target-host-info $(BASE_TARGETS) $(TARGETS_ALL)
 # dependencies anywhere else
 #
 #############################################################
-$(DL_DIR) $(TOOL_BUILD_DIR) $(BUILD_DIR) $(HOST_DIR) $(PROJECT_BUILD_DIR) \
-	$(PROJECT_BUILD_DIR)/autotools-stamps $(BINARIES_DIR) $(STAMP_DIR):
+$(DL_DIR) $(TOOLCHAIN_DIR) $(BUILD_DIR) $(HOST_DIR) $(BINARIES_DIR) $(STAMP_DIR):
 	@mkdir -p $@
 
 $(STAGING_DIR):
@@ -326,7 +367,7 @@ endif
 endif
 	@mkdir -p $(STAGING_DIR)/usr/include
 
-$(PROJECT_BUILD_DIR)/.root:
+$(BUILD_DIR)/.root:
 	mkdir -p $(TARGET_DIR)
 	if ! [ -d "$(TARGET_DIR)/bin" ]; then \
 		if [ -d "$(TARGET_SKELETON)" ]; then \
@@ -341,10 +382,10 @@ $(PROJECT_BUILD_DIR)/.root:
 	-find $(TARGET_DIR) -type f -name .empty -print0 | xargs -0 rm -rf
 	touch $@
 
-$(TARGET_DIR): $(PROJECT_BUILD_DIR)/.root
+$(TARGET_DIR): $(BUILD_DIR)/.root
 
 erase-fakeroots:
-	rm -f $(PROJECT_BUILD_DIR)/.fakeroot*
+	rm -f $(BUILD_DIR)/.fakeroot*
 
 target-finalize:
 ifeq ($(BR2_HAVE_DEVFILES),y)
@@ -363,14 +404,17 @@ endif
 	find $(TARGET_DIR) -type f -perm +111 | xargs $(STRIPCMD) 2>/dev/null || true
 	$(TARGET_LDCONFIG) -r $(TARGET_DIR) 2>/dev/null
 
+	mkdir -p $(TARGET_DIR)/etc
+	echo $(BR2_VERSION)$(shell $(TOPDIR)/scripts/setlocalversion) > \
+		$(TARGET_DIR)/etc/br-version
+
 ifneq ($(BR2_ROOTFS_POST_BUILD_SCRIPT),"")
 	$(BR2_ROOTFS_POST_BUILD_SCRIPT) $(TARGET_DIR)
 endif
 
 ifeq ($(BR2_ENABLE_LOCALE_PURGE),y)
-LOCALE_WHITELIST=$(PROJECT_BUILD_DIR)/locales.nopurge
-LOCALE_NOPURGE=$(strip $(subst ",,$(BR2_ENABLE_LOCALE_WHITELIST)))
-#"))
+LOCALE_WHITELIST=$(BUILD_DIR)/locales.nopurge
+LOCALE_NOPURGE=$(call qstrip,$(BR2_ENABLE_LOCALE_WHITELIST))
 
 target-purgelocales:
 	rm -f $(LOCALE_WHITELIST)
@@ -400,27 +444,18 @@ external-deps:
 #
 #############################################################
 clean: $(TARGETS_CLEAN)
-	rm -rf $(STAGING_DIR) $(TARGET_DIR) $(IMAGE) $(PROJECT_BUILD_DIR)/.root $(PROJECT_BUILD_DIR)/autotools-stamps $(STAMP_DIR)
+	rm -rf $(STAGING_DIR) $(TARGET_DIR) $(IMAGE) $(BUILD_DIR)/.root $(STAMP_DIR)
 
 dirclean: $(TARGETS_DIRCLEAN)
-	rm -rf $(STAGING_DIR) $(TARGET_DIR) $(IMAGE) $(PROJECT_BUILD_DIR)/.root $(PROJECT_BUILD_DIR)/autotools-stamps $(STAMP_DIR)
+	rm -rf $(STAGING_DIR) $(TARGET_DIR) $(IMAGE) $(BUILD_DIR)/.root $(STAMP_DIR)
 
 distclean:
-ifeq ($(DL_DIR),$(BASE_DIR)/dl)
+ifeq ($(DL_DIR),$(TOPDIR)/dl)
 	rm -rf $(DL_DIR)
 endif
-	rm -rf $(TOOL_BUILD_DIR) $(BUILD_DIR) $(PROJECT_BUILD_DIR) $(BINARIES_DIR) \
+	rm -rf $(TOOLCHAIN_DIR) $(BUILD_DIR) $(BINARIES_DIR) \
 	.config.cmd
 	$(MAKE) -C $(CONFIG) clean
-
-sourceball:
-	rm -rf $(BUILD_DIR) $(PROJECT_BUILD_DIR) $(BINARIES_DIR)
-	set -e; \
-	cd ..; \
-	rm -f buildroot.tar.bz2; \
-	tar -cvf buildroot.tar buildroot; \
-	bzip2 -9 buildroot.tar; \
-
 
 else # ifeq ($(BR2_HAVE_DOT_CONFIG),y)
 
@@ -527,27 +562,15 @@ distclean: clean
 endif # ifeq ($(BR2_HAVE_DOT_CONFIG),y)
 
 flush:
-	rm -f $(PROJECT_BUILD_DIR)/tgt-config.cache
+	rm -f $(BUILD_DIR)/tgt-config.cache
 
 %_defconfig: $(CONFIG)/conf
 	cp $(shell find ./target/ -name $@) .config
 	-@$(MAKE) oldconfig
 
-update:
-	cp .config $(BOARD_PATH)/$(PROJECT)_defconfig
-
 configured: dirs host-sed kernel-headers uclibc-config busybox-config linux26-config
 
 prepatch:	gcc-patched binutils-patched gdb-patched uclibc-patched
-
-.lognr.$(PROJECT):
-	@echo "0" > .lognr.$(PROJECT)
-
-log:	.lognr.$(PROJECT)
-	@expr `cat .lognr.$(PROJECT)` + 1 > .lognr.$(PROJECT)	
-	@echo Creating $(PROJECT)-`cat .lognr.$(PROJECT)`.log
-	@$(MAKE) > $(PROJECT)-`cat .lognr.$(PROJECT)`.log 2>&1
-
 
 cross: $(BASE_TARGETS)
 

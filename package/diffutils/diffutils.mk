@@ -78,7 +78,7 @@ $(DIFFUTILS_DIR)/.configured: $(DIFFUTILS_DIR)/.unpacked
 		ac_cv_func_working_mktime=yes \
 		jm_cv_func_working_re_compile_pattern=yes \
 		ac_use_included_regex=no \
-		./configure \
+		./configure $(QUIET) \
 		--target=$(GNU_TARGET_NAME) \
 		--host=$(GNU_TARGET_NAME) \
 		--build=$(GNU_HOST_NAME) \
@@ -106,7 +106,7 @@ ifneq ($(BR2_ENABLE_LOCALE),y)
 	rm -rf $(TARGET_DIR)/usr/share/locale
 endif
 
-diffutils: uclibc $(TARGET_DIR)/$(DIFFUTILS_TARGET_BINARY)
+diffutils: $(TARGET_DIR)/$(DIFFUTILS_TARGET_BINARY)
 
 diff-utils-unpacked: $(DIFFUTILS_DIR)/.unpacked
 

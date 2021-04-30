@@ -31,7 +31,7 @@ $(SUDO_DIR)/.configured: $(SUDO_DIR)/.unpacked $(SUDO_CONFIG_FILE)
 	(cd $(SUDO_DIR); rm -rf config.cache; \
 		$(TARGET_CONFIGURE_OPTS) \
 		$(TARGET_CONFIGURE_ARGS) \
-		./configure \
+		./configure $(QUIET) \
 		--target=$(GNU_TARGET_NAME) \
 		--host=$(GNU_TARGET_NAME) \
 		--build=$(GNU_HOST_NAME) \
@@ -74,7 +74,7 @@ $(TARGET_DIR)/usr/bin/sudo: $(SUDO_DIR)/sudo
 	$(INSTALL) -m 0440 -D $(SUDO_DIR)/sudoers $(TARGET_DIR)/etc/sudoers
 	touch -c $(TARGET_DIR)/usr/bin/sudo
 
-sudo: uclibc $(TARGET_DIR)/usr/bin/sudo
+sudo: $(TARGET_DIR)/usr/bin/sudo
 
 sudo-unpacked: $(SUDO_DIR)/.unpacked
 

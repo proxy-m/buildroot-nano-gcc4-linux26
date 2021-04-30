@@ -26,7 +26,7 @@ $(USBUTILS_DIR)/.configured: $(USBUTILS_DIR)/.unpacked
 		$(TARGET_CONFIGURE_OPTS) \
 		$(TARGET_CONFIGURE_ARGS) \
 		ac_cv_func_malloc_0_nonnull=yes \
-		./configure \
+		./configure $(QUIET) \
 		--target=$(GNU_TARGET_NAME) \
 		--host=$(GNU_TARGET_NAME) \
 		--build=$(GNU_HOST_NAME) \
@@ -41,7 +41,7 @@ $(TARGET_DIR)/$(USBUTILS_TARGET_BINARY): $(USBUTILS_DIR)/$(USBUTILS_BINARY)
 	$(MAKE) -C $(USBUTILS_DIR) DESTDIR=$(TARGET_DIR) install
 	rm -rf $(TARGET_DIR)/usr/man
 
-usbutils: uclibc libusb $(TARGET_DIR)/$(USBUTILS_TARGET_BINARY)
+usbutils: libusb $(TARGET_DIR)/$(USBUTILS_TARGET_BINARY)
 
 usbutils-clean:
 	rm -f $(TARGET_DIR)/$(USBUTILS_TARGET_BINARY)

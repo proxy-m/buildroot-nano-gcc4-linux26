@@ -25,7 +25,7 @@ $(TFTP_HPA_DIR)/.configured: $(TFTP_HPA_DIR)/.unpacked
 	(cd $(TFTP_HPA_DIR); rm -rf config.cache; \
 		$(TARGET_CONFIGURE_OPTS) \
 		$(TARGET_CONFIGURE_ARGS) \
-		./configure \
+		./configure $(QUIET) \
 		--target=$(GNU_TARGET_NAME) \
 		--host=$(GNU_TARGET_NAME) \
 		--build=$(GNU_HOST_NAME) \
@@ -61,7 +61,7 @@ $(TARGET_DIR)/$(TFTP_HPA_TARGET_BINARY): $(TFTP_HPA_DIR)/$(TFTP_HPA_BINARY)
 		$(INSTALL) -m 0755 package/tftpd/S80tftpd-hpa $(TARGET_DIR)/etc/init.d; \
 	fi
 
-tftpd: uclibc $(TARGET_DIR)/$(TFTP_HPA_TARGET_BINARY)
+tftpd: $(TARGET_DIR)/$(TFTP_HPA_TARGET_BINARY)
 
 tftpd-clean:
 	rm -f $(TARGET_DIR)/etc/init.d/S80tftpd-hpa

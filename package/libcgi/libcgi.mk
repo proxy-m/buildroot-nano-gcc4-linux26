@@ -23,7 +23,7 @@ $(LIBCGI_DIR)/.configured: $(LIBCGI_DIR)/.source
 	(cd $(LIBCGI_DIR); rm -f config.cache; \
 		$(TARGET_CONFIGURE_OPTS) \
 		$(TARGET_CONFIGURE_ARGS) \
-		./configure \
+		./configure $(QUIET) \
 		--target=$(GNU_TARGET_NAME) \
 		--host=$(GNU_TARGET_NAME) \
 		--build=$(GNU_HOST_NAME) \
@@ -52,7 +52,7 @@ $(STAGING_DIR)/$(LIBCGI_TARGET_LIBRARY): $(LIBCGI_DIR)/$(LIBCGI_LIBRARY)
 $(TARGET_DIR)/$(LIBCGI_TARGET_LIBRARY): $(STAGING_DIR)/$(LIBCGI_TARGET_LIBRARY)
 	cp -dpf $<* $(TARGET_DIR)/$(LIBCGI_DESTDIR)
 
-libcgi: uclibc $(TARGET_DIR)/$(LIBCGI_TARGET_LIBRARY)
+libcgi: $(TARGET_DIR)/$(LIBCGI_TARGET_LIBRARY)
 
 libcgi-source: $(DL_DIR)/$(LIBCGI_SOURCE)
 

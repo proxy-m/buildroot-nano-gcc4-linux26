@@ -5,7 +5,7 @@
 #############################################################
 PRBOOM_VERSION:=2.4.7
 
-PRBOOM_DEPENDENCIES = sdl sdl_net sdl_mixer
+PRBOOM_DEPENDENCIES = sdl SDL_net sdl_mixer
 
 $(eval $(call AUTOTARGETS,package/games,prboom))
 
@@ -18,7 +18,7 @@ $(PRBOOM_TARGET_CONFIGURE):
 	(cd $(PRBOOM_DIR); \
 		$(TARGET_CONFIGURE_ARGS) \
 		$(TARGET_CONFIGURE_OPTS) \
-		./configure \
+		./configure $(QUIET) \
 		--target=$(GNU_TARGET_NAME) \
 		--host=$(GNU_TARGET_NAME) \
 		--build=$(GNU_HOST_NAME) \

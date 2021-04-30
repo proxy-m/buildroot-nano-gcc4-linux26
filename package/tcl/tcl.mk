@@ -20,7 +20,7 @@ $(TCL_DIR)/.configured: $(TCL_DIR)/.source
 	(cd $(TCL_DIR)/unix; rm -f config.cache; \
 		$(TARGET_CONFIGURE_OPTS) \
 		$(TARGET_CONFIGURE_ARGS) \
-		./configure \
+		./configure $(QUIET) \
 		--target=$(GNU_TARGET_NAME) \
 		--host=$(GNU_TARGET_NAME) \
 		--build=$(GNU_HOST_NAME) \
@@ -47,7 +47,7 @@ $(TARGET_DIR)/usr/lib/libtcl8.4.so: $(TCL_DIR)/unix/libtcl8.4.so
 	rm -f $(TARGET_DIR)/usr/bin/tclsh8.4; \
 	fi
 
-tcl: uclibc $(TARGET_DIR)/usr/lib/libtcl8.4.so
+tcl: $(TARGET_DIR)/usr/lib/libtcl8.4.so
 
 tcl-source: $(DL_DIR)/$(TCL_SOURCE)
 

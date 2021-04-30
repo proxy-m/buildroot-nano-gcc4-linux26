@@ -36,7 +36,7 @@ $(FLEX_DIR)/.configured: $(FLEX_DIR)/.unpacked
 	(cd $(FLEX_DIR); rm -rf config.cache; \
 		$(TARGET_CONFIGURE_OPTS) \
 		$(TARGET_CONFIGURE_ARGS) \
-		./configure \
+		./configure $(QUIET) \
 		--target=$(GNU_TARGET_NAME) \
 		--host=$(GNU_TARGET_NAME) \
 		--build=$(GNU_HOST_NAME) \
@@ -89,7 +89,7 @@ endif
 	rm -rf $(TARGET_DIR)/usr/share/doc
 	(cd $(TARGET_DIR)/usr/bin; ln -snf flex lex)
 
-flex: uclibc $(TARGET_DIR)/$(FLEX_TARGET_BINARY)
+flex: $(TARGET_DIR)/$(FLEX_TARGET_BINARY)
 
 flex-clean:
 	$(MAKE) \

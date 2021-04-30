@@ -56,7 +56,7 @@ GCC_PATCH_EXTRA:=$(call XTENSA_PATCH,gcc,$(GCC_PATCH_DIR),. ..)
 endif
 
 GCC_SOURCE:=gcc-$(GCC_OFFICIAL_VERSION).tar.bz2
-GCC_DIR:=$(TOOL_BUILD_DIR)/gcc-$(GCC_OFFICIAL_VERSION)
+GCC_DIR:=$(TOOLCHAIN_DIR)/gcc-$(GCC_OFFICIAL_VERSION)
 GCC_CAT:=$(BZCAT)
 GCC_STRIP_HOST_BINARIES:=nope
 GCC_SRC_DIR:=$(GCC_DIR)
@@ -125,7 +125,7 @@ GCC_WITH_HOST_MPFR=--with-mpfr=$(MPFR_HOST_DIR)
 ifeq ($(BR2_INSTALL_FORTRAN),y)
 GCC_TARGET_LANGUAGES:=$(GCC_TARGET_LANGUAGES),fortran
 #GCC_TARGET_PREREQ+=$(TARGET_DIR)/usr/lib/libmpfr.so $(TARGET_DIR)/usr/lib/libgmp.so
-#GCC_STAGING_PREREQ+=$(TOOL_BUILD_DIR)/mpfr/lib/libmpfr.so
+#GCC_STAGING_PREREQ+=$(TOOLCHAIN_DIR)/mpfr/lib/libmpfr.so
 GCC_WITH_TARGET_GMP=--with-gmp="$(GMP_TARGET_DIR)"
 GCC_WITH_TARGET_MPFR=--with-mpfr="$(MPFR_TARGET_DIR)"
 endif
@@ -135,6 +135,12 @@ ifeq ($(BR2_GCC_SHARED_LIBGCC),y)
 GCC_SHARED_LIBGCC:=--enable-shared
 else
 GCC_SHARED_LIBGCC:=--disable-shared
+endif
+
+ifeq ($(BR2_GCC_ENABLE_TLS),y)
+GCC_TLS:=--enable-tls
+else
+GCC_TLS:=--disable-tls
 endif
 
 ifeq ($(BR2_KERNEL_HURD),y)
@@ -160,9 +166,9 @@ $(DL_DIR)/$(GCC_SOURCE):
 
 gcc-unpacked: $(GCC_DIR)/.patched
 $(GCC_DIR)/.unpacked: $(DL_DIR)/$(GCC_SOURCE)
-	mkdir -p $(TOOL_BUILD_DIR)
+	mkdir -p $(TOOLCHAIN_DIR)
 	rm -rf $(GCC_DIR)
-	$(GCC_CAT) $(DL_DIR)/$(GCC_SOURCE) | tar -C $(TOOL_BUILD_DIR) $(TAR_OPTIONS) -
+	$(GCC_CAT) $(DL_DIR)/$(GCC_SOURCE) | tar -C $(TOOLCHAIN_DIR) $(TAR_OPTIONS) -
 	$(CONFIG_UPDATE) $(@D)
 	touch $@
 
@@ -196,20 +202,18 @@ endif
 # build the first pass gcc compiler
 #
 #############################################################
-GCC_BUILD_DIR1:=$(TOOL_BUILD_DIR)/gcc-$(GCC_VERSION)-initial
+GCC_BUILD_DIR1:=$(TOOLCHAIN_DIR)/gcc-$(GCC_VERSION)-initial
 
 
 # The --without-headers option stopped working with gcc 3.0 and has never been
 # fixed, so we need to actually have working C library header files prior to
 # the step or libgcc will not build...
-		#####MAKEINFO=true
 
 $(GCC_BUILD_DIR1)/.configured: $(GCC_DIR)/.patched
 	mkdir -p $(GCC_BUILD_DIR1)
 	(cd $(GCC_BUILD_DIR1); rm -rf config.cache; \
-		$(HOST_CONFIGURE_OPTS) CFLAGS='  -DIN_GCC  -DCROSS_DIRECTORY_STRUCTURE  -W  -Wall  -Wwrite-strings  -Wstrict-prototypes  -Wmissing-prototypes  -Wold-style-definition  -Wmissing-format-attribute  -pedantic  -Wno-long-long  -Wno-variadic-macros  -Wno-overlength-strings     -std=gnu99 -fgnu89-inline  '   \
-		MAKEINFO=missing \
-		$(GCC_DIR)/configure --disable-libmudflap --disable-libgomp \
+		$(HOST_CONFIGURE_OPTS) \
+		$(GCC_DIR)/configure $(QUIET) \
 		--prefix=$(STAGING_DIR)/usr \
 		--build=$(GNU_HOST_NAME) \
 		--host=$(GNU_HOST_NAME) \
@@ -221,7 +225,7 @@ $(GCC_BUILD_DIR1)/.configured: $(GCC_DIR)/.patched
 		--with-gnu-ld \
 		--disable-shared \
 		--disable-libssp \
-		--disable-tls \
+		$(GCC_TLS) \
 		$(GCC_WITH_HOST_GMP) \
 		$(GCC_WITH_HOST_MPFR) \
 		$(DISABLE_NLS) \
@@ -276,7 +280,7 @@ gcc_initial-dirclean:
 # affect gcc-target. However, I haven't tested gcc-target yet so no
 # guarantees. mjn3
 
-GCC_BUILD_DIR2:=$(TOOL_BUILD_DIR)/gcc-$(GCC_VERSION)-final
+GCC_BUILD_DIR2:=$(TOOLCHAIN_DIR)/gcc-$(GCC_VERSION)-final
 $(GCC_BUILD_DIR2)/.configured: $(GCC_SRC_DIR)/.patched $(GCC_STAGING_PREREQ)
 	mkdir -p $(GCC_BUILD_DIR2)
 	# Important! Required for limits.h to be fixed.
@@ -284,9 +288,8 @@ $(GCC_BUILD_DIR2)/.configured: $(GCC_SRC_DIR)/.patched $(GCC_STAGING_PREREQ)
 	#-rmdir $(STAGING_DIR)/usr/$(REAL_GNU_TARGET_NAME)/lib
 	#ln -snf ../lib $(STAGING_DIR)/usr/$(REAL_GNU_TARGET_NAME)/lib
 	(cd $(GCC_BUILD_DIR2); rm -rf config.cache; \
-		$(HOST_CONFIGURE_OPTS) CFLAGS='  -DIN_GCC  -DCROSS_DIRECTORY_STRUCTURE  -W  -Wall  -Wwrite-strings  -Wstrict-prototypes  -Wmissing-prototypes  -Wold-style-definition  -Wmissing-format-attribute  -pedantic  -Wno-long-long  -Wno-variadic-macros  -Wno-overlength-strings     -std=gnu99 -fgnu89-inline  '   \
-		MAKEINFO=missing \
-		$(GCC_SRC_DIR)/configure --disable-libmudflap --disable-libgomp \
+		$(HOST_CONFIGURE_OPTS) \
+		$(GCC_SRC_DIR)/configure $(QUIET) \
 		--prefix=$(BR2_SYSROOT_PREFIX)/usr \
 		--build=$(GNU_HOST_NAME) \
 		--host=$(GNU_HOST_NAME) \
@@ -298,7 +301,7 @@ $(GCC_BUILD_DIR2)/.configured: $(GCC_SRC_DIR)/.patched $(GCC_STAGING_PREREQ)
 		--enable-target-optspace \
 		--with-gnu-ld \
 		--disable-libssp \
-		--disable-tls \
+		$(GCC_TLS) \
 		$(GCC_SHARED_LIBGCC) \
 		$(GCC_WITH_HOST_GMP) \
 		$(GCC_WITH_HOST_MPFR) \
@@ -355,7 +358,7 @@ endif
 	mkdir -p $(TARGET_DIR)/usr/lib $(TARGET_DIR)/usr/sbin
 	touch $@
 
-$(PROJECT_BUILD_DIR)/autotools-stamps/gcc_libs_target_installed: $(GCC_BUILD_DIR2)/.installed
+$(STAMP_DIR)/gcc_libs_target_installed: $(GCC_BUILD_DIR2)/.installed
 ifeq ($(BR2_GCC_SHARED_LIBGCC),y)
 	# These are in /lib, so...
 	rm -rf $(TARGET_DIR)/usr/lib/libgcc_s*.so*
@@ -384,7 +387,7 @@ endif
 cross_compiler:=$(STAGING_DIR)/usr/bin/$(REAL_GNU_TARGET_NAME)-gcc
 cross_compiler gcc: uclibc-configured binutils gcc_initial \
 	$(LIBFLOAT_TARGET) uclibc $(GCC_BUILD_DIR2)/.installed \
-	$(PROJECT_BUILD_DIR)/autotools-stamps/gcc_libs_target_installed \
+	$(STAMP_DIR)/gcc_libs_target_installed \
 	$(GCC_TARGETS)
 
 gcc-source: $(DL_DIR)/$(GCC_SOURCE)
@@ -406,17 +409,16 @@ gcc-dirclean: gcc_initial-dirclean
 #############################################################
 GCC_BUILD_DIR3:=$(BUILD_DIR)/gcc-$(GCC_VERSION)-target
 
-$(GCC_BUILD_DIR3)/.prepared: $(PROJECT_BUILD_DIR)/autotools-stamps/gcc_libs_target_installed $(GCC_TARGET_PREREQ)
+$(GCC_BUILD_DIR3)/.prepared: $(STAMP_DIR)/gcc_libs_target_installed $(GCC_TARGET_PREREQ)
 	mkdir -p $(GCC_BUILD_DIR3)
 	touch $@
 
 $(GCC_BUILD_DIR3)/.configured: $(GCC_BUILD_DIR3)/.prepared
 	(cd $(GCC_BUILD_DIR3); rm -rf config.cache; \
-		$(TARGET_CONFIGURE_OPTS) CFLAGS='  -DIN_GCC  -DCROSS_DIRECTORY_STRUCTURE  -W  -Wall  -Wwrite-strings  -Wstrict-prototypes  -Wmissing-prototypes  -Wold-style-definition  -Wmissing-format-attribute  -pedantic  -Wno-long-long  -Wno-variadic-macros  -Wno-overlength-strings     -std=gnu99 -fgnu89-inline  '   \
-		MAKEINFO=missing \
+		$(TARGET_CONFIGURE_OPTS) \
 		$(TARGET_CONFIGURE_ARGS) \
 		$(TARGET_GCC_FLAGS) \
-		$(GCC_SRC_DIR)/configure --disable-libmudflap --disable-libgomp \
+		$(GCC_SRC_DIR)/configure $(QUIET) \
 		--prefix=/usr \
 		--build=$(GNU_HOST_NAME) \
 		--host=$(REAL_GNU_TARGET_NAME) \
@@ -426,7 +428,7 @@ $(GCC_BUILD_DIR3)/.configured: $(GCC_BUILD_DIR3)/.prepared
 		--disable-__cxa_atexit \
 		--with-gnu-ld \
 		--disable-libssp \
-		--disable-tls \
+		$(GCC_TLS) \
 		$(GCC_SHARED_LIBGCC) \
 		$(GCC_WITH_TARGET_GMP) \
 		$(GCC_WITH_TARGET_MPFR) \

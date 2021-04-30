@@ -12,7 +12,7 @@ SHARED_MIME_INFO_INSTALL_TARGET = NO
 
 SHARED_MIME_INFO_AUTORECONF = NO
 SHARED_MIME_INFO_CONF_ENV = XMLLINT=$(HOST_DIR)/usr/bin/xmllint
-SHARED_MIME_INFO_DEPENDENCIES = uclibc host-pkgconfig host-libglib2 host-libxml2
+SHARED_MIME_INFO_DEPENDENCIES = host-pkgconfig host-libglib2 host-libxml2 libxml2 libglib2
 
 SHARED_MIME_INFO_CONF_OPT = --disable-update-mimedb
 
@@ -38,7 +38,7 @@ $(STAMP_DIR)/host_shared-mime-info_configured: $(STAMP_DIR)/host_shared-mime-inf
 		$(HOST_CONFIGURE_OPTS) \
 		CFLAGS="$(HOST_CFLAGS)" \
 		LDFLAGS="$(HOST_LDFLAGS)" \
-		./configure \
+		./configure $(QUIET) \
 		--prefix="$(HOST_DIR)/usr" \
 		--sysconfdir="$(HOST_DIR)/etc" \
 		--disable-update-mimedb \

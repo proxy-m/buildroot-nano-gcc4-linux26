@@ -30,7 +30,7 @@ $(XDATA_XCURSOR_THEMES_DIR)/.configured: $(XDATA_XCURSOR_THEMES_DIR)/.patched
 		LDFLAGS="$(TARGET_LDFLAGS)" \
 		STAGING_DIR=$(STAGING_DIR) \
  \
-		./configure \
+		./configure $(QUIET) \
 		--target=$(GNU_TARGET_NAME) \
 		--host=$(GNU_TARGET_NAME) \
 		--build=$(GNU_HOST_NAME) \
@@ -68,7 +68,7 @@ xdata_xcursor-themes-dirclean:
 	rm -rf $(XDATA_XCURSOR_THEMES_DIR)
 
 xdata_xcursor-themes-depends:
-xdata_xcursor-themes-source: $(XDATA_XCURSOR_THEMES_DIR)/.extracted
+xdata_xcursor-themes-source: $(DL_DIR)/$(XDATA_XCURSOR_THEMES_SOURCE)
 xdata_xcursor-themes-patch: $(XDATA_XCURSOR_THEMES_DIR)/.patched
 xdata_xcursor-themes-configure: $(XDATA_XCURSOR_THEMES_DIR)/.configured
 xdata_xcursor-themes-build: $(XDATA_XCURSOR_THEMES_DIR)/.built

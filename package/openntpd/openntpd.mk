@@ -23,7 +23,7 @@ $(OPENNTPD_DIR)/.configured: $(OPENNTPD_DIR)/.source
 	(cd $(OPENNTPD_DIR); rm -f config.cache; \
 		$(TARGET_CONFIGURE_OPTS) \
 		$(TARGET_CONFIGURE_ARGS) \
-		./configure \
+		./configure $(QUIET) \
 		--target=$(GNU_TARGET_NAME) \
 		--host=$(GNU_TARGET_NAME) \
 		--build=$(GNU_HOST_NAME) \
@@ -58,7 +58,7 @@ ifneq ($(BR2_HAVE_MANPAGES),y)
 	rm -Rf $(TARGET_DIR)/usr/share/man
 endif
 
-ntpd: uclibc $(TARGET_DIR)/$(OPENNTPD_TARGET_BINARY)
+ntpd: $(TARGET_DIR)/$(OPENNTPD_TARGET_BINARY)
 
 ntpd-source: $(DL_DIR)/$(OPENNTPD_SOURCE)
 

@@ -20,7 +20,7 @@ $(LIBRAW1394_DIR)/.configured: $(LIBRAW1394_DIR)/.unpacked
 	(cd $(LIBRAW1394_DIR); rm -rf config.cache; \
 		$(TARGET_CONFIGURE_OPTS) \
 		$(TARGET_CONFIGURE_ARGS) \
-		./configure \
+		./configure $(QUIET) \
 		--target=$(GNU_TARGET_NAME) \
 		--host=$(GNU_TARGET_NAME) \
 		--build=$(GNU_HOST_NAME) \
@@ -49,7 +49,7 @@ $(STAGING_DIR)/usr/lib/libraw1394.so: $(LIBRAW1394_DIR)/.compiled
 $(TARGET_DIR)/usr/lib/libraw1394.so: $(STAGING_DIR)/usr/lib/libraw1394.so
 	cp -dpf $(STAGING_DIR)/usr/lib/libraw1394.so* $(TARGET_DIR)/usr/lib/
 
-libraw1394: uclibc $(TARGET_DIR)/usr/lib/libraw1394.so
+libraw1394: $(TARGET_DIR)/usr/lib/libraw1394.so
 
 libraw1394-source: $(DL_DIR)/$(LIBRAW1394_SOURCE)
 

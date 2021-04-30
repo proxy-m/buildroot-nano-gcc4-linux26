@@ -33,7 +33,7 @@ $(NTP_DIR)/.configured: $(NTP_DIR)/.patched
 		$(TARGET_CONFIGURE_OPTS) \
 		$(TARGET_CONFIGURE_ARGS) \
 		ac_cv_lib_md5_MD5Init=no \
-		./configure \
+		./configure $(QUIET) \
 		--target=$(GNU_TARGET_NAME) \
 		--host=$(GNU_TARGET_NAME) \
 		--build=$(GNU_HOST_NAME) \
@@ -72,7 +72,7 @@ endif
 		install -m 644 package/ntp/ntpd.etc.default $(TARGET_DIR)/etc/default/ntpd ; \
 	fi
 
-ntp: uclibc $(TARGET_DIR)/$(NTP_TARGET_BINARY)
+ntp: $(TARGET_DIR)/$(NTP_TARGET_BINARY)
 
 ntp-clean:
 	rm -f $(TARGET_DIR)/usr/sbin/ntpd $(TARGET_DIR)/usr/bin/sntp \

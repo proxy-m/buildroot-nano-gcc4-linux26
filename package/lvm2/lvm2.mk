@@ -66,7 +66,7 @@ $(LVM2_DIR)/.configured: $(LVM2_DIR)/.unpacked
 		ac_cv_func_malloc_0_nonnull=yes \
 		ac_cv_func_calloc_0_nonnull=yes \
 		ac_cv_func_realloc_0_nonnull=yes \
-		./configure \
+		./configure $(QUIET) \
 		--target=$(GNU_TARGET_NAME) \
 		--host=$(GNU_TARGET_NAME) \
 		--build=$(GNU_HOST_NAME) \
@@ -97,9 +97,9 @@ $(LVM2_TARGET_LIBS): $(LVM2_DIR)/.built
 
 
 ifeq ($(BR2_PACKAGE_LVM2_DMSETUP_ONLY),y)
-lvm2: uclibc $(LVM2_TARGET_DMSETUP_SBINS) $(LVM2_TARGET_LIBS)
+lvm2: $(LVM2_TARGET_DMSETUP_SBINS) $(LVM2_TARGET_LIBS)
 else
-lvm2: uclibc $(LVM2_TARGET_SBINS) $(LVM2_TARGET_DMSETUP_SBINS) $(LVM2_TARGET_LIBS)
+lvm2: $(LVM2_TARGET_SBINS) $(LVM2_TARGET_DMSETUP_SBINS) $(LVM2_TARGET_LIBS)
 endif
 
 

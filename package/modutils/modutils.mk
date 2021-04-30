@@ -8,7 +8,7 @@ MODUTILS_SOURCE=modutils-$(MODUTILS_VERSION).tar.bz2
 MODUTILS_CAT:=$(BZCAT)
 MODUTILS_SITE=$(BR2_KERNEL_MIRROR)/linux/utils/kernel/modutils/v2.4/
 MODUTILS_DIR1=$(BUILD_DIR)/modutils-$(MODUTILS_VERSION)
-MODUTILS_DIR2=$(TOOL_BUILD_DIR)/modutils-$(MODUTILS_VERSION)
+MODUTILS_DIR2=$(TOOLCHAIN_DIR)/modutils-$(MODUTILS_VERSION)
 MODUTILS_BINARY=depmod
 MODUTILS_TARGET_BINARY=sbin/$(MODUTILS_BINARY)
 
@@ -33,7 +33,7 @@ $(MODUTILS_DIR1)/.configured: $(MODUTILS_DIR1)/.source
 		$(TARGET_CONFIGURE_OPTS) \
 		$(TARGET_CONFIGURE_ARGS) \
 		INSTALL=$(MODUTILS_DIR1)/install-sh \
-		./configure \
+		./configure $(QUIET) \
 		--target=$(GNU_TARGET_NAME) \
 		--host=$(GNU_TARGET_NAME) \
 		--build=$(GNU_HOST_NAME) \
@@ -61,7 +61,7 @@ $(TARGET_DIR)/sbin/rmmod: $(STAGING_DIR)/$(MODUTILS_TARGET_BINARY)
 	ln -s insmod $(TARGET_DIR)/sbin/modprobe
 	ln -s insmod $(TARGET_DIR)/sbin/rmmod
 
-modutils: uclibc $(TARGET_DIR)/sbin/rmmod
+modutils: $(TARGET_DIR)/sbin/rmmod
 
 modutils-source: $(DL_DIR)/$(MODUTILS_SOURCE)
 
@@ -95,14 +95,14 @@ DEPMOD_EXTRA_STUFF=CFLAGS=-D__MIPSEL__
 endif
 
 $(MODUTILS_DIR2)/.source: $(DL_DIR)/$(MODUTILS_SOURCE)
-	$(MODUTILS_CAT) $(DL_DIR)/$(MODUTILS_SOURCE) | tar -C $(TOOL_BUILD_DIR) -xvf -
+	$(MODUTILS_CAT) $(DL_DIR)/$(MODUTILS_SOURCE) | tar -C $(TOOLCHAIN_DIR) -xvf -
 	toolchain/patch-kernel.sh $(MODUTILS_DIR2) \
 		package/modutils \*.patch
 	touch $@
 
 $(MODUTILS_DIR2)/.configured: $(MODUTILS_DIR2)/.source
 	(cd $(MODUTILS_DIR2); \
-		./configure $(DEPMOD_EXTRA_STUFF) \
+		./configure $(QUIET) $(DEPMOD_EXTRA_STUFF) \
 		--target=$(GNU_TARGET_NAME) \
 		--host=$(GNU_HOST_NAME) \
 		--build=$(GNU_HOST_NAME) \
@@ -120,7 +120,7 @@ $(STAGING_DIR)/bin/$(GNU_TARGET_NAME)-depmod: $(MODUTILS_DIR2)/$(MODUTILS_BINARY
 	cp $(MODUTILS_DIR2)/$(MODUTILS_BINARY) $(STAGING_DIR)/bin/$(GNU_TARGET_NAME)-depmod
 	touch -c $@
 
-cross-depmod: uclibc $(STAGING_DIR)/bin/$(GNU_TARGET_NAME)-depmod
+cross-depmod: $(STAGING_DIR)/bin/$(GNU_TARGET_NAME)-depmod
 
 cross-depmod-source: $(DL_DIR)/$(MODUTILS_SOURCE)
 

@@ -41,7 +41,7 @@ $(LIBSYSFS_DIR)/.configured: $(LIBSYSFS_DIR)/.unpacked
 	(cd $(LIBSYSFS_DIR); rm -rf config.cache; \
 		$(TARGET_CONFIGURE_OPTS) \
 		$(TARGET_CONFIGURE_ARGS) \
-		./configure \
+		./configure $(QUIET) \
 		--target=$(GNU_TARGET_NAME) \
 		--host=$(GNU_TARGET_NAME) \
 		--build=$(GNU_HOST_NAME) \
@@ -64,7 +64,7 @@ $(TARGET_DIR)/usr/lib/libsysfs.so: $(STAGING_DIR)/usr/lib/libsysfs.so
 	cp -dpf $(STAGING_DIR)/usr/lib/libsysfs.so* $(TARGET_DIR)/usr/lib/
 	-$(STRIPCMD) $(STRIP_STRIP_UNNEEDED) $(TARGET_DIR)/usr/lib/libsysfs.so
 
-libsysfs: uclibc $(TARGET_DIR)/usr/lib/libsysfs.so
+libsysfs: $(TARGET_DIR)/usr/lib/libsysfs.so
 
 libsysfs-clean:
 	-$(MAKE) -C $(LIBSYSFS_DIR) clean

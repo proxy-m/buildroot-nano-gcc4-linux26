@@ -29,7 +29,7 @@ $(DASH_DIR)/.configured: $(DASH_DIR)/.unpacked
 	(cd $(DASH_DIR); rm -rf config.cache; \
 		$(TARGET_CONFIGURE_OPTS) \
 		$(TARGET_CONFIGURE_ARGS) \
-		./configure \
+		./configure $(QUIET) \
 		--target=$(GNU_TARGET_NAME) \
 		--host=$(GNU_TARGET_NAME) \
 		--build=$(GNU_HOST_NAME) \
@@ -54,7 +54,7 @@ $(TARGET_DIR)/$(DASH_TARGET_BINARY): $(DASH_DIR)/$(DASH_BINARY)
 	cp -a $(DASH_DIR)/$(DASH_BINARY) $(TARGET_DIR)/$(DASH_TARGET_BINARY)
 	touch -c $(TARGET_DIR)/$(DASH_TARGET_BINARY)
 
-dash: uclibc $(TARGET_DIR)/$(DASH_TARGET_BINARY)
+dash: $(TARGET_DIR)/$(DASH_TARGET_BINARY)
 
 dash-clean:
 	$(MAKE1) CC=$(TARGET_CC) -C $(DASH_DIR) clean

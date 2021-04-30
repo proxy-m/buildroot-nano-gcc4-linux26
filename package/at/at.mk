@@ -25,7 +25,7 @@ $(AT_DIR)/.configured: $(AT_DIR)/.unpacked
 	(cd $(AT_DIR); rm -rf config.cache; \
 		$(TARGET_CONFIGURE_OPTS) \
 		$(TARGET_CONFIGURE_ARGS) \
-		./configure \
+		./configure $(QUIET) \
 		--target=$(GNU_TARGET_NAME) \
 		--host=$(GNU_TARGET_NAME) \
 		--build=$(GNU_HOST_NAME) \
@@ -49,14 +49,14 @@ $(TARGET_DIR)/$(AT_TARGET_SCRIPT): $(AT_DIR)/$(AT_BINARY)
 	# Use fakeroot to pretend to do 'make install' as root
 	echo '$(MAKE) DAEMON_USERNAME=root DAEMON_GROUPNAME=root ' \
 	 '$(TARGET_CONFIGURE_OPTS) DESTDIR=$(TARGET_DIR) -C $(AT_DIR) install' \
-		> $(PROJECT_BUILD_DIR)/.fakeroot.at
+		> $(BUILD_DIR)/.fakeroot.at
 ifneq ($(BR2_HAVE_MANPAGES),y)
-	echo 'rm -rf $(TARGET_DIR)/usr/man' >> $(PROJECT_BUILD_DIR)/.fakeroot.at
+	echo 'rm -rf $(TARGET_DIR)/usr/man' >> $(BUILD_DIR)/.fakeroot.at
 endif
-	echo 'rm -rf $(TARGET_DIR)/usr/doc/at' >> $(PROJECT_BUILD_DIR)/.fakeroot.at
+	echo 'rm -rf $(TARGET_DIR)/usr/doc/at' >> $(BUILD_DIR)/.fakeroot.at
 	$(INSTALL) -m 0755 -D $(AT_DIR)/debian/rc $(TARGET_DIR)/$(AT_TARGET_SCRIPT)
 
-at: uclibc host-fakeroot $(TARGET_DIR)/$(AT_TARGET_SCRIPT)
+at: host-fakeroot $(TARGET_DIR)/$(AT_TARGET_SCRIPT)
 
 at-clean:
 	-$(MAKE) DESTDIR=$(TARGET_DIR) CC=$(TARGET_CC) -C $(AT_DIR) uninstall

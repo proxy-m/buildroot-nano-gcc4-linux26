@@ -7,7 +7,7 @@ FILE_VERSION:=4.26
 FILE_SOURCE:=file-$(FILE_VERSION).tar.gz
 FILE_SITE:=ftp://ftp.astron.com/pub/file/
 FILE_SOURCE_DIR:=$(BUILD_DIR)/file-$(FILE_VERSION)
-FILE_DIR1:=$(TOOL_BUILD_DIR)/file-$(FILE_VERSION)-host
+FILE_DIR1:=$(TOOLCHAIN_DIR)/file-$(FILE_VERSION)-host
 FILE_DIR2:=$(BUILD_DIR)/file-$(FILE_VERSION)-target
 FILE_CAT:=$(ZCAT)
 FILE_BINARY:=src/file
@@ -28,16 +28,16 @@ $(FILE_DIR1)/.configured: $(FILE_SOURCE_DIR)/.unpacked
 	mkdir -p $(FILE_DIR1)
 	(cd $(FILE_DIR1); rm -rf config.cache; \
 		CC="$(HOSTCC)" \
-		$(FILE_SOURCE_DIR)/configure \
+		$(FILE_SOURCE_DIR)/configure $(QUIET) \
 		--prefix=$(FILE_DIR1)/install \
 	)
 	touch $@
 
-$(TOOL_BUILD_DIR)/bin/file: $(FILE_DIR1)/.configured
+$(TOOLCHAIN_DIR)/bin/file: $(FILE_DIR1)/.configured
 	$(MAKE) -C $(FILE_DIR1) install
-	ln -sf $(FILE_DIR1)/install/bin/file $(TOOL_BUILD_DIR)/bin/file
+	ln -sf $(FILE_DIR1)/install/bin/file $(TOOLCHAIN_DIR)/bin/file
 
-host-file: $(TOOL_BUILD_DIR)/bin/file
+host-file: $(TOOLCHAIN_DIR)/bin/file
 
 host-file-clean:
 	-$(MAKE) -C $(FILE_DIR1) clean
@@ -62,7 +62,7 @@ $(FILE_DIR2)/.configured: $(FILE_SOURCE_DIR)/.unpacked
 	(cd $(FILE_DIR2); rm -rf config.cache; \
 		$(TARGET_CONFIGURE_OPTS) \
 		$(TARGET_CONFIGURE_ARGS) \
-		$(FILE_SOURCE_DIR)/configure \
+		$(FILE_SOURCE_DIR)/configure $(QUIET) \
 		--target=$(GNU_TARGET_NAME) \
 		--host=$(GNU_TARGET_NAME) \
 		--build=$(GNU_HOST_NAME) \
@@ -84,7 +84,7 @@ $(FILE_DIR2)/.configured: $(FILE_SOURCE_DIR)/.unpacked
 	)
 	touch $@
 
-$(FILE_DIR2)/$(FILE_BINARY): $(FILE_DIR2)/.configured $(TOOL_BUILD_DIR)/bin/file
+$(FILE_DIR2)/$(FILE_BINARY): $(FILE_DIR2)/.configured $(TOOLCHAIN_DIR)/bin/file
 	ln -sf $(FILE_DIR1)/install/bin/file $(FILE_DIR2)/magic/file
 	$(MAKE) $(TARGET_CONFIGURE_OPTS) LDFLAGS="-static" -C $(FILE_DIR2)
 
@@ -103,7 +103,7 @@ endif
 	rm -f $(TARGET_DIR)/lib/libmagic.la
 	mv $(TARGET_DIR)/usr/include/magic.h $(STAGING_DIR)/usr/include
 
-file: zlib uclibc $(TARGET_DIR)/$(FILE_TARGET_BINARY)
+file: zlib $(TARGET_DIR)/$(FILE_TARGET_BINARY)
 
 file-clean:
 	-$(MAKE) DESTDIR=$(TARGET_DIR) CC=$(TARGET_CC) -C $(FILE_DIR2) uninstall

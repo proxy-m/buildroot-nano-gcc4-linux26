@@ -8,7 +8,7 @@ MODULE_INIT_TOOLS_SOURCE=module-init-tools-$(MODULE_INIT_TOOLS_VERSION).tar.bz2
 MODULE_INIT_TOOLS_CAT:=$(BZCAT)
 MODULE_INIT_TOOLS_SITE=$(BR2_KERNEL_MIRROR)/linux/utils/kernel/module-init-tools/
 MODULE_INIT_TOOLS_DIR=$(BUILD_DIR)/module-init-tools-$(MODULE_INIT_TOOLS_VERSION)
-MODULE_INIT_TOOLS_DIR2=$(TOOL_BUILD_DIR)/module-init-tools-$(MODULE_INIT_TOOLS_VERSION)
+MODULE_INIT_TOOLS_DIR2=$(TOOLCHAIN_DIR)/module-init-tools-$(MODULE_INIT_TOOLS_VERSION)
 MODULE_INIT_TOOLS_BINARY=depmod
 MODULE_INIT_TOOLS_TARGET_BINARY=$(TARGET_DIR)/sbin/$(MODULE_INIT_TOOLS_BINARY)
 
@@ -28,7 +28,7 @@ $(MODULE_INIT_TOOLS_DIR)/.configured: $(MODULE_INIT_TOOLS_DIR)/.unpacked
 		$(TARGET_CONFIGURE_OPTS) \
 		$(TARGET_CONFIGURE_ARGS) \
 		INSTALL=$(MODULE_INIT_TOOLS_DIR)/install-sh \
-		./configure \
+		./configure $(QUIET) \
 		--target=$(GNU_TARGET_NAME) \
 		--host=$(GNU_TARGET_NAME) \
 		--build=$(GNU_HOST_NAME) \
@@ -60,7 +60,7 @@ endif
 	rm -f $(TARGET_DIR)/sbin/insmod.static
 	touch -c $(MODULE_INIT_TOOLS_TARGET_BINARY)
 
-module-init-tools: uclibc $(MODULE_INIT_TOOLS_TARGET_BINARY)
+module-init-tools: $(MODULE_INIT_TOOLS_TARGET_BINARY)
 
 module-init-tools-clean:
 	$(MAKE) prefix=$(TARGET_DIR)/usr -C $(MODULE_INIT_TOOLS_DIR) uninstall
@@ -73,7 +73,7 @@ module-init-tools-dirclean:
 
 
 $(MODULE_INIT_TOOLS_DIR2)/.source: $(DL_DIR)/$(MODULE_INIT_TOOLS_SOURCE)
-	$(MODULE_INIT_TOOLS_CAT) $(DL_DIR)/$(MODULE_INIT_TOOLS_SOURCE) | tar -C $(TOOL_BUILD_DIR) -xvf -
+	$(MODULE_INIT_TOOLS_CAT) $(DL_DIR)/$(MODULE_INIT_TOOLS_SOURCE) | tar -C $(TOOLCHAIN_DIR) -xvf -
 	toolchain/patch-kernel.sh $(MODULE_INIT_TOOLS_DIR2) package/module-init-tools \*.patch
 	$(CONFIG_UPDATE) $(MODULE_INIT_TOOLS_DIR2)
 	touch $(MODULE_INIT_TOOLS_DIR2)/.source
@@ -81,7 +81,7 @@ $(MODULE_INIT_TOOLS_DIR2)/.source: $(DL_DIR)/$(MODULE_INIT_TOOLS_SOURCE)
 $(MODULE_INIT_TOOLS_DIR2)/.configured: $(MODULE_INIT_TOOLS_DIR2)/.source
 	(cd $(MODULE_INIT_TOOLS_DIR2); \
 		CC="$(HOSTCC)" \
-		./configure \
+		./configure $(QUIET) \
 		--target=$(GNU_TARGET_NAME) \
 		--host=$(GNU_HOST_NAME) \
 		--build=$(GNU_HOST_NAME) \

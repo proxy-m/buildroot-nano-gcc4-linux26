@@ -11,8 +11,6 @@ ifeq ($(BR2_ENABLE_DEBUG),y) # install-exec doesn't install aclocal stuff
 LIBTOOL_INSTALL_TARGET_OPT = DESTDIR=$(TARGET_DIR) install
 endif
 
-LIBTOOL_DEPENDENCIES = uclibc
-
 $(eval $(call AUTOTARGETS,package,libtool))
 
 # libtool for the host
@@ -36,7 +34,7 @@ $(STAMP_DIR)/host_libtool_configured: $(STAMP_DIR)/host_libtool_unpacked
 		$(HOST_CONFIGURE_OPTS) \
 		CFLAGS="$(HOST_CFLAGS)" \
 		LDFLAGS="$(HOST_LDFLAGS)" \
-		./configure \
+		./configure $(QUIET) \
 		--prefix="$(HOST_DIR)/usr" \
 		--sysconfdir="$(HOST_DIR)/etc" \
 		--disable-static \

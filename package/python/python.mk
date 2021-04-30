@@ -10,7 +10,7 @@ PYTHON_SITE:=http://python.org/ftp/python/$(PYTHON_VERSION)
 PYTHON_DIR:=$(BUILD_DIR)/Python-$(PYTHON_VERSION)
 PYTHON_CAT:=$(BZCAT)
 PYTHON_BINARY:=python
-PYTHON_TARGET_BINARY:=usr/bin/python
+PYTHON_TARGET_BINARY:=usr/bin/python$(PYTHON_VERSION_MAJOR)
 PYTHON_DEPS:=
 PYTHON_SITE_PACKAGE_DIR=$(TARGET_DIR)/usr/lib/python$(PYTHON_VERSION_MAJOR)/site-packages
 
@@ -84,7 +84,7 @@ $(PYTHON_DIR)/.patched: $(PYTHON_DIR)/.unpacked
 $(PYTHON_DIR)/.hostpython: $(PYTHON_DIR)/.patched
 	(cd $(PYTHON_DIR); rm -rf config.cache; \
 		CC="$(HOSTCC)" OPT="-O2" \
-		./configure \
+		./configure $(QUIET) \
 		--with-cxx=no \
 		$(DISABLE_NLS) && \
 		$(MAKE) python Parser/pgen && \
@@ -99,7 +99,7 @@ $(PYTHON_DIR)/.configured: $(PYTHON_DIR)/.hostpython
 		$(TARGET_CONFIGURE_OPTS) \
 		$(TARGET_CONFIGURE_ARGS) \
 		OPT="$(TARGET_CFLAGS)" \
-		./configure \
+		./configure $(QUIET) \
 		--target=$(GNU_TARGET_NAME) \
 		--host=$(GNU_TARGET_NAME) \
 		--build=$(GNU_HOST_NAME) \
@@ -155,7 +155,6 @@ endif
 ifneq ($(BR2_PACKAGE_PYTHON_DEV),y)
 	rm -rf $(TARGET_DIR)/usr/include/python$(PYTHON_VERSION_MAJOR)
 	rm -rf $(TARGET_DIR)/usr/lib/python$(PYTHON_VERSION_MAJOR)/config
-	find $(TARGET_DIR)/usr/lib/ -name '*.py' -exec rm {} \;
 endif
 ifneq ($(BR2_PACKAGE_PYTHON_BSDDB),y)
 	rm -rf $(TARGET_DIR)/usr/lib/python$(PYTHON_VERSION_MAJOR)/bsddb
@@ -166,8 +165,9 @@ endif
 ifneq ($(BR2_PACKAGE_PYTHON_TKINTER),y)
 	rm -rf $(TARGET_DIR)/usr/lib/python$(PYTHON_VERSION_MAJOR)/lib-tk
 endif
+	touch -c $@
 
-python: uclibc $(PYTHON_DEPS) $(TARGET_DIR)/$(PYTHON_TARGET_BINARY)
+python: $(PYTHON_DEPS) $(TARGET_DIR)/$(PYTHON_TARGET_BINARY)
 
 python-clean:
 	-$(MAKE) -C $(PYTHON_DIR) distclean
@@ -186,7 +186,7 @@ LIBPYTHON_BINARY:=libpython$(PYTHON_VERSION_MAJOR).so
 libpython:	python $(TARGET_DIR)/usr/lib/$(LIBPYTHON_BINARY)
 
 
-$(STAGING_DIR)/usr/lib/libpython$(PYTHON_VERSION_MAJOR).so: $(TARGET_DIR)/$(PYTHON_TARGET_BINARY)
+$(STAGING_DIR)/usr/lib/$(LIBPYTHON_BINARY): $(TARGET_DIR)/$(PYTHON_TARGET_BINARY)
 		cp -dpr $(PYTHON_DIR)/$(LIBPYTHON_BINARY).* $(STAGING_DIR)/usr/lib
 		(\
 		cd $(STAGING_DIR)/usr/lib ; \

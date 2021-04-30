@@ -46,7 +46,7 @@ $(COREUTILS_DIR)/.configured: $(COREUTILS_DIR)/.unpacked
 		ac_cv_func_lstat_dereferences_slashed_symlink=yes \
 		ac_cv_func_lstat_empty_string_bug=no \
 		ac_cv_func_stat_empty_string_bug=no \
-		vb_cv_func_rename_trailing_slash_bug=no \
+		gl_cv_func_rename_trailing_slash_bug=no \
 		ac_cv_have_decl_nanosleep=yes \
 		jm_cv_func_nanosleep_works=yes \
 		gl_cv_func_working_utimes=yes \
@@ -84,7 +84,7 @@ $(COREUTILS_DIR)/.configured: $(COREUTILS_DIR)/.unpacked
 		jm_cv_func_working_re_compile_pattern=yes \
 		ac_use_included_regex=no \
 		gl_cv_c_restrict=no \
-		./configure \
+		./configure $(QUIET) \
 		--target=$(GNU_TARGET_NAME) \
 		--host=$(GNU_TARGET_NAME) \
 		--build=$(GNU_HOST_NAME) \
@@ -133,9 +133,9 @@ endif
 # If both coreutils and busybox are selected, make certain coreutils
 # wins the fight over who gets to have their utils actually installed.
 ifeq ($(BR2_PACKAGE_BUSYBOX),y)
-coreutils: uclibc busybox $(TARGET_DIR)/$(COREUTILS_TARGET_BINARY)
+coreutils: busybox $(TARGET_DIR)/$(COREUTILS_TARGET_BINARY)
 else
-coreutils: uclibc $(TARGET_DIR)/$(COREUTILS_TARGET_BINARY)
+coreutils: $(TARGET_DIR)/$(COREUTILS_TARGET_BINARY)
 endif
 
 # If both coreutils and busybox are selected, the corresponding applets

@@ -25,7 +25,7 @@ $(LIBID3TAG_DIR)/.configured: $(LIBID3TAG_DIR)/.unpacked
 	(cd $(LIBID3TAG_DIR); rm -rf config.cache; \
 		$(TARGET_CONFIGURE_OPTS) \
 		$(TARGET_CONFIGURE_ARGS) \
-		./configure \
+		./configure $(QUIET) \
 		--target=$(GNU_TARGET_NAME) \
 		--host=$(GNU_TARGET_NAME) \
 		--build=$(GNU_HOST_NAME) \
@@ -46,7 +46,7 @@ $(TARGET_DIR)/$(LIBID3TAG_TARGET_BIN): $(STAGING_DIR)/$(LIBID3TAG_TARGET_BIN)
 	cp -dpf $(STAGING_DIR)/usr/lib/libid3tag.so* $(TARGET_DIR)/usr/lib/
 	-$(STRIPCMD) $(STRIP_STRIP_UNNEEDED) $(TARGET_DIR)/usr/lib/libid3tag.so*
 
-libid3tag: uclibc zlib $(TARGET_DIR)/$(LIBID3TAG_TARGET_BIN)
+libid3tag: zlib $(TARGET_DIR)/$(LIBID3TAG_TARGET_BIN)
 
 libid3tag-source: $(DL_DIR)/$(LIBID3TAG_SOURCE)
 

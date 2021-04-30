@@ -28,7 +28,7 @@ $(LIBUNGIF_DIR)/.configured: $(LIBUNGIF_DIR)/.unpacked
 		$(TARGET_CONFIGURE_OPTS) \
 		CFLAGS="$(TARGET_CFLAGS)" \
 		LDFLAGS="$(TARGET_LDFLAGS)" \
-		./configure \
+		./configure $(QUIET) \
 		--target=$(GNU_TARGET_NAME) \
 		--host=$(GNU_TARGET_NAME) \
 		--build=$(GNU_HOST_NAME) \
@@ -51,7 +51,7 @@ $(TARGET_DIR)/$(LIBUNGIF_TARGET_BINARY): $(STAGING_DIR)/usr/lib/libungif.a
 	cp -dpf $(STAGING_DIR)/$(LIBUNGIF_TARGET_BINARY)* $(TARGET_DIR)/usr/lib/
 	-$(STRIPCMD) $(STRIP_STRIP_UNNEEDED) $(TARGET_DIR)/$(LIBUNGIF_TARGET_BINARY)*
 
-libungif: uclibc $(TARGET_DIR)/$(LIBUNGIF_TARGET_BINARY)
+libungif: $(TARGET_DIR)/$(LIBUNGIF_TARGET_BINARY)
 
 libungif-clean:
 	rm -f $(TARGET_DIR)/$(LIBUNGIF_TARGET_BINARY)*

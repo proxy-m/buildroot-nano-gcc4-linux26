@@ -22,7 +22,7 @@ $(NBD_DIR)/.configured: $(NBD_DIR)/.unpacked
 		$(TARGET_CONFIGURE_OPTS) \
 		$(TARGET_CONFIGURE_ARGS) \
 		CC=$(TARGET_CC) \
-		./configure \
+		./configure $(QUIET) \
 		--target=$(GNU_TARGET_NAME) \
 		--host=$(GNU_TARGET_NAME) \
 		--build=$(GNU_HOST_NAME) \
@@ -37,7 +37,7 @@ $(TARGET_DIR)/sbin/nbd-client: $(NBD_DIR)/nbd-client
 	cp $< $@
 	$(STRIPCMD) $@
 
-nbd: uclibc libglib2 $(TARGET_DIR)/sbin/nbd-client
+nbd: libglib2 $(TARGET_DIR)/sbin/nbd-client
 
 nbd-source: $(DL_DIR)/$(NBD_SOURCE)
 

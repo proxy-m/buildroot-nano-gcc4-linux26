@@ -24,7 +24,7 @@ $(ICU_DIR)/.unpacked: $(DL_DIR)/$(ICU_SOURCE)
 	touch $(ICU_DIR)/.unpacked
 
 $(ICU_HOST_DIR)/.configured: $(ICU_DIR)/.unpacked
-	(cd $(ICU_HOST_DIR); ./configure \
+	(cd $(ICU_HOST_DIR); ./configure $(QUIET) \
 		--prefix=/usr;);
 	touch $(ICU_HOST_DIR)/.configured
 
@@ -33,7 +33,7 @@ $(ICU_DIR)/.configured: $(ICU_HOST_DIR)/.configured
 		$(TARGET_CONFIGURE_OPTS) \
 		$(TARGET_CONFIGURE_ARGS) \
 		CXX=$(TARGET_CXX) \
-		./configure \
+		./configure $(QUIET) \
 		--target=$(GNU_TARGET_NAME) \
 		--host=$(GNU_TARGET_NAME) \
 		--build=$(GNU_HOST_NAME) \
@@ -57,7 +57,7 @@ $(ICU_DIR)/.done: $(ICU_HOST_DIR)/.done
 	$(SED) "s,^default_prefix=.*,default_prefix=\'$(STAGING_DIR)/usr\',g" $(STAGING_DIR)/usr/bin/icu-config
 	touch $(ICU_DIR)/.done
 
-icu: uclibc $(ICU_DIR)/.done
+icu: $(ICU_DIR)/.done
 
 icu-clean:
 	rm -f $(TARGET_DIR)/bin/icu

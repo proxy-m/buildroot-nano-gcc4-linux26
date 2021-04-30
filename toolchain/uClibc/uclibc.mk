@@ -9,20 +9,18 @@ ifeq ($(BR2_TOOLCHAIN_SOURCE),y)
 # specifying UCLIBC_CONFIG_FILE on the command-line overrides the .config
 # setting.
 ifndef UCLIBC_CONFIG_FILE
-UCLIBC_CONFIG_FILE=$(subst ",, $(strip $(BR2_UCLIBC_CONFIG)))
-#")
+UCLIBC_CONFIG_FILE=$(call qstrip,$(BR2_UCLIBC_CONFIG))
 endif
 
-UCLIBC_VER:=$(subst ",,$(BR2_UCLIBC_VERSION_STRING))
-#")
+UCLIBC_VER:=$(call qstrip,$(BR2_UCLIBC_VERSION_STRING))
 
 UCLIBC_OFFICIAL_VERSION:=$(UCLIBC_VER)$(VENDOR_SUFFIX)$(VENDOR_UCLIBC_RELEASE)
 
 ifeq ($(BR2_UCLIBC_VERSION_SNAPSHOT),y)
 UCLIBC_SITE:=http://www.uclibc.org/downloads/snapshots
-UCLIBC_DIR:=$(TOOL_BUILD_DIR)/uClibc
+UCLIBC_DIR:=$(TOOLCHAIN_DIR)/uClibc
 else
-UCLIBC_DIR:=$(TOOL_BUILD_DIR)/uClibc-$(UCLIBC_OFFICIAL_VERSION)
+UCLIBC_DIR:=$(TOOLCHAIN_DIR)/uClibc-$(UCLIBC_OFFICIAL_VERSION)
 UCLIBC_SITE:=http://www.uclibc.org/downloads
 ifeq ($(BR2_TOOLCHAIN_EXTERNAL_SOURCE),y)
 UCLIBC_SITE:=$(VENDOR_SITE)
@@ -76,10 +74,8 @@ else
 UCLIBC_NOT_TARGET_ENDIAN:=LITTLE
 endif
 
-UCLIBC_ARM_TYPE:=CONFIG_$(strip $(subst ",, $(BR2_ARM_TYPE)))
-#"))
-UCLIBC_SPARC_TYPE:=CONFIG_SPARC_$(strip $(subst ",, $(BR2_SPARC_TYPE)))
-#"))
+UCLIBC_ARM_TYPE:=CONFIG_$(call qstrip,$(BR2_ARM_TYPE))
+UCLIBC_SPARC_TYPE:=CONFIG_SPARC_$(call qstrip,$(BR2_SPARC_TYPE))
 
 $(DL_DIR)/$(UCLIBC_SOURCE):
 	$(call DOWNLOAD,$(UCLIBC_SITE),$(UCLIBC_SOURCE))
@@ -98,9 +94,9 @@ endif
 
 uclibc-unpacked: $(UCLIBC_DIR)/.unpacked
 $(UCLIBC_DIR)/.unpacked: $(DL_DIR)/$(UCLIBC_SOURCE) $(UCLIBC_LOCALE_DATA)
-	mkdir -p $(TOOL_BUILD_DIR)
+	mkdir -p $(TOOLCHAIN_DIR)
 	rm -rf $(UCLIBC_DIR)
-	$(UCLIBC_CAT) $(DL_DIR)/$(UCLIBC_SOURCE) | tar -C $(TOOL_BUILD_DIR) $(TAR_OPTIONS) -
+	$(UCLIBC_CAT) $(DL_DIR)/$(UCLIBC_SOURCE) | tar -C $(TOOLCHAIN_DIR) $(TAR_OPTIONS) -
 	touch $@
 
 uclibc-patched: $(UCLIBC_DIR)/.patched
@@ -416,40 +412,42 @@ endif
 
 $(UCLIBC_DIR)/.config: $(UCLIBC_DIR)/.oldconfig
 	cp -f $(UCLIBC_DIR)/.oldconfig $(UCLIBC_DIR)/.config
-	mkdir -p $(TOOL_BUILD_DIR)/uClibc_dev/usr/include
-	mkdir -p $(TOOL_BUILD_DIR)/uClibc_dev/usr/lib
-	mkdir -p $(TOOL_BUILD_DIR)/uClibc_dev/lib
+	mkdir -p $(TOOLCHAIN_DIR)/uClibc_dev/usr/include
+	mkdir -p $(TOOLCHAIN_DIR)/uClibc_dev/usr/lib
+	mkdir -p $(TOOLCHAIN_DIR)/uClibc_dev/lib
 	$(MAKE1) -C $(UCLIBC_DIR) \
-		PREFIX=$(TOOL_BUILD_DIR)/uClibc_dev/ \
+		ARCH="$(UCLIBC_TARGET_ARCH)" \
+		PREFIX=$(TOOLCHAIN_DIR)/uClibc_dev/ \
 		DEVEL_PREFIX=/usr/ \
-		RUNTIME_PREFIX=$(TOOL_BUILD_DIR)/uClibc_dev/ \
+		RUNTIME_PREFIX=$(TOOLCHAIN_DIR)/uClibc_dev/ \
 		HOSTCC="$(HOSTCC)" \
 		oldconfig
 	touch $@
 
 $(UCLIBC_DIR)/.configured: $(LINUX_HEADERS_DIR)/.configured $(UCLIBC_DIR)/.config
 	set -x && $(MAKE1) -C $(UCLIBC_DIR) \
-		PREFIX=$(TOOL_BUILD_DIR)/uClibc_dev/ \
+		ARCH="$(UCLIBC_TARGET_ARCH)" \
+		PREFIX=$(TOOLCHAIN_DIR)/uClibc_dev/ \
 		DEVEL_PREFIX=/usr/ \
-		RUNTIME_PREFIX=$(TOOL_BUILD_DIR)/uClibc_dev/ \
+		RUNTIME_PREFIX=$(TOOLCHAIN_DIR)/uClibc_dev/ \
 		HOSTCC="$(HOSTCC)" headers \
 		$(if $(BR2_UCLIBC_VERSION_0_9_28_3),install_dev,install_headers)
 	# Install the kernel headers to the first stage gcc include dir
 	# if necessary
 ifeq ($(LINUX_HEADERS_IS_KERNEL),y)
-	if [ ! -f $(TOOL_BUILD_DIR)/uClibc_dev/usr/include/linux/version.h ]; then \
+	if [ ! -f $(TOOLCHAIN_DIR)/uClibc_dev/usr/include/linux/version.h ]; then \
 		cp -pLR $(LINUX_HEADERS_DIR)/include/* \
-			$(TOOL_BUILD_DIR)/uClibc_dev/usr/include/; \
+			$(TOOLCHAIN_DIR)/uClibc_dev/usr/include/; \
 	fi
 else
 	if [ ! -f $(STAGING_DIR)/usr/include/linux/version.h ]; then \
 		cp -pLR $(LINUX_HEADERS_DIR)/include/asm \
-			$(TOOL_BUILD_DIR)/uClibc_dev/usr/include/; \
+			$(TOOLCHAIN_DIR)/uClibc_dev/usr/include/; \
 		cp -pLR $(LINUX_HEADERS_DIR)/include/linux \
-			$(TOOL_BUILD_DIR)/uClibc_dev/usr/include/; \
+			$(TOOLCHAIN_DIR)/uClibc_dev/usr/include/; \
 		if [ -d $(LINUX_HEADERS_DIR)/include/asm-generic ]; then \
 			cp -pLR $(LINUX_HEADERS_DIR)/include/asm-generic \
-				$(TOOL_BUILD_DIR)/uClibc_dev/usr/include/; \
+				$(TOOLCHAIN_DIR)/uClibc_dev/usr/include/; \
 		fi; \
 	fi
 endif
@@ -457,6 +455,7 @@ endif
 
 $(UCLIBC_DIR)/lib/libc.a: $(UCLIBC_DIR)/.configured $(gcc_initial) $(LIBFLOAT_TARGET)
 	$(MAKE1) -C $(UCLIBC_DIR) \
+		ARCH="$(UCLIBC_TARGET_ARCH)" \
 		PREFIX= \
 		DEVEL_PREFIX=/ \
 		RUNTIME_PREFIX=/ \
@@ -466,9 +465,10 @@ $(UCLIBC_DIR)/lib/libc.a: $(UCLIBC_DIR)/.configured $(gcc_initial) $(LIBFLOAT_TA
 
 uclibc-menuconfig: host-sed $(UCLIBC_DIR)/.config
 	$(MAKE1) -C $(UCLIBC_DIR) \
-		PREFIX=$(TOOL_BUILD_DIR)/uClibc_dev/ \
+		ARCH="$(UCLIBC_TARGET_ARCH)" \
+		PREFIX=$(TOOLCHAIN_DIR)/uClibc_dev/ \
 		DEVEL_PREFIX=/usr/ \
-		RUNTIME_PREFIX=$(TOOL_BUILD_DIR)/uClibc_dev/ \
+		RUNTIME_PREFIX=$(TOOLCHAIN_DIR)/uClibc_dev/ \
 		HOSTCC="$(HOSTCC)" \
 		menuconfig && \
 	touch -c $(UCLIBC_DIR)/.config
@@ -477,12 +477,14 @@ uclibc-menuconfig: host-sed $(UCLIBC_DIR)/.config
 $(STAGING_DIR)/usr/lib/libc.a: $(UCLIBC_DIR)/lib/libc.a
 ifneq ($(BR2_TOOLCHAIN_SYSROOT),y)
 	$(MAKE1) -C $(UCLIBC_DIR) \
+		ARCH="$(UCLIBC_TARGET_ARCH)" \
 		PREFIX= \
 		DEVEL_PREFIX=$(STAGING_DIR)/ \
 		RUNTIME_PREFIX=$(STAGING_DIR)/ \
 		install_runtime install_dev
 else
 	$(MAKE1) -C $(UCLIBC_DIR) \
+		ARCH="$(UCLIBC_TARGET_ARCH)" \
 		PREFIX=$(STAGING_DIR) \
 		DEVEL_PREFIX=/usr/ \
 		RUNTIME_PREFIX=/ \
@@ -525,6 +527,7 @@ endif
 ifneq ($(TARGET_DIR),)
 $(TARGET_DIR)/lib/libc.so.0: $(STAGING_DIR)/usr/lib/libc.a
 	$(MAKE1) -C $(UCLIBC_DIR) \
+		ARCH="$(UCLIBC_TARGET_ARCH)" \
 		PREFIX=$(TARGET_DIR) \
 		DEVEL_PREFIX=/usr/ \
 		RUNTIME_PREFIX=/ \
@@ -539,6 +542,7 @@ endif
 $(TARGET_DIR)/usr/bin/ldd: $(cross_compiler)
 	$(MAKE1) -C $(UCLIBC_DIR) CC=$(TARGET_CROSS)gcc \
 		CPP=$(TARGET_CROSS)cpp LD=$(TARGET_CROSS)ld \
+		ARCH="$(UCLIBC_TARGET_ARCH)" \
 		PREFIX=$(TARGET_DIR) utils install_utils
 ifeq ($(BR2_CROSS_TOOLCHAIN_TARGET_UTILS),y)
 	mkdir -p $(STAGING_DIR)/usr/$(REAL_GNU_TARGET_NAME)/target_utils
@@ -571,7 +575,7 @@ uclibc-configured: kernel-headers $(UCLIBC_DIR)/.configured
 uclibc-configured-source: uclibc-source
 
 uclibc-clean: uclibc-test-clean
-	-$(MAKE1) -C $(UCLIBC_DIR) clean
+	-$(MAKE1) -C $(UCLIBC_DIR) ARCH="$(UCLIBC_TARGET_ARCH)" clean
 	rm -f $(UCLIBC_DIR)/.config
 
 uclibc-dirclean: uclibc-test-dirclean
@@ -613,6 +617,7 @@ uclibc-test-dirclean:
 
 $(TARGET_DIR)/usr/lib/libc.a: $(STAGING_DIR)/usr/lib/libc.a
 	$(MAKE1) -C $(UCLIBC_DIR) \
+		ARCH="$(UCLIBC_TARGET_ARCH)" \
 		PREFIX=$(TARGET_DIR) \
 		DEVEL_PREFIX=/usr/ \
 		RUNTIME_PREFIX=/ \

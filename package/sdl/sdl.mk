@@ -54,7 +54,7 @@ $(SDL_DIR)/.configured: $(SDL_DIR)/.unpacked
 	(cd $(SDL_DIR); rm -rf config.cache; \
 		$(TARGET_CONFIGURE_OPTS) \
 		$(TARGET_CONFIGURE_ARGS) \
-		./configure \
+		./configure $(QUIET) \
 		--target=$(GNU_TARGET_NAME) \
 		--host=$(GNU_TARGET_NAME) \
 		--build=$(GNU_HOST_NAME) \
@@ -96,7 +96,7 @@ $(TARGET_DIR)/usr/lib/libSDL.so: $(STAGING_DIR)/usr/lib/libSDL.so
 	cp -dpf $(STAGING_DIR)/usr/lib/libSDL*.so* $(TARGET_DIR)/usr/lib/
 	-$(STRIPCMD) $(STRIP_STRIP_UNNEEDED) $(TARGET_DIR)/usr/lib/libSDL.so
 
-SDL sdl: uclibc $(TARGET_DIR)/usr/lib/libSDL.so
+SDL sdl: $(TARGET_DIR)/usr/lib/libSDL.so
 
 sdl-unpacked: $(SDL_DIR)/.unpacked
 

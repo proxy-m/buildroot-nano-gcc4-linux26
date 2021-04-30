@@ -55,9 +55,9 @@ $(TARGET_DIR)/usr/bin/luac: $(STAGING_DIR)/usr/bin/luac
 
 lua-bins:	$(TARGET_DIR)/usr/bin/lua $(TARGET_DIR)/usr/bin/luac
 
-lua-libs:	$(TARGET_DIR)/usr/lib/liblua.a
+lua-libs: $(if $(BR2_HAVE_DEVFILES),$(TARGET_DIR)/usr/lib/liblua.a)
 
-lua: uclibc readline ncurses lua-bins lua-libs
+lua: readline ncurses lua-bins lua-libs
 
 lua-source: $(DL_DIR)/$(LUA_SOURCE)
 

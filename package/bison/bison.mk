@@ -26,7 +26,7 @@ $(BISON_DIR)/.configured: $(BISON_DIR)/.unpacked
 		$(TARGET_CONFIGURE_OPTS) \
 		$(TARGET_CONFIGURE_ARGS) \
 		gt_cv_func_gnugettext2_libintl=yes \
-		./configure \
+		./configure $(QUIET) \
 		--target=$(GNU_TARGET_NAME) \
 		--host=$(GNU_TARGET_NAME) \
 		--build=$(GNU_HOST_NAME) \
@@ -62,7 +62,7 @@ endif
 	rm -rf $(TARGET_DIR)/usr/share/doc
 	cp -a package/bison/yacc $(TARGET_DIR)/usr/bin/yacc
 
-bison: uclibc $(TARGET_DIR)/$(BISON_TARGET_BINARY)
+bison: $(TARGET_DIR)/$(BISON_TARGET_BINARY)
 
 bison-clean:
 	-$(MAKE) DESTDIR=$(TARGET_DIR) CC=$(TARGET_CC) -C $(BISON_DIR) uninstall

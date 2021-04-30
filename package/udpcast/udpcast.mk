@@ -28,7 +28,7 @@ $(UDPCAST_DIR)/.configured: $(UDPCAST_DIR)/.unpacked
 		$(TARGET_CONFIGURE_OPTS) \
 		$(TARGET_CONFIGURE_ARGS) \
 		CFLAGS="$(TARGET_CFLAGS) $(BR2_UDPCAST_CFLAGS)" \
-		./configure \
+		./configure $(QUIET) \
 		--target=$(REAL_GNU_TARGET_NAME) \
 		--host=$(REAL_GNU_TARGET_NAME) \
 		--build=$(GNU_HOST_NAME) \
@@ -78,7 +78,7 @@ ifneq ($(BR2_HAVE_MANPAGES),y)
 		$(addsuffix .1,$(UDPCAST_BINARIES)))
 endif
 
-udpcast: uclibc $(UDPCAST_PROGS)
+udpcast: $(UDPCAST_PROGS)
 
 udpcast-clean:
 	rm -f $(UDPCAST_INSTALL_FILES)

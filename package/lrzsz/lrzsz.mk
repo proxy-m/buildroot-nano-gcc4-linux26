@@ -38,7 +38,7 @@ $(LRZSZ_DIR)/.configured: $(LRZSZ_DIR)/.unpacked
 	(cd $(LRZSZ_DIR); rm -rf config.cache; \
 		$(TARGET_CONFIGURE_OPTS) \
 		$(TARGET_CONFIGURE_ARGS) \
-		./configure \
+		./configure $(QUIET) \
 		--target=$(GNU_TARGET_NAME) \
 		--host=$(GNU_TARGET_NAME) \
 		--build=$(GNU_HOST_NAME) \
@@ -68,7 +68,7 @@ $(TARGET_DIR)/usr/bin/rz: $(LRZSZ_DIR)/src/lrz
 	cp $(LRZSZ_DIR)/src/lrz $(TARGET_DIR)/usr/bin/rz
 	cp $(LRZSZ_DIR)/src/lsz $(TARGET_DIR)/usr/bin/sz
 
-lrzsz: uclibc $(TARGET_DIR)/usr/bin/rz
+lrzsz: $(TARGET_DIR)/usr/bin/rz
 
 lrzsz-clean:
 	rm -f $(TARGET_DIR)/usr/bin/rz

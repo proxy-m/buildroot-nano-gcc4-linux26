@@ -12,8 +12,7 @@ LIBSOUP_AUTORECONF = YES
 LIBSOUP_INSTALL_STAGING = YES
 LIBSOUP_INSTALL_TARGET = YES
 
-LIBSOUP_CONF_ENV = \
-		ac_cv_path_GLIB_GENMARSHAL=$(HOST_GLIB)/bin/glib-genmarshal
+LIBSOUP_CONF_ENV = ac_cv_path_GLIB_GENMARSHAL=$(LIBGLIB2_HOST_BINARY)
 
 ifneq ($(BR2_INET_IPV6),y)
 LIBSOUP_CONF_ENV += soup_cv_ipv6=no
@@ -27,6 +26,6 @@ LIBSOUP_CONF_OPT = \
 	--without-gnome		\
 	--disable-gtk-doc --without-html-dir
 
-LIBSOUP_DEPENDENCIES = uclibc gettext libintl host-pkgconfig host-libglib2 libglib2 libxml2
+LIBSOUP_DEPENDENCIES = gettext libintl host-pkgconfig host-libglib2 libglib2 libxml2
 
 $(eval $(call AUTOTARGETS,package,libsoup))

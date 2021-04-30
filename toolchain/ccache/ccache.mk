@@ -6,7 +6,7 @@
 CCACHE_VER:=2.4
 CCACHE_SITE:=http://samba.org/ftp/ccache
 CCACHE_SOURCE:=ccache-$(CCACHE_VER).tar.gz
-CCACHE_DIR1:=$(TOOL_BUILD_DIR)/ccache-$(CCACHE_VER)
+CCACHE_DIR1:=$(TOOLCHAIN_DIR)/ccache-$(CCACHE_VER)
 CCACHE_DIR2:=$(BUILD_DIR)/ccache-$(CCACHE_VER)
 CCACHE_CAT:=$(ZCAT)
 CCACHE_BINARY:=ccache
@@ -16,7 +16,7 @@ $(DL_DIR)/$(CCACHE_SOURCE):
 	$(call DOWNLOAD,$(CCACHE_SITE),$(CCACHE_SOURCE))
 
 $(CCACHE_DIR1)/.unpacked: $(DL_DIR)/$(CCACHE_SOURCE)
-	$(CCACHE_CAT) $(DL_DIR)/$(CCACHE_SOURCE) | tar -C $(TOOL_BUILD_DIR) $(TAR_OPTIONS) -
+	$(CCACHE_CAT) $(DL_DIR)/$(CCACHE_SOURCE) | tar -C $(TOOLCHAIN_DIR) $(TAR_OPTIONS) -
 	touch $@
 
 $(CCACHE_DIR1)/.patched: $(CCACHE_DIR1)/.unpacked
@@ -36,7 +36,7 @@ $(CCACHE_DIR1)/.configured: $(CCACHE_DIR1)/.patched
 	mkdir -p $(CCACHE_DIR1)
 	(cd $(CCACHE_DIR1); rm -rf config.cache; \
 		CC="$(HOSTCC)" \
-		$(CCACHE_DIR1)/configure \
+		$(CCACHE_DIR1)/configure $(QUIET) \
 		--target=$(GNU_HOST_NAME) \
 		--host=$(GNU_HOST_NAME) \
 		--build=$(GNU_HOST_NAME) \
@@ -147,7 +147,7 @@ $(CCACHE_DIR2)/.configured: $(CCACHE_DIR2)/.patched
 	mkdir -p $(CCACHE_DIR2)
 	(cd $(CCACHE_DIR2); rm -rf config.cache; \
 		$(TARGET_CONFIGURE_OPTS) \
-		$(CCACHE_DIR2)/configure \
+		$(CCACHE_DIR2)/configure $(QUIET) \
 		--target=$(GNU_TARGET_NAME) \
 		--host=$(GNU_TARGET_NAME) \
 		--build=$(GNU_HOST_NAME) \

@@ -19,7 +19,7 @@ $(GENEXT2_DIR)/.unpacked: $(DL_DIR)/$(GENEXT2_SOURCE)
 $(GENEXT2_DIR)/.configured: $(GENEXT2_DIR)/.unpacked
 	chmod a+x $(GENEXT2_DIR)/configure
 	(cd $(GENEXT2_DIR); rm -rf config.cache; \
-		./configure \
+		./configure $(QUIET) \
 		CC="$(HOSTCC)" \
 		--prefix=$(STAGING_DIR) \
 	)
@@ -58,8 +58,7 @@ ifneq ($(strip $(BR2_TARGET_ROOTFS_EXT2_RESBLKS)),)
 EXT2_OPTS += -m $(BR2_TARGET_ROOTFS_EXT2_RESBLKS)
 endif
 
-EXT2_BASE := $(subst ",,$(BR2_TARGET_ROOTFS_EXT2_OUTPUT))
-#")
+EXT2_BASE := $(call qstrip,$(BR2_TARGET_ROOTFS_EXT2_OUTPUT))
 
 EXT2_ROOTFS_COMPRESSOR:=
 EXT2_ROOTFS_COMPRESSOR_EXT:=
@@ -88,14 +87,14 @@ endif
 
 $(EXT2_BASE): host-fakeroot makedevs genext2fs
 	# Use fakeroot to pretend all target binaries are owned by root
-	rm -f $(PROJECT_BUILD_DIR)/_fakeroot.$(notdir $(EXT2_TARGET))
-	touch $(PROJECT_BUILD_DIR)/.fakeroot.00000
-	cat $(PROJECT_BUILD_DIR)/.fakeroot* > $(PROJECT_BUILD_DIR)/_fakeroot.$(notdir $(EXT2_TARGET))
-	echo "chown -R 0:0 $(TARGET_DIR)" >> $(PROJECT_BUILD_DIR)/_fakeroot.$(notdir $(EXT2_TARGET))
+	rm -f $(BUILD_DIR)/_fakeroot.$(notdir $(EXT2_TARGET))
+	touch $(BUILD_DIR)/.fakeroot.00000
+	cat $(BUILD_DIR)/.fakeroot* > $(BUILD_DIR)/_fakeroot.$(notdir $(EXT2_TARGET))
+	echo "chown -R 0:0 $(TARGET_DIR)" >> $(BUILD_DIR)/_fakeroot.$(notdir $(EXT2_TARGET))
 ifneq ($(TARGET_DEVICE_TABLE),)
 	# Use fakeroot to pretend to create all needed device nodes
 	echo "$(HOST_DIR)/usr/bin/makedevs -d $(TARGET_DEVICE_TABLE) $(TARGET_DIR)" \
-		>> $(PROJECT_BUILD_DIR)/_fakeroot.$(notdir $(EXT2_TARGET))
+		>> $(BUILD_DIR)/_fakeroot.$(notdir $(EXT2_TARGET))
 endif
 	# Use fakeroot so genext2fs believes the previous fakery
 ifeq ($(strip $(BR2_TARGET_ROOTFS_EXT2_BLOCKS)),0)
@@ -107,22 +106,21 @@ ifeq ($(strip $(BR2_TARGET_ROOTFS_EXT2_BLOCKS)),0)
 	set -x; \
 	echo "$(GENEXT2_DIR)/genext2fs -b $$GENEXT2_SIZE " \
 		"-N $$GENEXT2_INODES -d $(TARGET_DIR) " \
-		"$(EXT2_OPTS) $(EXT2_BASE)" >> $(PROJECT_BUILD_DIR)/_fakeroot.$(notdir $(EXT2_TARGET))
+		"$(EXT2_OPTS) $(EXT2_BASE)" >> $(BUILD_DIR)/_fakeroot.$(notdir $(EXT2_TARGET))
 else
 	echo "$(GENEXT2_DIR)/genext2fs -d $(TARGET_DIR) " \
-		"$(EXT2_OPTS) $(EXT2_BASE)" >> $(PROJECT_BUILD_DIR)/_fakeroot.$(notdir $(EXT2_TARGET))
+		"$(EXT2_OPTS) $(EXT2_BASE)" >> $(BUILD_DIR)/_fakeroot.$(notdir $(EXT2_TARGET))
 endif
-	chmod a+x $(PROJECT_BUILD_DIR)/_fakeroot.$(notdir $(EXT2_TARGET))
-	$(HOST_DIR)/usr/bin/fakeroot -- $(PROJECT_BUILD_DIR)/_fakeroot.$(notdir $(EXT2_TARGET))
-	-@rm -f $(PROJECT_BUILD_DIR)/_fakeroot.$(notdir $(EXT2_TARGET))
+	chmod a+x $(BUILD_DIR)/_fakeroot.$(notdir $(EXT2_TARGET))
+	$(HOST_DIR)/usr/bin/fakeroot -- $(BUILD_DIR)/_fakeroot.$(notdir $(EXT2_TARGET))
+	-@rm -f $(BUILD_DIR)/_fakeroot.$(notdir $(EXT2_TARGET))
 
 ifneq ($(EXT2_ROOTFS_COMPRESSOR),)
 $(EXT2_BASE).$(EXT2_ROOTFS_COMPRESSOR_EXT): $(EXT2_ROOTFS_COMPRESSOR_PREREQ) $(EXT2_BASE)
 	$(EXT2_ROOTFS_COMPRESSOR) $(EXT2_BASE) > $(EXT2_TARGET)
 endif
 
-EXT2_COPYTO := $(strip $(subst ",,$(BR2_TARGET_ROOTFS_EXT2_COPYTO)))
-# "))
+EXT2_COPYTO := $(call qstrip,$(BR2_TARGET_ROOTFS_EXT2_COPYTO))
 
 ext2root: $(EXT2_TARGET)
 	@ls -l $(EXT2_TARGET)

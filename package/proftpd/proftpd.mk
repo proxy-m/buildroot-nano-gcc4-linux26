@@ -32,7 +32,7 @@ $(PROFTPD_DIR)/.configured: $(PROFTPD_DIR)/.unpacked
 		$(TARGET_CONFIGURE_ARGS) \
 		ac_cv_func_setpgrp_void=yes \
 		ac_cv_func_setgrent_void=yes \
-		./configure \
+		./configure $(QUIET) \
 		--target=$(GNU_TARGET_NAME) \
 		--host=$(GNU_TARGET_NAME) \
 		--build=$(GNU_HOST_NAME) \
@@ -64,7 +64,7 @@ $(TARGET_DIR)/$(PROFTPD_TARGET_BINARY): $(PROFTPD_DIR)/$(PROFTPD_BINARY)
 	fi
 	$(INSTALL) -m 0755 package/proftpd/S50proftpd $(TARGET_DIR)/etc/init.d
 
-proftpd: uclibc $(TARGET_DIR)/$(PROFTPD_TARGET_BINARY)
+proftpd: $(TARGET_DIR)/$(PROFTPD_TARGET_BINARY)
 
 proftpd-clean:
 	rm -f $(TARGET_DIR)/$(PROFTPD_TARGET_BINARY)

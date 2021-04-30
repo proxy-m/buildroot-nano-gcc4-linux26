@@ -1,3 +1,31 @@
+2009.11, Not yet released:
+
+	New packages: divine, gvfs, libarchive, libmicrohttpd,
+	sdl_sound, swfdec
+
+	Updated/fixed packages: autoconf, busybox, directfb, dnsmasq,
+	festival, imagemagick, iptables, kernel-headers, kismet,
+	libevent, libglib2, liblockfile, libmad, libuuid, ltrace, mdadm,
+	ncftp, netkittelnet, openssl, python, quagga, radvd, samba,
+	speech-tools, squashfs, syslinux, u-boot, valgrind, wipe,
+	xdata_xcursor-themes
+
+	Removed package: mdnsresponder, mpatrol
+
+	Issues resolved (http://bugs.uclibc.org):
+
+	#301: allow to install libsmbclient
+	#303: add gvfs package
+	#477: Add sdl_sound package
+	#487: Make kismet package sexier
+	#527: misc fixes for dnsmasq package
+	#565: libevent: Bump version and clean up makefile
+	#587: Use iptables multipurpose binaries and bump to 1.4.4
+	#609: libmicrohttpd: New package
+	#615: python: Don't delete .py files unless asked
+	#617: netkit/inetd requires RPC and fails to build if RPC is disabled
+	#619: netkittelnet requires netkitbase to install, but there's no dependency
+
 2009.08, Released August 31th, 2009:
 
 	Additional fixes and cleanups.

@@ -10,8 +10,6 @@ LZO_AUTORECONF = NO
 LZO_INSTALL_STAGING = YES
 LZO_INSTALL_TARGET = YES
 LZO_INSTALL_STAGING_OPT = CC="$(TARGET_CC)" DESTDIR=$(STAGING_DIR) install
-LZO_CONF_ENV =
-LZO_DEPENDENCIES = uclibc
 
 $(eval $(call AUTOTARGETS,package,lzo))
 
@@ -33,7 +31,7 @@ $(STAMP_DIR)/host_lzo_configured: $(STAMP_DIR)/host_lzo_unpacked
 		$(HOST_CONFIGURE_OPTS) \
 		CFLAGS="$(HOST_CFLAGS)" \
 		LDFLAGS="$(HOST_LDFLAGS)" \
-		./configure \
+		./configure $(QUIET) \
 		--prefix="$(HOST_DIR)/usr" \
 		--sysconfdir="$(HOST_DIR)/etc" \
 	)

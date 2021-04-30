@@ -46,7 +46,7 @@ $(BASH_DIR)/.configured: $(BASH_DIR)/.unpacked
 		bash_cv_getcwd_malloc=yes \
 		bash_cv_func_sigsetjmp=present \
 		bash_cv_printf_a_format=yes \
-		./configure \
+		./configure $(QUIET) \
 		--target=$(GNU_TARGET_NAME) \
 		--host=$(GNU_TARGET_NAME) \
 		--build=$(GNU_HOST_NAME) \
@@ -92,9 +92,9 @@ endif
 # If both bash and busybox are selected, make certain bash wins
 # the fight over who gets to own the /bin/sh symlink.
 ifeq ($(BR2_PACKAGE_BUSYBOX),y)
-bash: ncurses uclibc busybox $(TARGET_DIR)/$(BASH_TARGET_BINARY)
+bash: ncurses busybox $(TARGET_DIR)/$(BASH_TARGET_BINARY)
 else
-bash: ncurses uclibc $(TARGET_DIR)/$(BASH_TARGET_BINARY)
+bash: ncurses $(TARGET_DIR)/$(BASH_TARGET_BINARY)
 endif
 
 # If both bash and busybox are selected, the /bin/sh symlink

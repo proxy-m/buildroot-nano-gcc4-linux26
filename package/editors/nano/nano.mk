@@ -26,7 +26,7 @@ $(NANO_DIR)/.configured: $(NANO_DIR)/.unpacked
 		$(TARGET_CONFIGURE_OPTS) \
 		$(TARGET_CONFIGURE_ARGS) \
 		ac_cv_header_regex_h=no \
-		./configure \
+		./configure $(QUIET) \
 		--target=$(GNU_TARGET_NAME) \
 		--host=$(GNU_TARGET_NAME) \
 		--build=$(GNU_HOST_NAME) \
@@ -41,7 +41,7 @@ $(NANO_DIR)/$(NANO_BINARY): $(NANO_DIR)/.configured
 $(TARGET_DIR)/$(NANO_TARGET_BINARY): $(NANO_DIR)/$(NANO_BINARY)
 	install -D $(NANO_DIR)/$(NANO_BINARY) $(TARGET_DIR)/$(NANO_TARGET_BINARY)
 
-nano: uclibc ncurses $(TARGET_DIR)/$(NANO_TARGET_BINARY)
+nano: ncurses $(TARGET_DIR)/$(NANO_TARGET_BINARY)
 
 nano-clean:
 	rm -f $(TARGET_DIR)/$(NANO_TARGET_BINARY)

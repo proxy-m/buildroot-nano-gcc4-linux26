@@ -21,7 +21,7 @@ $(LESS_DIR)/.configured: $(LESS_DIR)/.source
 	(cd $(LESS_DIR); rm -f config.cache; \
 		$(TARGET_CONFIGURE_OPTS) \
 		$(TARGET_CONFIGURE_ARGS) \
-		./configure \
+		./configure $(QUIET) \
 		--target=$(GNU_TARGET_NAME) \
 		--host=$(GNU_TARGET_NAME) \
 		--build=$(GNU_HOST_NAME) \
@@ -39,7 +39,7 @@ ifneq ($(BR2_HAVE_MANPAGES),y)
 	rm -Rf $(TARGET_DIR)/usr/man
 endif
 
-less: uclibc ncurses $(TARGET_DIR)/$(LESS_TARGET_BINARY)
+less: ncurses $(TARGET_DIR)/$(LESS_TARGET_BINARY)
 
 less-source: $(DL_DIR)/$(LESS_SOURCE)
 

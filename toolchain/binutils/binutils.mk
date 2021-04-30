@@ -3,11 +3,9 @@
 # build binutils for use on the host system
 #
 #############################################################
-BINUTILS_VERSION:=$(subst ",,$(BR2_BINUTILS_VERSION))
-#")
+BINUTILS_VERSION:=$(call qstrip,$(BR2_BINUTILS_VERSION))
 
-EXTRA_BINUTILS_CONFIG_OPTIONS=$(strip $(subst ",, $(BR2_EXTRA_BINUTILS_CONFIG_OPTIONS)))
-#"))
+EXTRA_BINUTILS_CONFIG_OPTIONS=$(call qstrip,$(BR2_EXTRA_BINUTILS_CONFIG_OPTIONS))
 BINUTILS_SITE:=$(BR2_KERNEL_MIRROR)/linux/devel/binutils
 ifeq ($(BINUTILS_VERSION),2.19.1)
 BINUTILS_SITE:=$(BR2_GNU_MIRROR)/binutils/
@@ -34,8 +32,8 @@ BINUTILS_NO_MPFR:=y
 endif
 
 ifndef BINUTILS_NO_MPFR
-BINUTILS_HOST_PREREQ:=$(TOOL_BUILD_DIR)/gmp/lib/libgmp$(HOST_LIBEXT) \
-	$(TOOL_BUILD_DIR)/mpfr/lib/libmpfr$(HOST_LIBEXT)
+BINUTILS_HOST_PREREQ:=$(TOOLCHAIN_DIR)/gmp/lib/libgmp$(HOST_LIBEXT) \
+	$(TOOLCHAIN_DIR)/mpfr/lib/libmpfr$(HOST_LIBEXT)
 
 BINUTILS_TARGET_PREREQ:=$(TARGET_DIR)/usr/lib/libgmp$(LIBTGTEXT) \
 	$(TARGET_DIR)/usr/lib/libmpfr$(LIBTGTEXT)
@@ -61,10 +59,10 @@ BINUTILS_PATCH_EXTRA:=$(call XTENSA_PATCH,binutils,$(BINUTILS_PATCH_DIR),. ..)
 endif
 
 BINUTILS_SOURCE:=binutils-$(BINUTILS_OFFICIAL_VERSION).tar.bz2
-BINUTILS_DIR:=$(TOOL_BUILD_DIR)/binutils-$(BINUTILS_OFFICIAL_VERSION)
+BINUTILS_DIR:=$(TOOLCHAIN_DIR)/binutils-$(BINUTILS_OFFICIAL_VERSION)
 BINUTILS_CAT:=$(BZCAT)
 
-BINUTILS_DIR1:=$(TOOL_BUILD_DIR)/binutils-$(BINUTILS_VERSION)-build
+BINUTILS_DIR1:=$(TOOLCHAIN_DIR)/binutils-$(BINUTILS_VERSION)-build
 
 $(DL_DIR)/$(BINUTILS_SOURCE):
 	mkdir -p $(DL_DIR)
@@ -72,9 +70,9 @@ $(DL_DIR)/$(BINUTILS_SOURCE):
 
 binutils-unpacked: $(BINUTILS_DIR)/.patched
 $(BINUTILS_DIR)/.unpacked: $(DL_DIR)/$(BINUTILS_SOURCE)
-	mkdir -p $(TOOL_BUILD_DIR)
+	mkdir -p $(TOOLCHAIN_DIR)
 	rm -rf $(BINUTILS_DIR)
-	$(BINUTILS_CAT) $(DL_DIR)/$(BINUTILS_SOURCE) | tar -C $(TOOL_BUILD_DIR) $(TAR_OPTIONS) -
+	$(BINUTILS_CAT) $(DL_DIR)/$(BINUTILS_SOURCE) | tar -C $(TOOLCHAIN_DIR) $(TAR_OPTIONS) -
 	$(CONFIG_UPDATE) $(@D)
 	touch $@
 
@@ -87,8 +85,8 @@ $(BINUTILS_DIR)/.patched: $(BINUTILS_DIR)/.unpacked
 $(BINUTILS_DIR1)/.configured: $(BINUTILS_DIR)/.patched
 	mkdir -p $(BINUTILS_DIR1)
 	(cd $(BINUTILS_DIR1); rm -rf config.cache; \
-		$(HOST_CONFIGURE_OPTS) CFLAGS='  -DIN_GCC  -DCROSS_DIRECTORY_STRUCTURE  -W  -Wall  -Wwrite-strings  -Wstrict-prototypes  -Wmissing-prototypes  -Wold-style-definition  -Wmissing-format-attribute  -pedantic  -Wno-long-long  -Wno-variadic-macros  -Wno-overlength-strings     -std=gnu99 -fgnu89-inline  '  \
-		$(BINUTILS_DIR)/configure \
+		$(HOST_CONFIGURE_OPTS) \
+		$(BINUTILS_DIR)/configure $(QUIET) \
 		--prefix=$(BR2_SYSROOT_PREFIX)/usr \
 		--build=$(GNU_HOST_NAME) \
 		--host=$(GNU_HOST_NAME) \
@@ -142,8 +140,8 @@ BINUTILS_DIR2:=$(BUILD_DIR)/binutils-$(BINUTILS_VERSION)-target
 $(BINUTILS_DIR2)/.configured: $(BINUTILS_DIR)/.patched
 	mkdir -p $(BINUTILS_DIR2)
 	(cd $(BINUTILS_DIR2); rm -rf config.cache; \
-		$(TARGET_CONFIGURE_OPTS) CFLAGS='  -DIN_GCC  -DCROSS_DIRECTORY_STRUCTURE  -W  -Wall  -Wwrite-strings  -Wstrict-prototypes  -Wmissing-prototypes  -Wold-style-definition  -Wmissing-format-attribute  -pedantic  -Wno-long-long  -Wno-variadic-macros  -Wno-overlength-strings     -std=gnu99 -fgnu89-inline  ' \
-		$(BINUTILS_DIR)/configure \
+		$(TARGET_CONFIGURE_OPTS) \
+		$(BINUTILS_DIR)/configure $(QUIET) \
 		--prefix=/usr \
 		--exec-prefix=/usr \
 		--build=$(GNU_HOST_NAME) \

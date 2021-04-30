@@ -165,8 +165,8 @@ if [ -z "$MAKE_VERSION" ] ; then
 fi;
 MAKE_MAJOR=$(echo $MAKE_VERSION | $XSED -e "s/\..*//g")
 MAKE_MINOR=$(echo $MAKE_VERSION | $XSED -e "s/^$MAKE_MAJOR\.//g" -e "s/\..*//g" -e "s/[a-zA-Z].*//g")
-if [ $MAKE_MAJOR -lt 3 ] || [ $MAKE_MAJOR -eq 3 -a $MAKE_MINOR -lt 80 ] ; then
-	echo "You have make '$MAKE_VERSION' installed.  GNU make >=3.80 is required"
+if [ $MAKE_MAJOR -lt 3 ] || [ $MAKE_MAJOR -eq 3 -a $MAKE_MINOR -lt 81 ] ; then
+	echo "You have make '$MAKE_VERSION' installed.  GNU make >=3.81 is required"
 	exit 1;
 fi;
 echo "GNU make version '$MAKE_VERSION':			Ok"
@@ -297,6 +297,12 @@ fi;
 echo "gettext installed:				Ok"
 
 
+#############################################################
+#
+# check build system 'makeinfo'
+#
+#############################################################
+
 if ! which makeinfo > /dev/null ; then \
 	echo "makeinfo installed:		    FALSE"
 	/bin/echo -e "\n\nMost likely some packages will fail to build their documentation"
@@ -306,6 +312,17 @@ else
 	echo "makeinfo installed:				Ok"
 fi
 
+#############################################################
+#
+# check build system 'patch'
+#
+#############################################################
+if ! which patch > /dev/null ; then \
+	echo "patch installed:				FALSE"
+	/bin/echo -e "\n\nYou must install 'patch' on your build machine\n"; \
+	exit 1; \
+fi;
+echo "patch installed:				Ok"
 
 #############################################################
 #

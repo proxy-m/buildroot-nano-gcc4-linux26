@@ -41,7 +41,7 @@ $(JPEG_DIR)/.configured: $(JPEG_DIR)/.unpacked
 	(cd $(JPEG_DIR); rm -rf config.cache; \
 		$(TARGET_CONFIGURE_OPTS) \
 		$(TARGET_CONFIGURE_ARGS) \
-		./configure \
+		./configure $(QUIET) \
 		--target=$(GNU_TARGET_NAME) \
 		--host=$(GNU_TARGET_NAME) \
 		--build=$(GNU_HOST_NAME) \
@@ -79,7 +79,7 @@ $(TARGET_DIR)/usr/lib/libjpeg.so: $(STAGING_DIR)/usr/lib/libjpeg.a
 	-$(STRIPCMD) $(STRIP_STRIP_UNNEEDED) $(TARGET_DIR)/usr/lib/libjpeg.so*
 	touch -c $@
 
-jpeg: uclibc $(TARGET_DIR)/usr/lib/libjpeg.so
+jpeg: $(TARGET_DIR)/usr/lib/libjpeg.so
 
 jpeg-clean:
 	-$(MAKE) -C $(JPEG_DIR) clean

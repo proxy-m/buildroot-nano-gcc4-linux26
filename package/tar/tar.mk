@@ -29,7 +29,7 @@ $(GNUTAR_DIR)/.configured: $(GNUTAR_DIR)/.unpacked
 		$(TARGET_CONFIGURE_ARGS) \
 		ac_cv_func_chown_works=yes \
 		gl_cv_func_chown_follows_symlink=yes \
-		./configure \
+		./configure $(QUIET) \
 		--target=$(GNU_TARGET_NAME) \
 		--host=$(GNU_TARGET_NAME) \
 		--build=$(GNU_HOST_NAME) \
@@ -65,7 +65,7 @@ tar-target_binary: $(GNUTAR_DIR)/$(GNUTAR_BINARY)
 			$(TARGET_DIR)/$(GNUTAR_TARGET_BINARY); \
 	fi
 
-tar: uclibc tar-target_binary
+tar: tar-target_binary
 
 tar-clean:
 	$(MAKE) DESTDIR=$(TARGET_DIR) -C $(GNUTAR_DIR) uninstall

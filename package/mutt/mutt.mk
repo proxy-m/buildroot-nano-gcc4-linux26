@@ -33,7 +33,7 @@ $(MUTT_DIR)/.configured: $(MUTT_DIR)/.unpacked
 	(cd $(MUTT_DIR); rm -rf config.cache; \
 		$(TARGET_CONFIGURE_OPTS) \
 		$(TARGET_CONFIGURE_ARGS) \
-		./configure \
+		./configure $(QUIET) \
 		--target=$(GNU_TARGET_NAME) \
 		--host=$(GNU_TARGET_NAME) \
 		--build=$(GNU_HOST_NAME) \
@@ -58,7 +58,7 @@ mutt-source: $(DL_DIR)/$(MUTT_SOURCE) $(DL_DIR)/$(MUTT_PATCH)
 
 mutt-unpacked: $(MUTT_DIR)/.unpacked
 
-mutt: uclibc ncurses $(TARGET_DIR)/$(MUTT_TARGET_BINARY)
+mutt: ncurses $(TARGET_DIR)/$(MUTT_TARGET_BINARY)
 
 mutt-clean:
 	-$(MAKE) -C $(MUTT_DIR) clean

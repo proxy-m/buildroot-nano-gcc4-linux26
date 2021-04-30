@@ -8,7 +8,7 @@ config BR2_HAVE_DOT_CONFIG
 
 config BR2_VERSION
 	string
-	default "2009.08"
+	default "2009.11-git"
 
 source "target/Config.in.arch"
 source "target/device/Config.in"
@@ -26,6 +26,14 @@ config BR2_SVN_CO
 config BR2_SVN_UP
 	string "Subversion (svn) command to update source tree"
 	default "svn up"
+
+config BR2_BZR_CO
+	string "Bazaar (bzr) command to download source tree"
+	default "bzr co"
+
+config BR2_BZR_UP
+	string "Bazaar (bzr) command to update source tree"
+	default "bzr up"
 
 config BR2_GIT
 	string "Git command to download source tree"
@@ -61,13 +69,13 @@ config BR2_TAR_OPTIONS
 
 config BR2_DL_DIR
 	string "Download dir"
-	default "$(BASE_DIR)/dl"
+	default "$(TOPDIR)/dl"
 	help
 	  Directory to store all the source files that we need to fetch.
 	  If the Linux shell environment has defined the BUILDROOT_DL_DIR
 	  environment variable, then this overrides this configuration item.
 
-	  The default is $(BASE_DIR)/dl
+	  The default is $(TOPDIR)/dl
 
 config BR2_COPYTO
 	string "Copy result to..."
@@ -80,7 +88,7 @@ source	"target/device/Config.in.mirrors"
 
 config BR2_STAGING_DIR
 	string "Toolchain and header file location?"
-	default "$(BUILD_DIR)/staging_dir"
+	default "$(BASE_DIR)/staging"
 	help
 	  This is the location where the toolchain will be installed.  The
 	  toolchain will not work if it is moved from this location.
@@ -89,7 +97,7 @@ config BR2_STAGING_DIR
 	  will be used.
 
 	  Most people will leave this set to the default value of
-	  "$(BUILD_DIR)/staging_dir".
+	  "$(BASE_DIR)/staging".
 
 config BR2_FPU_SUFFIX
 	bool "Add '_nofpu' suffix for softfloat toolchains"
@@ -97,24 +105,6 @@ config BR2_FPU_SUFFIX
 	  If the toolchain is configured to use softfloat, then
 	  the "_nofpu" suffix will be added to the toolchain build
 	  directory name and to any rootfs image name
-
-config BR2_TOPDIR_PREFIX
-	string "Custom build dir prefix"
-	default ""
-	help
-	  Add a custom string to the beginning of the build directories.
-
-	  build_ARCH -> [PREFIX]_build_ARCH
-	  toolchain_build_ARCH -> [PREFIX]_toolchain_build_ARCH
-
-config BR2_TOPDIR_SUFFIX
-	string "Custom build dir suffix"
-	default ""
-	help
-	  Add a custom string to the end of the build directories.
-
-	  build_ARCH -> build_ARCH_[SUFFIX]
-	  toolchain_build_ARCH -> toolchain_build_ARCH_[SUFFIX]
 
 config BR2_GNU_BUILD_SUFFIX
 	string "GNU build hostname suffix"

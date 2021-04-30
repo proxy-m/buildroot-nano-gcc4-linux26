@@ -38,7 +38,7 @@ $(DUMMY_DIR)/.configured: $(DUMMY_DIR)/.unpacked
 	(cd $(DUMMY_DIR); rm -rf config.cache; \
 		$(TARGET_CONFIGURE_OPTS) \
 		$(TARGET_CONFIGURE_ARGS) \
-		./configure \
+		./configure $(QUIET) \
 		--target=$(GNU_TARGET_NAME) \
 		--host=$(GNU_TARGET_NAME) \
 		--build=$(GNU_HOST_NAME) \
@@ -65,7 +65,7 @@ $(TARGET_DIR)/$(DUMMY_TARGET_BINARY): $(DUMMY_DIR)/$(DUMMY_BINARY)
 # Main rule which shows which other packages must be installed before the dummy
 # package is installed. This to ensure that all depending libraries are
 # installed.
-dummy:	uclibc $(TARGET_DIR)/$(DUMMY_TARGET_BINARY)
+dummy: $(TARGET_DIR)/$(DUMMY_TARGET_BINARY)
 
 # Source download rule. Main purpose to download the source package. Since some
 # people would like to work offline, it is mandotory to implement a rule which

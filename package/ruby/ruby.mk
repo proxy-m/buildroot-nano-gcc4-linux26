@@ -26,7 +26,7 @@ $(RUBY_DIR)/.configured: $(RUBY_DIR)/.unpacked
 	(cd $(RUBY_DIR); rm -rf config.cache; \
 		$(TARGET_CONFIGURE_OPTS) \
 		$(TARGET_CONFIGURE_ARGS) \
-		./configure \
+		./configure $(QUIET) \
 		--target=$(GNU_TARGET_NAME) \
 		--host=$(GNU_TARGET_NAME) \
 		--build=$(GNU_HOST_NAME) \
@@ -55,7 +55,7 @@ $(TARGET_DIR)/$(RUBY_TARGET_BINARY): $(RUBY_DIR)/$(RUBY_BINARY)
 	$(MAKE) DESTDIR=$(TARGET_DIR) -C $(RUBY_DIR) install
 	rm -rf $(TARGET_DIR)/usr/man $(TARGET_DIR)/usr/share/doc
 
-ruby: uclibc $(TARGET_DIR)/$(RUBY_TARGET_BINARY)
+ruby: $(TARGET_DIR)/$(RUBY_TARGET_BINARY)
 
 ruby-clean:
 	$(MAKE) DESTDIR=$(TARGET_DIR) -C $(RUBY_DIR) uninstall

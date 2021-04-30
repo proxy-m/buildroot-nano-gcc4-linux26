@@ -7,12 +7,12 @@ LZMA_VERSION:=4.32.6
 LZMA_SOURCE:=lzma-$(LZMA_VERSION).tar.gz
 LZMA_CAT:=$(ZCAT)
 LZMA_SITE:=http://tukaani.org/lzma/
-LZMA_HOST_DIR:=$(TOOL_BUILD_DIR)/lzma-$(LZMA_VERSION)
+LZMA_HOST_DIR:=$(TOOLCHAIN_DIR)/lzma-$(LZMA_VERSION)
 LZMA_TARGET_DIR:=$(BUILD_DIR)/lzma-$(LZMA_VERSION)
 LZMA_TARGET_BINARY:=bin/lzma
 
 # lzma binary for use on the host
-LZMA=$(TOOL_BUILD_DIR)/bin/lzma
+LZMA=$(TOOLCHAIN_DIR)/bin/lzma
 HOST_LZMA_BINARY=$(shell package/lzma/lzmacheck.sh)
 HOST_LZMA_IF_ANY=$(shell toolchain/dependencies/check-host-lzma.sh)
 
@@ -27,7 +27,7 @@ $(DL_DIR)/$(LZMA_SOURCE):
 ######################################################################
 
 $(LZMA_HOST_DIR)/.unpacked: $(DL_DIR)/$(LZMA_SOURCE)
-	$(LZMA_CAT) $(DL_DIR)/$(LZMA_SOURCE) | tar -C $(TOOL_BUILD_DIR) $(TAR_OPTIONS) -
+	$(LZMA_CAT) $(DL_DIR)/$(LZMA_SOURCE) | tar -C $(TOOLCHAIN_DIR) $(TAR_OPTIONS) -
 	toolchain/patch-kernel.sh $(LZMA_HOST_DIR) package/lzma/ lzma\*.patch
 	touch $@
 
@@ -35,7 +35,7 @@ $(LZMA_HOST_DIR)/.configured: $(LZMA_HOST_DIR)/.unpacked
 	(cd $(LZMA_HOST_DIR); rm -f config.cache;\
 		CC="$(HOSTCC)" \
 		CXX="$(HOSTCXX)" \
-		./configure \
+		./configure $(QUIET) \
 		--prefix=/ \
 	)
 	touch $@
@@ -51,15 +51,15 @@ $(STAGING_DIR)/bin/lzma: $(LZMA_HOST_DIR)/src/lzma/lzma
 
 .PHONY: lzma-host use-lzma-host-binary
 use-lzma-host-binary:
-	if [ ! -f "$(TOOL_BUILD_DIR)/bin/lzma" ]; then \
-		[ -d $(TOOL_BUILD_DIR)/bin ] || mkdir -p $(TOOL_BUILD_DIR)/bin; \
-		ln -sf "$(HOST_LZMA_IF_ANY)" "$(TOOL_BUILD_DIR)/bin/lzma"; \
+	if [ ! -f "$(TOOLCHAIN_DIR)/bin/lzma" ]; then \
+		[ -d $(TOOLCHAIN_DIR)/bin ] || mkdir -p $(TOOLCHAIN_DIR)/bin; \
+		ln -sf "$(HOST_LZMA_IF_ANY)" "$(TOOLCHAIN_DIR)/bin/lzma"; \
 	fi
 
 build-lzma-host-binary: $(LZMA_HOST_DIR)/src/lzma/lzma
-	-rm -f $(TOOL_BUILD_DIR)/bin/lzma
-	[ -d $(TOOL_BUILD_DIR)/bin ] || mkdir $(TOOL_BUILD_DIR)/bin
-	cp -pf $(LZMA_HOST_DIR)/src/lzma/lzma $(TOOL_BUILD_DIR)/bin/lzma
+	-rm -f $(TOOLCHAIN_DIR)/bin/lzma
+	[ -d $(TOOLCHAIN_DIR)/bin ] || mkdir $(TOOLCHAIN_DIR)/bin
+	cp -pf $(LZMA_HOST_DIR)/src/lzma/lzma $(TOOLCHAIN_DIR)/bin/lzma
 
 host-lzma: $(HOST_LZMA_BINARY)
 
@@ -90,7 +90,7 @@ $(LZMA_TARGET_DIR)/.configured: $(LZMA_TARGET_DIR)/.unpacked
 		$(TARGET_CONFIGURE_ARGS) \
 		CFLAGS="$(TARGET_CFLAGS)" \
 		ac_cv_func_malloc_0_nonnull=yes \
-		./configure \
+		./configure $(QUIET) \
 		--target=$(GNU_TARGET_NAME) \
 		--host=$(GNU_TARGET_NAME) \
 		--build=$(GNU_HOST_NAME) \
@@ -115,7 +115,7 @@ $(TARGET_DIR)/$(LZMA_TARGET_BINARY): $(LZMA_TARGET_DIR)/src/lzma/lzma
 
 #lzma-headers: $(TARGET_DIR)/$(LZMA_TARGET_BINARY)
 
-lzma-target: uclibc $(TARGET_DIR)/$(LZMA_TARGET_BINARY)
+lzma-target: $(TARGET_DIR)/$(LZMA_TARGET_BINARY)
 
 lzma-source: $(DL_DIR)/$(LZMA_SOURCE)
 

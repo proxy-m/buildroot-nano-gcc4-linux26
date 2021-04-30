@@ -35,7 +35,7 @@ $(FAKEROOT_DIR1)/.configured: $(FAKEROOT_SOURCE_DIR)/.unpacked
 	mkdir -p $(FAKEROOT_DIR1)
 	(cd $(FAKEROOT_DIR1); rm -rf config.cache; \
 		CC="$(HOSTCC)" \
-		$(FAKEROOT_SOURCE_DIR)/configure \
+		$(FAKEROOT_SOURCE_DIR)/configure $(QUIET) \
 		--prefix=$(HOST_DIR)/usr \
 	)
 	touch $@
@@ -48,7 +48,7 @@ $(HOST_DIR)/usr/bin/fakeroot: $(FAKEROOT_DIR1)/faked
 	$(MAKE) -C $(FAKEROOT_DIR1) install
 	touch -c $@
 
-host-fakeroot: uclibc $(HOST_DIR)/usr/bin/fakeroot
+host-fakeroot: $(HOST_DIR)/usr/bin/fakeroot
 
 host-fakeroot-clean:
 	-$(MAKE) -C $(FAKEROOT_DIR1) clean
@@ -68,7 +68,7 @@ $(FAKEROOT_DIR2)/.configured: $(FAKEROOT_SOURCE_DIR)/.unpacked
 	(cd $(FAKEROOT_DIR2); rm -rf config.cache; \
 		$(TARGET_CONFIGURE_OPTS) \
 		$(TARGET_CONFIGURE_ARGS) \
-		$(FAKEROOT_SOURCE_DIR)/configure \
+		$(FAKEROOT_SOURCE_DIR)/configure $(QUIET) \
 		--target=$(GNU_TARGET_NAME) \
 		--host=$(GNU_TARGET_NAME) \
 		--build=$(GNU_HOST_NAME) \
@@ -106,7 +106,7 @@ endif
 	rm -rf $(TARGET_DIR)/usr/share/doc
 	touch -c $@
 
-fakeroot: uclibc $(TARGET_DIR)/usr/bin/fakeroot
+fakeroot: $(TARGET_DIR)/usr/bin/fakeroot
 
 fakeroot-clean:
 	-$(MAKE) -C $(FAKEROOT_DIR2) clean

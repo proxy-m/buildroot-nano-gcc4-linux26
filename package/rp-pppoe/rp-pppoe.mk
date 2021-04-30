@@ -38,7 +38,7 @@ $(RP_PPPOE_TOPDIR)/.configured: $(RP_PPPOE_TOPDIR)/.unpacked
 		$(TARGET_CONFIGURE_OPTS) \
 		$(TARGET_CONFIGURE_ARGS) \
 		rpppoe_cv_pack_bitfields=normal \
-		./configure \
+		./configure $(QUIET) \
 		--target=$(GNU_TARGET_NAME) \
 		--host=$(GNU_TARGET_NAME) \
 		--build=$(GNU_HOST_NAME) \
@@ -59,7 +59,7 @@ ifeq ($(BR2_HAVE_MANPAGES),y)
 endif
 	$(STRIPCMD) $(STRIP_STRIP_ALL) $@
 
-rp-pppoe: uclibc $(TARGET_DIR)/$(RP_PPPOE_TARGET_BINARY)
+rp-pppoe: $(TARGET_DIR)/$(RP_PPPOE_TARGET_BINARY)
 
 rp-pppoe-source: $(DL_DIR)/$(RP_PPPOE_SOURCE) $(RP_PPPOE_PATCH_FILE)
 

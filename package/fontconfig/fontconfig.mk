@@ -21,7 +21,7 @@ FONTCONFIG_CONF_OPT = --with-arch=$(GNU_TARGET_NAME) \
 		--with-expat-includes=$(STAGING_DIR)/usr/include \
 		--disable-docs
 
-FONTCONFIG_DEPENDENCIES = uclibc freetype expat
+FONTCONFIG_DEPENDENCIES = freetype expat
 
 $(eval $(call AUTOTARGETS,package,fontconfig))
 
@@ -42,7 +42,7 @@ $(STAMP_DIR)/host_fontconfig_configured: $(STAMP_DIR)/host_fontconfig_unpacked $
 		$(HOST_CONFIGURE_OPTS) \
 		CFLAGS="$(HOST_CFLAGS)" \
 		LDFLAGS="$(HOST_LDFLAGS)" \
-		./configure \
+		./configure $(QUIET) \
 		--prefix="$(HOST_DIR)/usr" \
 		--sysconfdir="$(HOST_DIR)/etc" \
 		--disable-docs \

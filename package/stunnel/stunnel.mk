@@ -27,7 +27,7 @@ $(STUNNEL_DIR)/.configured: $(STUNNEL_DIR)/.unpacked
 		$(TARGET_CONFIGURE_ARGS) \
 		ac_cv_file___dev_ptmx_=yes \
 		ac_cv_file___dev_ptc_=no \
-		./configure \
+		./configure $(QUIET) \
 		--target=$(GNU_TARGET_NAME) \
 		--host=$(GNU_TARGET_NAME) \
 		--build=$(GNU_HOST_NAME) \
@@ -62,7 +62,7 @@ ifeq ($(BR2_CROSS_TOOLCHAIN_TARGET_UTILS),y)
 		$(STAGING_DIR)/usr/$(REAL_GNU_TARGET_NAME)/target_utils/stunnel
 endif
 
-stunnel: uclibc $(TARGET_DIR)/usr/bin/stunnel
+stunnel: $(TARGET_DIR)/usr/bin/stunnel
 
 stunnel-clean:
 	-$(MAKE) -C $(STUNNEL_DIR) clean

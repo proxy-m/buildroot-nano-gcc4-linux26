@@ -21,7 +21,7 @@ $(LIBFUSE_DIR)/.configured: $(LIBFUSE_DIR)/.source
 	(cd $(LIBFUSE_DIR); rm -rf config.cache ; \
 	$(TARGET_CONFIGURE_OPTS) \
 	CFLAGS="$(TARGET_CFLAGS)" \
-		./configure \
+		./configure $(QUIET) \
 		--target=$(GNU_TARGET_NAME) \
 		--host=$(GNU_TARGET_NAME) \
 		--build=$(GNU_HOST_NAME) \
@@ -55,7 +55,7 @@ $(TARGET_DIR)/usr/lib/libfuse.so: $(STAGING_DIR)/usr/lib/libfuse.so
 	$(STRIPCMD) $(STRIP_STRIP_UNNEEDED) $(TARGET_DIR)/usr/lib/libfuse.so
 	touch -c $@
 
-libfuse: uclibc $(TARGET_DIR)/usr/lib/libfuse.so
+libfuse: $(TARGET_DIR)/usr/lib/libfuse.so
 
 libfuse-source: $(DL_DIR)/$(LIBFUSE_SOURCE)
 

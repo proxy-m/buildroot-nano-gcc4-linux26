@@ -35,7 +35,7 @@ $(TCPDUMP_DIR)/.configured: $(TCPDUMP_DIR)/.unpacked
 		BUILD_CC=$(TARGET_CC) HOSTCC="$(HOSTCC)" \
 		$(TARGET_CONFIGURE_OPTS) \
 		$(TARGET_CONFIGURE_ARGS) \
-		./configure \
+		./configure $(QUIET) \
 		--target=$(GNU_TARGET_NAME) \
 		--host=$(GNU_TARGET_NAME) \
 		--build=$(GNU_HOST_NAME) \
@@ -60,7 +60,7 @@ $(TARGET_DIR)/usr/sbin/tcpdump: $(TCPDUMP_DIR)/tcpdump
 	cp -f $< $@
 	$(STRIPCMD) $@
 
-tcpdump: uclibc zlib libpcap $(TARGET_DIR)/usr/sbin/tcpdump
+tcpdump: zlib libpcap $(TARGET_DIR)/usr/sbin/tcpdump
 
 tcpdump-clean:
 	rm -f $(TARGET_DIR)/usr/sbin/tcpdump
