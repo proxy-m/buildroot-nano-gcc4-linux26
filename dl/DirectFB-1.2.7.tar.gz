@@ -1,0 +1,1212 @@
+<!DOCTYPE html>
+
+<html lang="en-US">
+
+<head>
+	<meta name='robots' content='index, follow, max-video-preview:-1, max-snippet:-1, max-image-preview:large' />
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="template" content="Apex 1.38" />
+
+	<!-- This site is optimized with the Yoast SEO plugin v16.1.1 - https://yoast.com/wordpress/plugins/seo/ -->
+	<title>Directfb.org | Linux &amp; Development</title>
+	<meta name="description" content="We serve the newest news about tech, linux tutorials and resources for development." />
+	<link rel="canonical" href="https://www.directfb.org/" />
+	<meta property="og:locale" content="en_US" />
+	<meta property="og:type" content="website" />
+	<meta property="og:title" content="Directfb.org | Linux &amp; Development" />
+	<meta property="og:url" content="https://www.directfb.org/" />
+	<meta property="og:site_name" content="DirectFB" />
+	<meta name="twitter:card" content="summary_large_image" />
+	<script type="application/ld+json" class="yoast-schema-graph">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://www.directfb.org/#website","url":"https://www.directfb.org/","name":"DirectFB","description":"Tech news and tutorials | Linux &amp; Development","potentialAction":[{"@type":"SearchAction","target":"https://www.directfb.org/?s={search_term_string}","query-input":"required name=search_term_string"}],"inLanguage":"en-US"},{"@type":"CollectionPage","@id":"https://www.directfb.org/#webpage","url":"https://www.directfb.org/","name":"Directfb.org | Linux & Development","isPartOf":{"@id":"https://www.directfb.org/#website"},"description":"We serve the newest news about tech, linux tutorials and resources for development.","breadcrumb":{"@id":"https://www.directfb.org/#breadcrumb"},"inLanguage":"en-US","potentialAction":[{"@type":"ReadAction","target":["https://www.directfb.org/"]}]},{"@type":"BreadcrumbList","@id":"https://www.directfb.org/#breadcrumb","itemListElement":[{"@type":"ListItem","position":1,"item":{"@type":"WebPage","@id":"https://www.directfb.org/","url":"https://www.directfb.org/","name":"Home"}}]}]}</script>
+	<!-- / Yoast SEO plugin. -->
+
+
+<link rel='dns-prefetch' href='//fonts.googleapis.com' />
+<link rel='dns-prefetch' href='//s.w.org' />
+<link rel="alternate" type="application/rss+xml" title="DirectFB &raquo; Feed" href="https://www.directfb.org/feed/" />
+<link rel="alternate" type="application/rss+xml" title="DirectFB &raquo; Comments Feed" href="https://www.directfb.org/comments/feed/" />
+		<script type="text/javascript">
+			window._wpemojiSettings = {"baseUrl":"https:\/\/s.w.org\/images\/core\/emoji\/13.0.1\/72x72\/","ext":".png","svgUrl":"https:\/\/s.w.org\/images\/core\/emoji\/13.0.1\/svg\/","svgExt":".svg","source":{"concatemoji":"https:\/\/www.directfb.org\/wp-includes\/js\/wp-emoji-release.min.js?ver=5.7.1"}};
+			!function(e,a,t){var n,r,o,i=a.createElement("canvas"),p=i.getContext&&i.getContext("2d");function s(e,t){var a=String.fromCharCode;p.clearRect(0,0,i.width,i.height),p.fillText(a.apply(this,e),0,0);e=i.toDataURL();return p.clearRect(0,0,i.width,i.height),p.fillText(a.apply(this,t),0,0),e===i.toDataURL()}function c(e){var t=a.createElement("script");t.src=e,t.defer=t.type="text/javascript",a.getElementsByTagName("head")[0].appendChild(t)}for(o=Array("flag","emoji"),t.supports={everything:!0,everythingExceptFlag:!0},r=0;r<o.length;r++)t.supports[o[r]]=function(e){if(!p||!p.fillText)return!1;switch(p.textBaseline="top",p.font="600 32px Arial",e){case"flag":return s([127987,65039,8205,9895,65039],[127987,65039,8203,9895,65039])?!1:!s([55356,56826,55356,56819],[55356,56826,8203,55356,56819])&&!s([55356,57332,56128,56423,56128,56418,56128,56421,56128,56430,56128,56423,56128,56447],[55356,57332,8203,56128,56423,8203,56128,56418,8203,56128,56421,8203,56128,56430,8203,56128,56423,8203,56128,56447]);case"emoji":return!s([55357,56424,8205,55356,57212],[55357,56424,8203,55356,57212])}return!1}(o[r]),t.supports.everything=t.supports.everything&&t.supports[o[r]],"flag"!==o[r]&&(t.supports.everythingExceptFlag=t.supports.everythingExceptFlag&&t.supports[o[r]]);t.supports.everythingExceptFlag=t.supports.everythingExceptFlag&&!t.supports.flag,t.DOMReady=!1,t.readyCallback=function(){t.DOMReady=!0},t.supports.everything||(n=function(){t.readyCallback()},a.addEventListener?(a.addEventListener("DOMContentLoaded",n,!1),e.addEventListener("load",n,!1)):(e.attachEvent("onload",n),a.attachEvent("onreadystatechange",function(){"complete"===a.readyState&&t.readyCallback()})),(n=t.source||{}).concatemoji?c(n.concatemoji):n.wpemoji&&n.twemoji&&(c(n.twemoji),c(n.wpemoji)))}(window,document,window._wpemojiSettings);
+		</script>
+		<style type="text/css">
+img.wp-smiley,
+img.emoji {
+	display: inline !important;
+	border: none !important;
+	box-shadow: none !important;
+	height: 1em !important;
+	width: 1em !important;
+	margin: 0 .07em !important;
+	vertical-align: -0.1em !important;
+	background: none !important;
+	padding: 0 !important;
+}
+</style>
+	<link rel='stylesheet' id='wp-block-library-css'  href='https://www.directfb.org/wp-includes/css/dist/block-library/style.min.css?ver=5.7.1' type='text/css' media='all' />
+<link rel='stylesheet' id='contact-form-7-css'  href='https://www.directfb.org/wp-content/plugins/contact-form-7/includes/css/styles.css?ver=5.4' type='text/css' media='all' />
+<link rel='stylesheet' id='ct-apex-style-css'  href='https://www.directfb.org/wp-content/themes/apex/style.css?ver=5.7.1' type='text/css' media='all' />
+<link rel='stylesheet' id='ct-morning-child-style-css'  href='https://www.directfb.org/wp-content/themes/morning/style.css?ver=5.7.1' type='text/css' media='all' />
+<link rel='stylesheet' id='ct-apex-font-awesome-css'  href='https://www.directfb.org/wp-content/themes/apex/assets/font-awesome/css/all.min.css?ver=5.7.1' type='text/css' media='all' />
+<link rel='stylesheet' id='ct-morning-google-fonts-css'  href='//fonts.googleapis.com/css?family=Montserrat%3A400%2C700%7COpen+Sans%3A400%2C700&#038;ver=5.7.1' type='text/css' media='all' />
+<script type='text/javascript' src='https://www.directfb.org/wp-includes/js/jquery/jquery.min.js?ver=3.5.1' id='jquery-core-js'></script>
+<script type='text/javascript' src='https://www.directfb.org/wp-includes/js/jquery/jquery-migrate.min.js?ver=3.3.2' id='jquery-migrate-js'></script>
+<!--[if IE 8]>
+<script type='text/javascript' src='https://www.directfb.org/wp-content/themes/apex/js/build/html5shiv.min.js?ver=5.7.1' id='ct-apex-html5-shiv-js'></script>
+<![endif]-->
+<link rel="https://api.w.org/" href="https://www.directfb.org/wp-json/" /><link rel="EditURI" type="application/rsd+xml" title="RSD" href="https://www.directfb.org/xmlrpc.php?rsd" />
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="https://www.directfb.org/wp-includes/wlwmanifest.xml" /> 
+<meta name="generator" content="WordPress 5.7.1" />
+</head>
+
+<body data-rsssl=1 id="morning" class="home blog full-post">
+			<a class="skip-content" href="#main">Skip to content</a>
+	<div id="overflow-container" class="overflow-container">
+		<div id="max-width" class="max-width">
+									<header class="site-header" id="site-header" role="banner">
+				<div id="menu-primary-container" class="menu-primary-container">
+					<div id="menu-primary" class="menu-container menu-primary" role="navigation">
+	<nav class="menu"><ul id="menu-primary-items" class="menu-primary-items"><li id="menu-item-57" class="menu-item menu-item-type-custom menu-item-object-custom current-menu-item current_page_item menu-item-home menu-item-57"><a href="https://www.directfb.org" aria-current="page">Home</a></li>
+<li id="menu-item-58" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-58"><a href="https://www.directfb.org/privacy-policy/">Privacy Policy</a></li>
+<li id="menu-item-95" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-95"><a href="https://www.directfb.org/contact/">Contact</a></li>
+</ul></nav></div>
+					<div class='search-form-container'>
+	<button id="search-icon" class="search-icon">
+		<i class="fas fa-search"></i>
+	</button>
+	<form role="search" method="get" class="search-form" action="https://www.directfb.org/">
+		<label class="screen-reader-text">Search</label>
+		<input type="search" class="search-field" placeholder="Search..." value="" name="s"
+		       title="Search for:" tabindex="-1"/>
+	</form>
+</div>									</div>
+				<button id="toggle-navigation" class="toggle-navigation">
+					<span class="screen-reader-text">open menu</span>
+					<svg width="24px" height="18px" viewBox="0 0 24 18" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+				    <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+				        <g transform="translate(-148.000000, -36.000000)" fill="#6B6B6B">
+				            <g transform="translate(123.000000, 25.000000)">
+				                <g transform="translate(25.000000, 11.000000)">
+				                    <rect x="0" y="16" width="24" height="2"></rect>
+				                    <rect x="0" y="8" width="24" height="2"></rect>
+				                    <rect x="0" y="0" width="24" height="2"></rect>
+				                </g>
+				            </g>
+				        </g>
+				    </g>
+				</svg>				</button>
+				<div id="title-container" class="title-container">
+					<div id='site-title' class='site-title'><a href='https://www.directfb.org'>DirectFB</a></div>					<p class="tagline">Tech news and tutorials | Linux &amp; Development</p>				</div>
+			</header>
+									<section id="main" class="main" role="main">
+				<h1 class="screen-reader-text">DirectFB Posts</h1><div id="loop-container" class="loop-container">
+	<div class="post-122 post type-post status-publish format-standard has-post-thumbnail hentry category-blog entry">
+		<article>
+		<div class="featured-image"><a href="https://www.directfb.org/linux-an-introduction-to-open-source-operating-systems/">Linux: an introduction to open-source operating systems<img width="1100" height="1100" src="https://www.directfb.org/wp-content/uploads/2020/10/linux.jpeg" class="attachment-full size-full wp-post-image" alt="" loading="lazy" srcset="https://www.directfb.org/wp-content/uploads/2020/10/linux.jpeg 1100w, https://www.directfb.org/wp-content/uploads/2020/10/linux-300x300.jpeg 300w, https://www.directfb.org/wp-content/uploads/2020/10/linux-1024x1024.jpeg 1024w, https://www.directfb.org/wp-content/uploads/2020/10/linux-150x150.jpeg 150w, https://www.directfb.org/wp-content/uploads/2020/10/linux-768x768.jpeg 768w, https://www.directfb.org/wp-content/uploads/2020/10/linux-270x270.jpeg 270w" sizes="(max-width: 1100px) 100vw, 1100px" /></a></div>		<div class="post-container">
+			<div class='post-header'>
+								<span class="post-date">
+					Published October 26, 2020				</span>
+				<h2 class='post-title'>
+					<a href="https://www.directfb.org/linux-an-introduction-to-open-source-operating-systems/">Linux: an introduction to open-source operating systems</a>
+				</h2>
+			</div>
+			<div class="post-content">
+				<p class="p1"><span class="s1"><a href="https://en.wikipedia.org/wiki/Linux" rel="nofollow">Linux is an operating system</a></span>, just like Microsoft&#8217;s Windows or Apple&#8217;s MacOS. An operating system is what makes it possible to use computer hardware. Technically, this serves as an interface between the hardware (processor, memory, sound card) and application software (Internet browser, office suite, games). Without an operating system, a computer is unusable. To be very precise, Linux is the name of the kernel of the operating system, it is the heart of it, which contains the most important programs. It is the central and almost invisible part of the system.</p>
+<p class="p1">GNU/Linux is the name of the entire operating system, although it is often referred simply as Linux for abuse. GNU/Linux makes it possible to insist on the fact that many GNU tools are necessary for <a href="https://www.pornpolis.blog/"><strong>Porno HD </strong></a>the functioning of Linux, but especially to underline its freedom: the difference between GNU/Linux and other systems such as Windows or macOS is that this system d exploitation is free. For the curious, the Linux and the <a href="https://www.gnu.org/gnu/thegnuproject.en.html" rel="nofollow"><span class="s1">GNU Project page</span></a> will explain in more detail what free means and what GNU is.</p>
+<p class="p2"><img loading="lazy" class="alignleft" src="https://img2.freepng.es/20180528/uqc/kisspng-gnu-linux-naming-controversy-linux-distribution-li-5b0c0ccc5bba51.6581240515275163643757.jpg" width="444" height="217" /></p>
+<h2 class="p1"><b>A world-wide, easy-to-use, open-source option among the best operating systems</b></h2>
+<p class="p1">Without necessarily claiming to be the best operating system, Linux <a href="https://www.pornpolis.blog/milf/"><strong><span class="___SText_cbi2o-red-team" data-ui-name="Link.Text">milf xxx</span></strong></a> is a system renowned for its stability &#8211; it is not uncommon to meet people who have not restarted their computer running Linux for many months &#8211; its security and its multitasking side &#8211; you can format a disc, listen to music, burn a backup DVD, download files from the internet, update its distribution and type the text of your monograph on flies in the same time, really, at the same time, and without crashing.</p>
+<p class="p1">In addition, Linux has a very diversified software library. A Linux distribution usually comes with hundreds, if not thousands, of software. Linux is highly customizable and there are several alternatives to do almost anything. At first, it is advisable to choose the most popular software and tools. If afterwards we want to change, there are many possibilities.</p>
+<p><iframe loading="lazy" title="10 ways Linux is just better!" width="500" height="281" src="https://www.youtube.com/embed/mAFMJ1LnQu8?feature=oembed" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></p>
+<p class="p2"><img loading="lazy" class="alignright" src="https://i.pinimg.com/originals/cc/10/d0/cc10d091f6187b0d27c7e7362bab026a.jpg" width="299" height="187" /></p>
+<p class="p1">Linux works on an impressive number of architectures (hardware if you prefer): <a href="https://en.wikipedia.org/wiki/X86" rel="nofollow"><span class="s1">x86 processors</span></a> (Intel Pentium, AMD Athlon and company), Alpha, ARM, Power PC (old Macintosh, G5, etc.). It is therefore found on big IBM servers (mainframes), some personal assistants (PDAs), mobile phones and tablets (Android, Firefox OS) and even parking meters. Did you know that <a href="https://opensource.com/article/19/8/everyday-tech-runs-linux" rel="nofollow"><span class="s1">Google and Facebook run entirely on Linux</span></a>? NASA uses Linux on its computers and robots in space.</p>
+<p class="p1">All in all, you will quickly see that Linux, although it is less prevalent on personal computers than other operating systems, is just as pleasant an environment to use as the others and not much more difficult.</p>
+<h2 class="p1"><b>Why should you start coding in Linux?</b></h2>
+<p class="p1">The choice to develop software in <span class="s1">C or C ++ language</span> on Linux actually covers two decisions. First, you choose an operating system. Using Linux as a development environment is a new option in industry. The second decision concerns the language and the libraries used. Other languages ​​are indeed available, and you must be in line with the end goal of the application as well as the intended audience. The next paragraphs will examine the possibilities offered by the tools available under Linux for a good software realization in C or C ++ language.</p>
+<p class="p1">Well, choosing the Linux platform to perform software development is already an important decision. Several motivations can be at the origin of this choice. First of all, Linux is probably the best operating system for distributing <span class="s1">free software, websites like <a href="https://geile.blog/joyclub/">joyclub</a> can be made thanks to free software like this</span>. The spirit of the Linux community is such that a new project is generally well received, and the enthusiasm of the participants allows the rapid progression of software, provided the team is sufficiently motivated.</p>
+<p class="p2"><img loading="lazy" class="alignleft" src="https://3.bp.blogspot.com/-bL11VcacNzQ/XMaWOjnR3BI/AAAAAAAAAJw/enVNcqjvhz0XDQ2WLS8BkjzVLP9TNk51gCLcBGAs/s1600/IMG_20190428_132446_641.jpg" width="279" height="338" /></p>
+<p class="p1">This type of choice is no longer only made by amateurs or students, but some companies have already understood the immediate interest for them in adhering to the logic of free software. This is the case, for example, with some manufacturers of computer peripherals: they distribute the technical specifications of their hardware in the development of free drivers for operation under Linux. The choice of the Linux system as a development environment can also be motivated by the quality of the tools available &#8220;freely&#8221; and the documentation available on the Internet. Upon installation, any Gnu/Linux distribution includes all the software tools needed by the programmer &#8211; editors, compilers, debuggers &#8211; for all commonly used computer languages.</p>
+<p class="p1">In addition, porting applications to other <span class="s1">Unix environments</span> is often very fast, since it only requires a simple recompilation of the source files. It is then possible to have PC type development stations, which are powerful and economical. Note also that Linux, far from being limited to PCs, is available on a wide variety of machines. Applications running under this system automatically have &#8220;internal&#8221; portability across a full range of different architectures and processors.</p>
+<p class="p1">However, the most common motivation for Linux development is simply the choice of this system as the final application platform. This solution has been used for several years in many laboratories, study centers, etc. The use of Linux as the primary environment for industrial applications is more recent, but once initial reservations have been overcome, there is usually a slow but steady increase in the number of machines running Linux within an organization.</p>
+<p class="p1">To ensure the success of an application development under Linux, it is important to clearly target in which category the product fits: free software distributed on the Internet or reserved for internal use; application intended to be widely ported to other operating systems or conversely limited to use only under Linux. This influence both the programming tools and languages ​​to use, and the priority goals that the team of developers should set for themselves.</p>
+<p><iframe loading="lazy" title="TOP 6 BEST WONDERFUL Linux Distros [ 2020 Edition ]" width="500" height="281" src="https://www.youtube.com/embed/CbnuKnYKaL0?feature=oembed" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></p>
+<h2 class="p1"><b>How to choose the better language for my Linux development?</b></h2>
+<p class="p1">In the industrial world, one of the most popular strengths of the Linux system is its remarkable stability. Correctly configured stations can have very long uninterrupted uptime. The only shutdowns of the system are then due to the hardware components, and not to the software. This results in particularly high system availability rates, which is very valuable in certain types of applications.</p>
+<p class="p1">The most frequently cited example is that of the web server. <a href="https://www.openoffice.org/download/" rel="nofollow"><span class="s1">Apache free software</span></a> is widely used to build efficient and inexpensive servers under Linux. To configure and customize a network server, we often use the <a href="https://www.perl.org/" rel="nofollow"><span class="s1">Perl language</span></a>, which allows you to quickly write small powerful scripts, to boost the content of web pages, to program software robots managing mailing lists or to sort and distribute mail or <a href="https://en.wikipedia.org/wiki/Usenet" rel="nofollow"><span class="s1">Usenet articles</span></a>.</p>
+<p class="p2"><img loading="lazy" class="alignright" src="https://img.devrant.com/devrant/rant/r_2279210_2oE39.jpg" width="368" height="327" /></p>
+<p class="p1">For applications requiring greater technical involvement, the most used languages ​​are C and C ++. Portability is a bit more restricted, mainly regarding the user interface. In fact, the Linux kernel, as well as all the system utilities, are written in C. The use of this language therefore allows easy access to the low-level resources essential in certain applications (interfacing, writing a device driver, etc.). The C language offers technical advantages in terms of power and speed, particularly suitable for scientific and industrial applications. In addition, as a compiled language, it provides a stand-alone executable file, which ensures the confidentiality of the algorithms used in the sources. This aspect constitutes, in certain circumstances, a real advantage over other languages.</p>
+<p class="p1">The graphical environment used in Linux is the <a href="https://en.wikipedia.org/wiki/X_Window_System" rel="nofollow"><span class="s1">XWindow system</span></a>. This very powerful system is particularly interesting on networked machines, because it allows displays to be deported to remote stations. X-Window imposes very few obligations in terms of the appearance of applications. Therefore, many different graphics libraries coexist, sometimes making porting applications somewhat difficult.</p>
+<p class="p1">Two main graphical environments currently exist: the <a href="https://www.gnome.org/"><span class="s1">Gnome system</span></a>, from the GNU project, and the <a href="https://kde.org/" rel="nofollow"><span class="s1">KDE system</span></a>. Both are installed automatically with most current distributions, and the user chooses their preferred environment upon login. These environments affect the appearance and behavior of windows (system menu, borders, mouse reaction, etc.), but also have an important role in communication between applications.</p>
+<p class="p1">Choosing to use the Gnome or KDE environment for an application&#8217;s user interface is therefore not an innocent action. Another possibility is to use a portable library on all Unix systems. The <a href="https://en.wikipedia.org/wiki/Motif_(software)%23:~:text=Motif%2520is%2520the%2520basic%2520building,standard%2520desktop%2520for%2520commercial%2520Unix.&amp;text=As%2520of%2520version%25202.1%252C%2520Motif,used%2520in%2520several%2520multilingual%2520environments." rel="nofollow"><span class="s1">Motif environment</span></a> has established itself as a de facto standard in industrial computer systems. There are several commercial implementations of this in Linux, as well as a free implementation called <a href="https://en.wikipedia.org/wiki/LessTif"><span class="s1">Lesstif</span></a>. The use of these libraries helps to ensure portability of graphics applications, while maintaining the efficiency and performance of a compiled language close to the machine.</p>
+<h2 class="p1"><b>Development tools that will make your life easier in Linux</b></h2>
+<p class="p1">The development tools freely available in Linux are surprisingly powerful. At the heart of programming in C or C ++ language is naturally the compiler. The one used in Linux is called <a href="https://gcc.gnu.org/" rel="nofollow"><span class="s1">GCC</span></a>. This is a compiler produced by the GNU Project, the purpose of which is to freely provide replacement software for all system utilities and development tools under Unix. The GCC compiler is nothing specific to Linux. It represents an interesting alternative to very expensive compilers, since it allows to equip easily and inexpensively all the stations of the developers of a team. GCC is available in several versions installed jointly, depending on whether you prefer to use the C language, C ++, or even the <a href="https://en.wikipedia.org/wiki/Objective-C" rel="nofollow"><span class="s1">Objective C dialect</span></a>. The many options available to adjust the configuration of the compiler allow you to adapt its behavior to the wishes of the programmer, particularly with regard to compliance with the most common standards (Posix, Iso C99, etc.).</p>
+<blockquote class="twitter-tweet" data-width="500" data-dnt="true">
+<p lang="en" dir="ltr">Top 7 CAD Programs Available for Linux <a href="https://t.co/en2XzqxSg5">https://t.co/en2XzqxSg5</a> via <a href="https://twitter.com/itsfoss2?ref_src=twsrc%5Etfw">@itsfoss2</a></p>
+<p>&mdash; howtopam (@howtopam) <a href="https://twitter.com/howtopam/status/1319831985301250049?ref_src=twsrc%5Etfw">October 24, 2020</a></p></blockquote>
+<p><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script></p>
+<p class="p1">The GCC compiler is a command line tool, which can therefore be started directly &#8220;by hand&#8221; by indicating the desired options and the source files to be compiled. This utility performs only one task, but it performs it best, without user interface considerations distracting it from its role, distractions like <a href="https://geile.blog/">free porn</a> and many others. To improve the ergonomics of the programmer, there are however a certain number of integrated development environments, which include a text editor for entering source files, and graphic components (buttons, menus, etc.) to directly invoke the compiler in background, making sure you are using the correct options. These environments also allow the <a href="https://en.wikipedia.org/wiki/GNU_Debugger%23:~:text=The%2520GNU%2520Debugger%2520(GDB)%2520is,%252C%2520Go%252C%2520and%2520partially%2520others." rel="nofollow"><span class="s1">GNU debugger, named GDB</span></a>. Like the compiler, this tool works by invocation from a command line, and then offers a minimal user interface. Integrated development environments frame it and present a more attractive graphical interface, allowing the execution of a program instruction by instruction, inspection of variables, and more.</p>
+<p class="p2"><img loading="lazy" class="aligncenter" src="https://i.chzbgr.com/original/6349573/hB0DE8033/20-programming-memes-thatll-trigger-any-developer" width="549" height="309" /></p>
+<p class="p1">The GNU project brings together a complete set of tools to support the developer&#8217;s work. These include, for example, archiving utilities for creating custom function libraries, source code covers to standardize the appearance of files created by different team members, RCS or CVS tools that provide version control and thus, allow simultaneous work by several developers on the same project while minimizing the risk of competitive modifications.</p>
+<h2 class="p1"><b>The Linux community is the biggest success of this operating system</b></h2>
+<p class="p1">The immense documentation available on the Linux environment is one of the features of this system that is most appealing to programmers. One can <a href="https://www.whizlabs.com/blog/best-linux-blogs/" rel="nofollow"><span class="s1">find on Internet sites</span></a> gathering high quality information in all the fields interesting the developer.</p>
+<p class="p1">With regard to the Linux environment in general, the installation and configuration of applications or the administration of the system, consult the HOW-TO documents, translated into many languages, and which gather information on most of the important subjects for the users.</p>
+<blockquote class="twitter-tweet" data-width="500" data-dnt="true">
+<p lang="en" dir="ltr">Just to make sure that you didn&#39;t miss anything, this could be a good checklist for reference: <a href="https://t.co/tJaf9sMAOp">https://t.co/tJaf9sMAOp</a></p>
+<p> <a href="https://twitter.com/hashtag/Linux?src=hash&amp;ref_src=twsrc%5Etfw">#Linux</a> <a href="https://twitter.com/hashtag/Sysadmin?src=hash&amp;ref_src=twsrc%5Etfw">#Sysadmin</a></p>
+<p>&mdash; Linux Handbook (@LinuxHandbook) <a href="https://twitter.com/LinuxHandbook/status/1319166392780861440?ref_src=twsrc%5Etfw">October 22, 2020</a></p></blockquote>
+<p><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script></p>
+<p class="p1">The programmer can always consult the sources of the kernel or those of the C library at will, which represents not only a source of exact information regarding a precise functionality, but also powerful and often elegant examples of implementation.</p>
+<p class="p1">The functionality offered by the <a href="https://www.kernel.org/" rel="nofollow"><span class="s1">Linux kernel</span></a> and the higher-level routines offered by the standard C library are seldom sufficient to build a complete application. It is often necessary to use other libraries that do various tasks. Let us quote for example the existence of libraries integrating algorithms of compression, encryption, reading of graphic files in most of the usual formats. It is also possible to mention the option of accessing objects available on a <a href="https://en.wikipedia.org/wiki/Common_Object_Request_Broker_Architecture" rel="nofollow"><span class="s1">Corba bus</span></a> or even using gateways to other development languages ​​such as Python, Perl or Tcl/Tk. All these libraries are available in the form of freely searchable source code and adaptable to specific needs.</p>
+<p><iframe loading="lazy" title="Introduction to Linux and Basic Linux Commands for Beginners" width="500" height="281" src="https://www.youtube.com/embed/IVquJh3DXUA?feature=oembed" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></p>
+				<span class="comments-link">
+	<i class="fas fa-comment" title="comment icon" aria-hidden="true"></i>
+	Comments closed</span>			</div>
+		</div>
+	</article>
+	</div><div class="post-7 post type-post status-publish format-standard has-post-thumbnail hentry category-blog entry">
+		<article>
+		<div class="featured-image"><a href="https://www.directfb.org/entrepreneurship/">Books you should read if you want to be a better entrepreneur<img width="1200" height="675" src="https://www.directfb.org/wp-content/uploads/2016/10/Entrepreneurship.jpg" class="attachment-full size-full wp-post-image" alt="" loading="lazy" srcset="https://www.directfb.org/wp-content/uploads/2016/10/Entrepreneurship.jpg 1200w, https://www.directfb.org/wp-content/uploads/2016/10/Entrepreneurship-300x169.jpg 300w, https://www.directfb.org/wp-content/uploads/2016/10/Entrepreneurship-768x432.jpg 768w, https://www.directfb.org/wp-content/uploads/2016/10/Entrepreneurship-1024x576.jpg 1024w" sizes="(max-width: 1200px) 100vw, 1200px" /></a></div>		<div class="post-container">
+			<div class='post-header'>
+								<span class="post-date">
+					Published June 18, 2020				</span>
+				<h2 class='post-title'>
+					<a href="https://www.directfb.org/entrepreneurship/">Books you should read if you want to be a better entrepreneur</a>
+				</h2>
+			</div>
+			<div class="post-content">
+				
+<p>In Scaling Up Excellence, bestselling author, Robert Sutton and Stanford colleague, Huggy Rao Sutton offer a comprehensive guide to management in a package of enticing stories, subtly supported by references to high-end research. Their personal history in the <a href="https://www.pornochacha.com/porno-casero/">porno casero</a> Silicon Valley and their global access to interesting organizations provides a relevant backdrop. </p>
+
+
+
+<p>The main theme is that, while many good practices exist in organizations, they either get lost or there are difficulties when attempts are made to spread them (scale them) across the organization. </p>
+
+
+
+<p>This theme means that this book will provide value to anyone who would like to see organizations improve. The benefits are not limited by industry, functional area or organizational size.</p>
+
+
+
+<div class="wp-block-image"><figure class="aligncenter"><img src="https://images.unsplash.com/photo-1457369804613-52c61a468e7d?ixlib=rb-1.2.1&amp;auto=format&amp;fit=crop&amp;w=1000&amp;q=80" alt="open book lot"/></figure></div>
+
+
+
+<h3><strong>What books do alumni from the Stanford Graduate School of Business recommend? </strong></h3>
+
+
+
+<p>Here’s one: Orbiting the Giant Hairball: A Corporate Fool’s Guide to Surviving with Grace by Gordon MacKenzie </p>
+
+
+
+<blockquote class="wp-block-quote"><p>“It was written by a guy who made Hallmark cards. It’s about maintaining creativity in a corporate structure.”</p><cite>–– Tristan Walker, founder of Walker &amp; Company </cite></blockquote>
+
+
+
+<p>Any business can morph into a giant hairball, a tangled, impenetrable mass of rules, traditions, and systems based on what worked in the past that can plunge it into mediocrity. Gordon MacKenzie worked at Hallmark Cards for thirty years. Much at that time he worked hard to get his colleagues to go into “orbit”, to a mode of dreaming, daring and doing above and beyond the rubber-stamp confines of the administrative mind-set. </p>
+
+
+
+<p>In his deeply funny book, exuberantly illustrated in full color, he shares the story of his own professional evolution, together with lessons on awakening and fostering creative genius.</p>
+
+
+
+<p>Originally self-published and already a business &#8220;cult classic&#8221;, this personally empowering and entertaining book explores the intersection between human creativity and the bottom line. A must-read for any manager looking for new ways to invigorate employees, and any professional who wants to achieve his or her best, most self-expressive, most creative and fulfilling work. </p>
+
+
+
+<h2>Inspiration Awaits</h2>
+
+
+
+<p>5 Influential Business Books You Need to Read Dartmouth The syllabus for Managerial Decision Making at the Tuck School for Business at Dartmouth includes this unexpected yet captivating read: Moneyball: </p>
+
+
+
+<p>The Art of Winning an Unfair Game by Michael Lewis &#8220;One of the best baseball, and management, books out&#8230;. Deserves a place in the Baseball Hall of Fame.&#8221; ― </p>
+
+
+
+<p>Forbes Discover the compelling story of the low-budget Oakland A&#8217;s and their unorthodox general manager, Billy Beane as they use statistics and the scientific method to succeed against teams with much larger payrolls. This is a book that can be appreciated from so many different angles.</p>
+
+
+
+<figure class="wp-block-embed-twitter wp-block-embed is-type-rich is-provider-twitter"><div class="wp-block-embed__wrapper">
+<blockquote class="twitter-tweet" data-width="500" data-dnt="true"><p lang="en" dir="ltr">An unusual business name can work in your favor…if you pay attention to these three qualities.  Buy your copy of &quot;The Naming Book: 5 Steps to Creating Brand &amp; Product Names that Sell&quot; here: <a href="https://t.co/2nQtznrGWc">https://t.co/2nQtznrGWc</a> <a href="https://t.co/9q768mBcVH">https://t.co/9q768mBcVH</a></p>&mdash; Entrepreneur Books (@EntBooks) <a href="https://twitter.com/EntBooks/status/1289275042308804608?ref_src=twsrc%5Etfw">July 31, 2020</a></blockquote><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+</div></figure>
+
+
+
+<h2>The allure is obvious</h2>
+
+
+
+<p>For fans of statistics, this book offers amazing insight into how numbers can be employed in real life with very powerful and very real <a href="https://geile.blog/xhamster/"><strong>xhamster</strong></a> results. </p>
+
+
+
+<p>Human nature fans, this book offers a great look at how mistakes can be repeated and then perpetuated until someone with a strong mind and a stronger will comes along to break the cycle. </p>
+
+
+
+<p>And for fans of character-driven stories, Moneyball hits it out of the park. </p>
+
+
+
+<p> The story of The Rise and Fall of Long-Term Capital Management is a compelling one not only for people interested in finance, but for anyone fascinated by the spectacle of very smart people losing enormous sums of money. </p>
+
+
+
+<p>Lowenstein&#8217;s book makes this story accessible by glossing over some of the technical details, a tradeoff of readability for depth, but still provides insight into the causes of LTCM&#8217;s collapse. In this business classic, now with a new afterword in which the author draws parallels to the recent financial crisis, Lowenstein captures the gripping roller-coaster ride of Long-Term Capital Management. </p>
+
+
+
+<div class="wp-block-image"><figure class="aligncenter"><img src="https://images.unsplash.com/photo-1529400971008-f566de0e6dfc?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=crop&amp;w=1000&amp;q=80" alt="person walking holding brown leather bag"/></figure></div>
+
+
+
+<h2>Influences that can help</h2>
+
+
+
+<p>Drawing on confidential internal memos and interviews with dozens of key players, Lowenstein explains not just how the fund made and lost its money but also how the personalities of Long-Term’s partners, the arrogance of their mathematical certainties, and the culture of Wall Street itself contributed to both their rise and their fall.</p>
+
+
+
+<p>Influence has established itself as the most important book on persuasion ever published. This book explains the psychology of why people say, yes and how to apply these findings to others and your own life. Distinguished psychologist, Robert B. Cialdini Ph.D., explains why some people are remarkably persuasive and how you can beat them at their own game. </p>
+
+
+
+<p>This indispensable book guarantees you’ll never again say, yes when you really mean, no, and how to make yourself into your most influential self. </p>
+
+
+
+<figure class="wp-block-embed-twitter wp-block-embed is-type-rich is-provider-twitter"><div class="wp-block-embed__wrapper">
+<blockquote class="twitter-tweet" data-width="500" data-dnt="true"><p lang="en" dir="ltr">Grow your elist with these 5 smart strategies. Purchase your copy of <a href="https://twitter.com/Robertbly?ref_src=twsrc%5Etfw">@Robertbly</a>’s &quot;The Content Marketing Handbook&quot; <a href="https://t.co/ipkdJgkdcD">https://t.co/ipkdJgkdcD</a> <a href="https://t.co/nxw3fTViRY">https://t.co/nxw3fTViRY</a></p>&mdash; Entrepreneur Books (@EntBooks) <a href="https://twitter.com/EntBooks/status/1288927764922466305?ref_src=twsrc%5Etfw">July 30, 2020</a></blockquote><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+</div></figure>
+
+
+
+<p>Most books of applied psychology fall prey to one of two weaknesses: Either they lack scientific content (or over-simplify) or they present solid information in an academic manner that readers find difficult to absorb and apply. </p>
+
+
+
+<p>Robert Cialdini&#8217;s book stands out brilliantly from these books. Traci is a marketing copywriter with over twelve years experience developing multi channel content and branding strategies for financial products and services for a fortune 100 company, including but not limited to banking, credit cards, lending, and small business. </p>
+
+
+
+<p>Making complicated subject matter more interesting and easier to understand is her specialty. A fan of all things entrepreneurial, she creates branding and marketing materials for start-ups and small businesses.</p>
+				<span class="comments-link">
+	<i class="fas fa-comment" title="comment icon" aria-hidden="true"></i>
+	Comments closed</span>			</div>
+		</div>
+	</article>
+	</div><div class="post-75 post type-post status-publish format-standard has-post-thumbnail hentry category-tech entry">
+		<article>
+		<div class="featured-image"><a href="https://www.directfb.org/the-history-of-linux/">The history of Linux, a brief guide to the world of tech<img width="700" height="558" src="https://www.directfb.org/wp-content/uploads/2018/03/linux-history.jpg" class="attachment-full size-full wp-post-image" alt="The history of Linux" loading="lazy" srcset="https://www.directfb.org/wp-content/uploads/2018/03/linux-history.jpg 700w, https://www.directfb.org/wp-content/uploads/2018/03/linux-history-300x239.jpg 300w, https://www.directfb.org/wp-content/uploads/2018/03/linux-history-339x270.jpg 339w" sizes="(max-width: 700px) 100vw, 700px" /></a></div>		<div class="post-container">
+			<div class='post-header'>
+								<span class="post-date">
+					Published March 6, 2018				</span>
+				<h2 class='post-title'>
+					<a href="https://www.directfb.org/the-history-of-linux/">The history of Linux, a brief guide to the world of tech</a>
+				</h2>
+			</div>
+			<div class="post-content">
+				
+<p class="p1"><span class="s1">Oh Linux, not everyone knows how to understand your awesomeness. Not everyone gets your amazing characteristics and features. The half of the world misleads your excellence.&nbsp;</span></p>
+
+
+
+<p class="p1"><span class="s1">Are you already judging our criteria?</span></p>
+
+
+
+<p class="p1"><span class="s1">We&#8217;re sure. </span></p>
+
+
+
+<p class="p1"><span class="s1">Don’t misunderstand us, we really don’t want to be one sided.&nbsp;</span></p>
+
+
+
+<p class="p1"><span class="s1">We’re aware that Linux is not the best. </span></p>
+
+
+
+<p class="p1"><span class="s1">We just want to let you know, before start talking about the penguin, that there’s no such thing like a perfect operating system (OS). Choosing a software doesn’t involve <a href="https://www.pornpolis.blog/pornhub/"><strong>pornhub</strong></a> the perfect features of a full package program. Instead, is more of a taste and personal functionality decision. In fact, the first question that we have to do before buying an OS, should be: does it works for what I have to do? From then on, selecting the one, means matching different OS features with our needs. </span></p>
+
+
+
+<p class="p1"><span class="s1">You may have judged the first paragraph of this article because you believe that your OS is better than Linux. If that&#8217;s the case, you might be losing the chance of buying the one that really fits your responsibilities. Forget what your heart feels about the operating system you use.</span></p>
+
+
+
+<figure class="wp-block-embed-twitter wp-block-embed is-type-rich is-provider-twitter"><div class="wp-block-embed__wrapper">
+<blockquote class="twitter-tweet" data-width="500" data-dnt="true"><p lang="en" dir="ltr">10 Linux commands to know the system <a href="https://t.co/v7GUSsB4yj">https://t.co/v7GUSsB4yj</a> via <a href="https://twitter.com/nixcraft?ref_src=twsrc%5Etfw">@nixcraft</a> <a href="https://twitter.com/hashtag/Linux?src=hash&amp;ref_src=twsrc%5Etfw">#Linux</a> <a href="https://twitter.com/hashtag/LinuxKernel?src=hash&amp;ref_src=twsrc%5Etfw">#LinuxKernel</a> <a href="https://twitter.com/hashtag/Terminal?src=hash&amp;ref_src=twsrc%5Etfw">#Terminal</a> <a href="https://twitter.com/hashtag/Shell?src=hash&amp;ref_src=twsrc%5Etfw">#Shell</a> <a href="https://twitter.com/hashtag/Bash?src=hash&amp;ref_src=twsrc%5Etfw">#Bash</a></p>&mdash; Scripter (@thomas_metz) <a href="https://twitter.com/thomas_metz/status/1289201556663996416?ref_src=twsrc%5Etfw">July 31, 2020</a></blockquote><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+</div></figure>
+
+
+
+<h2>Compare &#8211; be critical</h2>
+
+
+
+<p class="p1"><span class="s1">Windows is not perfect. MacOS is not the best. Linux is not the greatest. And, there are many other OS that exits on the computer market.</span></p>
+
+
+
+<p class="p1"><span class="s1">In general, the one that you use, is the one that suits your tasks. If you want to buy the one that suits you best, you will have to know all of the programs, its functions, characteristics, pros, cons and more, to find out the right one. </span></p>
+
+
+
+<p class="p1"><span class="s1">As result, I don’t know about you reading this article, but we believe that Linux deserves -like every other program-, further consideration than the actual. All of the products that exist, deserve a chance to be known and proven. </span></p>
+
+
+
+<p class="p1"><span class="s1">Besides critics and hate, we´ll like to spread some good information by trying to make a rational and objective article about another brand, that has always been there, but never has being as popular as it´s sisters.</span></p>
+
+
+
+<p class="p1"><span class="s1">Bad reputation, is unfair and lead by disinformation. There is a lot of negative reviews around of Linux, that may have influenced your decision on acquiring another OS.</span></p>
+
+
+
+<p class="p1"><span class="s1">On this article, you will find a chance to know more about the famous penguin operating system, Linux. </span></p>
+
+
+
+<h2 class="p1"><span class="s1"><b>What is Linux?</b></span></h2>
+
+
+
+<p class="p1"><span class="s1">Before talking about the technical side of Linux, we have to explain the theory. </span></p>
+
+
+
+<p class="p1"><span class="s1">First, we need to make sure that the basis conceptualization is clear. </span></p>
+
+
+
+<p class="p1"><span class="s1">Everyone knows that Linux is an operating system that’s been around for a while &#8211; even before MacOS, that was released on 1995. It holds the essence of other OS like Windows XP, Windows 7, Windows 8, and Mac OS X, with a different characteristic -that we&#8217;ll explain later. </span></p>
+
+
+
+<p class="p1"><span class="s1">Perhaps, in general, people doesn&#8217;t really know what’s an operating system &#8211; unless you’re some kind of computer engineer or that you have a job related with computers. By “knowing”, we refer to actually have the capability of explaining what it is.</span></p>
+
+
+
+<p class="p1"><span class="s1">The OS, is simply a software. An operating system, is in charge of managing all of your desktop or laptop hardware. It basically controls communication between the software and the hardware. And, you need it&#8217;s functions to keep the laptop alive. </span></p>
+
+
+
+<div class="wp-block-image"><figure class="aligncenter"><img src="https://images.unsplash.com/photo-1583109193439-1ebb113bceac?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=crop&amp;w=1000&amp;q=80" alt="green and black audio mixer"/></figure></div>
+
+
+
+<h2>Key points</h2>
+
+
+
+<p class="p1"><span class="s1">An OS, specifically Linux, is composed by the following parts:</span></p>
+
+
+
+<ol class="ol1"><li class="li1"><span class="s1">The kernel: this part is meant to be the heart of the whole system that manages the CPU, memory and other devices. Kernel is the one piece that we called Linux and is the “lowest” level of all the OS. </span></li><li class="li1"><span class="s1">The Bootloader: it manages the boot process in any Linux compatible CPU. This piece is the famous starting page that appears once we had turn on the CPU. </span></li><li class="li1"><span class="s1">Daemons: this piece comes into action after turning on the computer. Daemons, is not a lonely tool but all of the devices that comprised Linux; such as, the printer, calculator, schedule, calendar, and others. </span></li><li class="li1"><span class="s1">Graphical Server or X: subsystem that displays graphics on your screen. </span></li><li class="li1"><span class="s1">Shell: an original piece of the penguin. It&#8217;s basically a command process that allows you to control the computer by typing commands into the text interface. If your not someone related with codes and computers, you have just find the floor where people got scared of the penguin world, in the past; back then, people would had to learn some codes properly to successfully manage the OS. Nowadays, you don’t have to do this anymore.</span></li><li class="li1"><span class="s1">Desktop environment: the part where people interacts with the OS. Linux has a wide layout of environments to choose from; such as:<span class="Apple-converted-space">&nbsp; </span>Unity, GNOME, Cinnamon, Enlightenment, etc. </span><span class="s1">Additionally, each one of these environments have built-in characteristics, for the user; such as: file managers, configuration tools,games, etc.&nbsp;</span></li><li class="li1"><span class="s1">Applications: everyone&#8217;s favorite part in an OS. Linux offers thousands of software to install and enjoy, but it doesn’t provide the full army. Nowadays, some Linux softwares, include application stores to simplify the finding process.<span class="Apple-converted-space">&nbsp; &nbsp;</span></span></li></ol>
+
+
+
+<h2 class="p1"><span class="s1"><b>Linux time line</b></span></h2>
+
+
+
+<p class="p1"><span class="s1">Now that we actually know what is an OS, let’s get deep into Linux history. </span></p>
+
+
+
+<p class="p1"><span class="s1">Linux story started back in the early 90’s when the </span><span class="s2">Finnish student Linus Torvalds, started a personal project of creating a free OS. On 1991, Linux kernel, was initially released and it hasn’t stopped growing since then. </span></p>
+
+
+
+<p class="p2"><span class="s1">The penguin origins, go back to early 70&#8217;s when the Unix operating system was implemented by Ken Thompson and Dennis Ritchie, from the AT&amp;T Bell Laboratories (1969), released in 1970. And specifically, to their portable and modifiable programming language, called C. On which Linux kernel creator wrote his program. </span></p>
+
+
+
+<p class="p2"><span class="s1">On 1992 Linux distributions was created along with the relicensed GNU GPL, starting an era of unstoppable growing to Torvalds creation. </span></p>
+
+
+
+<p class="p2"><span class="s1">It wasn’t until 2007, until the GNU (General Public License), Linux free software license, was finally consolidated with GPLv3 released, marking this part of the story as a new programing adaptation era, for the OS. </span></p>
+
+
+
+<figure class="wp-block-embed-twitter wp-block-embed is-type-rich is-provider-twitter"><div class="wp-block-embed__wrapper">
+<blockquote class="twitter-tweet" data-width="500" data-dnt="true"><p lang="en" dir="ltr">Linux ip Command Examples<a href="https://t.co/fov9srqrgA">https://t.co/fov9srqrgA</a></p>&mdash; pengcz (@abelard2008) <a href="https://twitter.com/abelard2008/status/1288568488743723008?ref_src=twsrc%5Etfw">July 29, 2020</a></blockquote><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+</div></figure>
+
+
+
+<h2>Gaining popularity</h2>
+
+
+
+<p class="p2"><span class="s1">Also on 2007, Dell was distributing for the first time, laptops with preinstalled Ubuntu (Linux famous distribution base), improving its market. </span></p>
+
+
+
+<p class="p2"><span class="s1">But, is fair to say, that the penguin free software system, started it’s massification way before, with IBMs support on 1998; followed by Dell on 2000, year when Microsoft and Linux rivality got aggressive, until 2006 when peace was proclaimed by Microsoft and Novell, by the announcement of a cooperation that enhance better interoperability and mutual patent protection.</span></p>
+
+
+
+<p class="p2"><span class="s1">2011, was the year for Linux kernel consolidation on the new era, when Version 3.0 was released. A year later, Linux server market revenue exceeded the Unix market. Getting to the top, back in 2013, when Google&#8217;s Linux-Android, claim the big trophy of a 75% smartphone market share.</span></p>
+
+
+
+<p class="p2"><span class="s1">On 2015, latest Linux 4.0 arrived the game. Nowadays, Linux has tons of environments and is used almost anywhere. </span></p>
+				<span class="comments-link">
+	<i class="fas fa-comment" title="comment icon" aria-hidden="true"></i>
+	Comments closed</span>			</div>
+		</div>
+	</article>
+	</div><div class="post-38 post type-post status-publish format-standard has-post-thumbnail hentry category-blog entry">
+		<article>
+		<div class="featured-image"><a href="https://www.directfb.org/how-to-prepare-for-the-first-sex/">How to prepare for the first sex?<img width="1513" height="831" src="https://www.directfb.org/wp-content/uploads/2016/12/FIRST-SEX.jpg" class="attachment-full size-full wp-post-image" alt="" loading="lazy" srcset="https://www.directfb.org/wp-content/uploads/2016/12/FIRST-SEX.jpg 1513w, https://www.directfb.org/wp-content/uploads/2016/12/FIRST-SEX-300x165.jpg 300w, https://www.directfb.org/wp-content/uploads/2016/12/FIRST-SEX-768x422.jpg 768w, https://www.directfb.org/wp-content/uploads/2016/12/FIRST-SEX-1024x562.jpg 1024w" sizes="(max-width: 1513px) 100vw, 1513px" /></a></div>		<div class="post-container">
+			<div class='post-header'>
+								<span class="post-date">
+					Published December 23, 2016				</span>
+				<h2 class='post-title'>
+					<a href="https://www.directfb.org/how-to-prepare-for-the-first-sex/">How to prepare for the first sex?</a>
+				</h2>
+			</div>
+			<div class="post-content">
+				
+<p>The first sexual experience always stays in your memory, it is quite normal and natural. Sex left only positive memories, you need to prepare for this event.</p>
+
+
+
+<p>Intimacy is an inseparable part of the relationship of two loving people. If platonic relationship moved to a new level, and the partners are ripe for closer loving contact, make sure psychological and physical readiness of such a connection.</p>
+
+
+
+<p>The girl needs to understand that her intercourse may be painful, but this discomfort passes quickly, opening an interesting journey into the world of erotica.</p>
+
+
+
+<h3><strong>Physiological readiness for first sex</strong></h3>
+
+
+
+<p>Young people often ask the main question , what is the optimal age for first sex, worrying about the physical state of the body for sexual intercourse.</p>
+
+
+
+<p>It is known that in the course of a scientific experiment, which scientists have conducted over 10 years, was set the ideal age for a woman&#8217;s first sexual intimacy &#8211; 18-19 years.</p>
+
+
+
+<p>This early contact before 17 years and later after 22 years, the researchers say, is connect with complications to health. Similar recommendations sexologists give men. At the same time women have to know that puberty, which manifests the onset of menstruation, is not a reason to start intimacy.</p>
+
+
+
+<p>It is not recommended to intercourse until the menstrual cycle is not stable, and this requires 2-3 years after the onset of menses. But given that they can start with a 9-10 years period of time before the onset of sexual activity should be much more.</p>
+
+
+
+<p>According to statistics, 36% of adolt people have sexual relations before the age of 16, with more than half of them after regret it.</p>
+
+
+
+<p>Early sexual activity has a number of negative consequences:</p>
+
+
+
+<ul><li>The risk of sexually transmitted and infectious diseases due to poor awareness of contraceptive methods and the lack of a permanent partner;</li><li>Unintended pregnancy;</li><li>Increased risk of cervical cancer; -psychological problems associated with the distorted idea about sex or, conversely, its negation.</li></ul>
+
+
+
+<p>Speaking negatively about early sexual intercourse, sexologists are advised not to delay, because it is fraught with hormonal disorders, mental disorders, lack of women orgasm.</p>
+
+
+
+<div class="wp-block-image"><figure class="aligncenter"><img src="https://images.unsplash.com/photo-1533780095592-fe083f460259?ixlib=rb-1.2.1&amp;auto=format&amp;fit=crop&amp;w=1000&amp;q=80" alt="woman in black top looking downwards"/></figure></div>
+
+
+
+<h3><strong>Shychological readiness for the first sex</strong></h3>
+
+
+
+<p>In the life of every girl&#8217;s deflowering (violation of the hymen) provides access to a full sex life, which can be purchased as a positive color, and leave negative memories. Age of first sex today dropped significantly.</p>
+
+
+
+<p>For psychological comfort intimacy is possible only in the most familiar surroundings, where you can feel more uninhibited and use familiar objects.</p>
+
+
+
+<p>It is necessary to sort out your wardrobe and wear the usual things, so as not to feel the discomfort of an additional new clothes, which can be very uncomfortable in the piquant situation.</p>
+
+
+
+<p>Quite often it happens after the penetration of the penis into the vagina without no spotting. This can happen because deflowering held not before the end because of good stretchability hymen.</p>
+
+
+
+<p>Girls should know how to prepare for the first sex and, do not forget all factors, quietly take to the reproaches inexperienced partner, patiently explaining the situation and observing the emotional calm.</p>
+
+
+
+<h3><strong>How to prepare right for the first sex?</strong></h3>
+
+
+
+<p>Beginning sexual activity requires creating an intimate atmosphere, romantic lighting, slow disposing music. Memories of this meeting should be only pleasant, so you need to follow the recommendations of psychologists and sexologists. Often, young people think that taking a small dose of alcohol will help to relax, make pain lower.</p>
+
+
+
+<p>This view is fundamentally wrong. Strong drinks serve as catalysator, reinforcing pain. Intimacy does not tolerate fuss, especially at this crucial moment. Until a man is not enough to excite a woman using a stimulation of erogenous zones, it is not recommended to make defloration.</p>
+
+
+
+<p>Knowing how to prepare yourself to have sex, do not forget about the additional lubricants that are most suitable for such a moment.</p>
+
+
+
+<p>Consultation sexologist on the preparation of the first sex Doctors, teachers and psychologists rightly believe that the younger generation is necessary to take a course of sex education before intimacy.</p>
+
+
+
+<p>The knowledge gained will save from mistakes and form a correct concept of sexual culture. Upon entry into sexual life, it is desirable to combine theory with practice. Theoretical knowledge can expand the emotional range of partners, enriching the intimate life.</p>
+
+
+
+<figure class="wp-block-embed-twitter wp-block-embed is-type-rich is-provider-twitter"><div class="wp-block-embed__wrapper">
+<blockquote class="twitter-tweet" data-width="500" data-dnt="true"><p lang="en" dir="ltr">Only be sexually active with a partner you live with that doesn&#39;t have the virus or symptoms of the virus. Avoid kissing anyone outside of your partner and anyone with symptoms as kissing can easily pass on the virus. <br>Learn more here 💋  <a href="https://t.co/1Sg635d0K8">https://t.co/1Sg635d0K8</a> <a href="https://twitter.com/hashtag/sexualwellbeing?src=hash&amp;ref_src=twsrc%5Etfw">#sexualwellbeing</a> <a href="https://t.co/cV6w5xkg7Y">pic.twitter.com/cV6w5xkg7Y</a></p>&mdash; HSE Sexual Wellbeing (@_respectprotect) <a href="https://twitter.com/_respectprotect/status/1287759648330678272?ref_src=twsrc%5Etfw">July 27, 2020</a></blockquote><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+</div></figure>
+
+
+
+<h3><strong><a href="https://www.directfb.org/required-hygiene-before-sex-with-contraceptives-lical-destination/">The importance of hygiene before sex.</a></strong></h3>
+
+
+
+<p>Clean &#8211; the guarantee of health. Everyone know this truth.<br>If you not following elementary rules of hygiene you can trigger the growth of the number of bacterial diseases, and adversely affect the body&#8217;s immune system. Therefore, almost every person thoroughly washes his hands before making a meal, take a daily shower. </p>
+
+
+
+<p>Remember that it is not less important than hygiene before sex. In this case, in addition to water treatment, it is recommended to comply with many other rules that can protect against infection. Specificity intercourse allows bacteria to multiply actively enough, and even minor damage can facilitate their penetration into the body.</p>
+
+
+
+<h3><strong>Hygiene before oral sex.</strong></h3>
+
+
+
+<p>Experts recommend to use contraception for all contacts, not excluding oral. The mouth contains a large number of bacteria that are in contact with the mucous membranes of the male member provoke the development of numerous diseases. </p>
+
+
+
+<p>Hygiene oral sex to include a set of preparatory actions since taking a shower just before the act of using the means of the processing of intimate genital organs. If fellatio is not spontaneous and is practiced between regular partners, it needs to reorganize oral, cure the sick teeth, getting rid of dental problems.</p>
+
+
+
+<div class="wp-block-image"><figure class="aligncenter is-resized"><img loading="lazy" src="https://images.unsplash.com/photo-1578057287201-3812f175e204?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=crop&amp;w=1000&amp;q=80" alt="shallow focus photo of person's teeth" width="561" height="373"/></figure></div>
+
+
+
+<p>It is strictly prohibited contact with acute respiratory symptoms, pharyngitis, tonsillitis, tonsillitis, etc. Strange as it sounds, but it is not good to fellatio tooth brushing and mouthwash because of the destruction of the natural immunological defense in the oral cavity, which reduces the bactericidal properties of saliva.</p>
+
+
+
+<p>A man must remove excess vegetation on the genitals, in order to prevent hair getting into the respiratory tract, to treat head of the penis and the foreskin of special tools. Before oral intima the stronger sex it is necessary to wash with warm water with a special foam penis. </p>
+
+
+
+<p>The foreskin should pull gently and thoroughly clean the head, paying special attention to the bridle and the rim. In conclusion, you need to wash the groin. And of course, we should not ignore bathing. If this is not possible, you can use intimate wipes that you can find at all ladies purse.</p>
+				<span class="comments-link">
+	<i class="fas fa-comment" title="comment icon" aria-hidden="true"></i>
+	Comments closed</span>			</div>
+		</div>
+	</article>
+	</div><div class="post-35 post type-post status-publish format-standard has-post-thumbnail hentry category-blog entry">
+		<article>
+		<div class="featured-image"><a href="https://www.directfb.org/required-hygiene-before-sex-with-contraceptives-lical-destination/">Required hygiene before sex with contraceptives lical destination<img width="1600" height="1066" src="https://www.directfb.org/wp-content/uploads/2016/12/REQUIR-HYGIENE-BEFORE-SEX.jpg" class="attachment-full size-full wp-post-image" alt="" loading="lazy" srcset="https://www.directfb.org/wp-content/uploads/2016/12/REQUIR-HYGIENE-BEFORE-SEX.jpg 1600w, https://www.directfb.org/wp-content/uploads/2016/12/REQUIR-HYGIENE-BEFORE-SEX-300x200.jpg 300w, https://www.directfb.org/wp-content/uploads/2016/12/REQUIR-HYGIENE-BEFORE-SEX-768x512.jpg 768w, https://www.directfb.org/wp-content/uploads/2016/12/REQUIR-HYGIENE-BEFORE-SEX-1024x682.jpg 1024w" sizes="(max-width: 1600px) 100vw, 1600px" /></a></div>		<div class="post-container">
+			<div class='post-header'>
+								<span class="post-date">
+					Published December 23, 2016				</span>
+				<h2 class='post-title'>
+					<a href="https://www.directfb.org/required-hygiene-before-sex-with-contraceptives-lical-destination/">Required hygiene before sex with contraceptives lical destination</a>
+				</h2>
+			</div>
+			<div class="post-content">
+				
+<p>Local contraceptives are divided into barrier and chemical (spermicide).</p>
+
+
+
+<p>Barrier include condoms, cervical caps, diaphragms. Chemicals include contraceptive creams, vaginal suppositories and tablets. The majority of the fair sex is confident that intimate hygiene before sex is the frequency of cleaning . As much as better. </p>
+
+
+
+<p>This view is erroneous. Endless exposure to water with conventional detergents leads to a breach of an alkaline environment. This imbalance increases the possibility of infection, irritation, unpleasant odor.</p>
+
+
+
+<p>Therefore, before the proximity is important to follow certain rules:</p>
+
+
+
+<ul><li>Contraception must always be perfectly clean, reaching up to complete sterility and stored in a cool and dark place;</li><li>Should not be oily solutions used as a lubricant in this type of contraception. If necessary, you can use prior to the act of contraceptive jelly;</li><li>Diaphragms and caps are sure to wash after each time of each sex. While washing is necessary to avoid fragrances and apply talc; as sanitary protection, you can use dental dams, to cover part of the vagina and the anus.</li><li>Keeping clean and taking into account all the nuances of fellatio, there is no fear of infection of various types and enjoy new sensations.</li></ul>
+
+
+
+<figure class="wp-block-embed-twitter wp-block-embed is-type-rich is-provider-twitter"><div class="wp-block-embed__wrapper">
+<blockquote class="twitter-tweet" data-width="500" data-dnt="true"><p lang="en" dir="ltr">Did you know that condoms are only 82% effective when you don&#39;t use them correctly? 😲 🍆 Watch this video to check if you are using condoms the right way. <a href="https://twitter.com/hashtag/sexualwellbeing?src=hash&amp;ref_src=twsrc%5Etfw">#sexualwellbeing</a> <a href="https://t.co/TNmNBXAIFM">pic.twitter.com/TNmNBXAIFM</a></p>&mdash; HSE Sexual Wellbeing (@_respectprotect) <a href="https://twitter.com/_respectprotect/status/1289190325659918337?ref_src=twsrc%5Etfw">July 31, 2020</a></blockquote><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+</div></figure>
+
+
+
+<h3>Hygiene before anal sex</h3>
+
+
+
+<p>This type of relationship is no longer considered taboo. Anal intercourse is practiced in many couples. However, many people have no idea about the purity of the sexual encounter. Especially important in such a relationship to hygiene before the first sex. </p>
+
+
+
+<p>Note that the anus is the end of the rectum, which is inhabited by a large number of harmful microorganisms, therefore not allowed a sharp transition to vaginal contact without pre-treatment member running water.</p>
+
+
+
+<p>Some doctors recommend at such proximity pre-clean the intestine using an enema. However, in this case violated the intestinal microflora, reduced natural protection, and increased risk of infections. As a rule, not necessarily pre-washing of the intestine. Suffice it before it emptied and washed away.</p>
+
+
+
+<p>To soften the anus and easier penetration is important to use a lubricant. This will help avoid mucosal injury. And it is quite natural that the hygiene before anal sex should be provided by a condom.</p>
+
+
+
+<p>The correct approach to the purity requirements for any sexual acts will allow the partners to feel safe and enjoy the proximity without fear of consequences.</p>
+
+
+
+<h3><strong>Importance of intimare hygiene after sex</strong></h3>
+
+
+
+<p>Implementation of the rules of purity genitals very piquant topic of conversation. Almost no woman does not affect while visiting her gynecologist. This is not entirely true, because performing hygiene after sex can prevent possible unwanted complications in the field of gynecology.</p>
+
+
+
+<p>The main condition for the health of the female reproductive system &#8211; daily care. In addition to standard cleaning the shower and after copulation, doctors recommend the use of condoms, if the ultimate goal of sex is not pregnant. </p>
+
+
+
+<p>It is important to remember that conventional detergents and cosmetics are not suitable for delicate areas.</p>
+
+
+
+<p>They contain high levels of pH, which is harmful for delicate areas. After the proximity should take a shower, but without the use of washcloths in the genital area. Suffice it to be washed away by hand with a special gel, and then wash it off with warm water. </p>
+
+
+
+<p>It is advisable to always carry a damp cloth, which in case of emergency can replace water treatments. </p>
+
+
+
+<p>A negative value is the presence of hair in areas hidden from the eye, which become the cause of bacterial infections. Unwanted hair it has to be removed.</p>
+
+
+
+<h3><strong>Hygiene after oral sex</strong></h3>
+
+
+
+<p>In this type of proximity increases the risk of transmission of pathogenic microbes that cause gastrointestinal infections, genital and respiratory system. The main condition of safe oral-genital contact is personal hygiene after sex and timely rehabilitation of the oral cavity.</p>
+
+
+
+<p>Clean the mouth directly reflected in the spread of the bacteria across the surface of the wound in the mouth, labial herpes, bleeding gums. All these symptoms are a direct contraindication for intimacy.</p>
+
+
+
+<p>Despite the fact that fellatio is considered the safest way relationship, still advisable to use protective equipment and observe safety.</p>
+
+
+
+<p>After fellatio recommended as fast as you can clean mouth by vaginal secretions and semen, which will significantly reduce the risk of infections.</p>
+
+
+
+<h3><strong>Hygiene after anal sex</strong></h3>
+
+
+
+<p>In anal sex should be an essential attribute of a condom. This contraception prevents the spread of harmful intestinal flora in the vagina. However, if the partners are confident in their health and are permanent, such as a married couple, they can practice unprotected contact.</p>
+
+
+
+<p>It took only special grease and hygienic requirements. A man needs to know that even with full confidence in the health of each other&#8217;s penetration into the anus partner&#8217;s risk of developing various forms of urethritis. In this case, preferably within 15 minutes after contact urinate, rinsing the urethra and urethral best effect douching special disinfectant.</p>
+
+
+
+<p>You should not forget that after anal sex hygiene involves right cleaning, which involves the use of warm water and the movement of the pubic area to the anus. Cold water can cause inflammation of the sensitive genitals. Water jet put not directed into the vagina, as increased likelihood of infectious diseases and flushing of the protective film.</p>
+
+
+
+<h2>Optimal disinfectant</h2>
+
+
+
+<p>Gel for intimate treatment which can be used both before coitus, and after it.Genitals need to wipe gently separate towel best &#8211; waffle. The terry towels accumulates a large amount of bacteria. It is recommended to lightly wet the genitals, leaving them moist slightly. </p>
+
+
+
+<p>This is for protection of soft tissues. Compliance with safety measures before and after intercourse is recommended for both men and women.</p>
+
+
+
+<p>Both partners must be assured in the absence of pathogens, allowing them to relax and enjoy a pleasant process.</p>
+
+
+
+<figure class="wp-block-image"><img src="https://images.unsplash.com/photo-1585760271739-382e5fb7c138?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=crop&amp;w=1000&amp;q=80" alt="person holding white and black love print paper"/></figure>
+
+
+
+<h3>Why intimate hygiene is so important in our life?</h3>
+
+
+
+<p>Failure to comply with cleanliness can lead to infertility and gynecological complications. Thus, intimate hygiene after sex is extremely important for reproductive functions of the body.</p>
+
+
+
+<p>The main body of the women&#8217;s reproduction is a uterus that is absolutely sterile. Contact with her malicious viruses and bacteria have a negative impact on functional ability in pregnancy.</p>
+
+
+
+<p>Nature of the uterus is protected from infringement sterile sheath, which is populated by lactobacilli. The immediate objective of these microorganisms is the suppression of the penetration of foreign bodies of the uterus.</p>
+
+
+
+<p>If hygiene is not performed after sex, harmful micro-organisms convert the vaginal environment, making it alkaline. This factor greatly reduces the amount of lactic acid bacteria, reducing the defense, which is manifested in the appearance of dysbiosis.</p>
+
+
+
+<p>In order to prevent inflammatory processes and maintain reproductive function must carefully follow the rules of hygiene, particularly for intimate parts.</p>
+
+
+
+<h3><strong>How to found out man want you or nоt?</strong></h3>
+
+
+
+<p>Relationships between men and women have always been covered by a certain aura of mystery, like a game. Misteryous fact these manifestations often occur because of the uncertainty in the sensations and feelings of each other.</p>
+
+
+
+<p>Human psychology has a hidden attraction to the opposite sex, which give views, gestures, behavior. Therefore ladies are attentive without further goes to identify signs of sexual desire on the part of the second half.</p>
+
+
+
+<h3><strong>Signs of interest to woman.</strong></h3>
+
+
+
+<p>Representatives of the stronger sex rarely show feelings, even if the lady desirable for him. They mask the emotions ostentatious indifference, caustic jokes. The girls are often loss, not knowing, like she or he is an ordinary flirtation. I</p>
+
+
+
+<p>n order to make it easier to understand, there are a number of signs that show the true attitude of the young man. If a guy tries to be close by, offering friendship, strongly involved in the life of a girl, it proves that he considers her charming and suggests a further link.</p>
+
+
+
+<p>Representatives of the stronger sex does not get rid of the &#8220;hunting instinct&#8221; in modern society. &#8220;Prey&#8221; is necessary to win, then the victory sweeter. Easily accessible &#8220;trophies&#8221; does not appeal to the stronger sex. If the partner is seeking long-term girl, going to different victim, then he is interested in a serious relationship.</p>
+
+
+
+<p>Potential partner showering compliments, gifts, surprise of surprises, regardless of the holiday dates, which once again points to the attentions to the young lady.</p>
+
+
+
+<p>Often women ask the question: how to determine whether you want a man. Respond to him with almost 100% certainty can be, after looking for the object of attention.</p>
+
+
+
+<h2>Communication is key</h2>
+
+
+
+<p>If a girl catches for herself a peek, if a representative of the stronger sex focuses on the face, eyes, hair of the object of interest, then it&#8217;s not against the move to a new stage of relations.</p>
+
+
+
+<p>Man partner began to dress, to use a fashionable perfume, always shaven and neat &#8211; it demonstrates a desire to look into the eyes of the beloved ladies much better surrounding.</p>
+
+
+
+<p>Man surrounded pet care and support. Moreover, it can manifest itself in the most insignificant trifles: an umbrella during a rain jacket during the cold season, flowers for no reason, etc.</p>
+
+
+
+<p>Demonstration culinary abilities in a detailed story, offer sample food prepared with their own hands &#8211; it is said that love is just around the corner. The most important sign of serious intent &#8211; familiarity with the household. If he insists, you can be sure that the guy is ready to offer an engagement ring.</p>
+
+
+
+<h3><strong>Recognizing the signs of sexual attraction.</strong></h3>
+
+
+
+<p>Signs of sexual attraction of a young man to the object of signs and the desire to have a lady appear in gifts with overtones, specially prepared words, demonstrating that the gentleman wants intimacy with the object of love. If the girl was presented with erotic lingerie, it is a veiled suggestion to have sex.</p>
+
+
+
+<p>The young man admired the female body, so is a prerequisite touch. In contrast to the friendly, it will be more tender, easy, often simulating a random gesture. It should be noted that the guys are very developed sense of smell, and to awaken the desire is enough to smell a woman. </p>
+
+
+
+<p>Therefore, if the gentleman is trying to inhale the fragrance of perfume, hair and body, he apparently alludes to his sexual desire.</p>
+
+
+
+<p>In any male company boyfriend will try to win the favor of his passion, wanting to stand out from the crowd and be the first. Every woman subconsciously know how to determine what boyfriend wants sex.</p>
+
+
+
+<p>External behavioral responses can show it: languid eyes, the desire to avoid looking directly into the eyes of the woman he loved, nervous behavior and constant presence next to the object sighs.</p>
+
+
+
+<p>All these signs indicate a desire to intima. However, every woman should remember that its behavior should not be vulgar, or gentleman will quickly lose interest in it.</p>
+
+
+
+<h3><strong>Are you ready for his active moves?</strong></h3>
+
+
+
+<p>The reaction of the guy who is set to sex, rather predictable. He will try more often to meet her, to call, to make a pleasant surprise.</p>
+
+
+
+<div class="wp-block-image"><figure class="aligncenter"><img src="https://images.unsplash.com/photo-1508440767412-59ce0b206bbc?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=crop&amp;w=1000&amp;q=80" alt="woman with head resting on hand"/></figure></div>
+
+
+
+<h3><strong>How to found out that man wants you and do not be mistaken, giving him a little more and do not be disappointed?</strong></h3>
+
+
+
+<p>If a woman feels peace and comfort with a partner, she originate the first signs of sexual attraction. This is due to a sense of security, protection of the person with whom she plans a long relationship.</p>
+
+
+
+<p>Woman ready to take action, can not constrain the physical demonstration of affection, indicating the desire to partner.</p>
+
+
+
+<p>Gentle hugs, light touch and strokes are regarded as offering greater.</p>
+
+
+
+<p>At this point, the best &#8211; it is reciprocity: the touch of the hands or an unexpected kiss, which indicate that both partners are ready for another serious relationship.</p>
+				<span class="comments-link">
+	<i class="fas fa-comment" title="comment icon" aria-hidden="true"></i>
+	Comments closed</span>			</div>
+		</div>
+	</article>
+	</div><div class="post-12 post type-post status-publish format-standard has-post-thumbnail hentry category-blog entry">
+		<article>
+		<div class="featured-image"><a href="https://www.directfb.org/questions-with-jimmy-rodela/">Questions with Jimmy Rodela<img width="800" height="533" src="https://www.directfb.org/wp-content/uploads/2016/10/Questions-with-Jimmy-Rodela.jpg" class="attachment-full size-full wp-post-image" alt="" loading="lazy" srcset="https://www.directfb.org/wp-content/uploads/2016/10/Questions-with-Jimmy-Rodela.jpg 800w, https://www.directfb.org/wp-content/uploads/2016/10/Questions-with-Jimmy-Rodela-300x200.jpg 300w, https://www.directfb.org/wp-content/uploads/2016/10/Questions-with-Jimmy-Rodela-768x512.jpg 768w" sizes="(max-width: 800px) 100vw, 800px" /></a></div>		<div class="post-container">
+			<div class='post-header'>
+								<span class="post-date">
+					Published October 13, 2016				</span>
+				<h2 class='post-title'>
+					<a href="https://www.directfb.org/questions-with-jimmy-rodela/">Questions with Jimmy Rodela</a>
+				</h2>
+			</div>
+			<div class="post-content">
+				<p style="text-align: justify;">Ready for  a serious dose of inspiration? Our January Market Expert of the Month, <strong>Jimmy Rodela</strong>, is one inspiring guy. In just a few short years, he went from working 9-5 and knowing very little about business on the Internet to working full-time as  a freelance web content writer. Get to know Jimmy below, and get ready to take on the day! Become a Market Expert: Learn more about the Market Expert Program and apply now!</p>
+<h3 style="text-align: justify;"><strong>1. In three sentences or less, tell us “your story” as an entrepreneur </strong></h3>
+<p style="text-align: justify;">Jimmy: I started in the whole online scene about 4-5 years  ago. Back then, no one taught me the tricks of the trade so I had to spend about 1-2 hours everyday just reading and studying how things worked. I had to do my 9-5 job, worked online for about 2-3 hours, then dedicated another 2  hours just to study. To date, I still spend about 1-2 hours of my time everyday just to read and learn (not including weekends). I find my commitment to studying as one of the crucial things that helped me achieve the level of success that I have right now.</p>
+<h3 style="text-align: justify;"><strong>2. In three sentences or less, tell  us about your business. </strong></h3>
+<p style="text-align: justify;">JR: I offer online writing services. While I cater to a diverse audience, I mostly write for business owners and journalists. These days, however, I mostly write for journalists and authors who contribute on top-tier magazine sites like Forbes and Entrepreneur, among others. Everything that I write for my clients is ghostwritten.</p>
+<h3 style="text-align: justify;"><strong>3. What inspired you to start your  business? </strong></h3>
+<p style="text-align: justify;">JR: It was when I learned that my wife was pregnant. I knew that the amount I earned from my 9-5 job just wasn&#8217;t going to cut it, so I looked to freelancing online to make ends meet. In a matter of 3-4 months, I started to earn more from just working 2-3 hours online, compared to my day job. It was at this point that I decided to join the online bandwagon and do it full time. Related Article: 10 Questions With Sarah Landrum: Business.com Market Expert of the Month</p>
+<h3 style="text-align: justify;"><strong>4. What is the most  rewarding (and the most challenging) part of what you do?</strong></h3>
+<p style="text-align: justify;">JR: The most rewarding part for me is being able to spend time with my family everyday . Hearing my daughter and wife laugh as I work just reminds me of how blessed I am to be where I am at right now. The most challenging part for me would probably be staying disciplined with my work. Running a business at home can be quite challenging because of all the distractions.</p>
+<h3 style="text-align: justify;"><strong>5. Which current marketing trends  do you see as “the future”?</strong></h3>
+<p style="text-align: justify;">JR: I’d say that everyone’s focus in publishing (and consuming) quality content is quite evident. The content consumers are starting to get really vocal about their thoughts on whatever they read online, and the search engines are starting to really recognize what’s good content and what isn’t. This is good news for someone like me who provides affordable, yet high quality writing services. This makes my services all the more relevant to the industry.</p>
+<h3 style="text-align: justify;"><strong>6. What do you believe makes for successful marketing? </strong></h3>
+<p style="text-align: justify;">JR: For me, genuine relationship building is the key. I’m a huge fan of befriending my clients (or prospects). I have found that doing so makes my relationship with them even more meaningful, and it almost always translates to more projects and even referrals.</p>
+<h3 style="text-align: justify;"><strong>7. If you had to give the former you a few words of advice, what would they be? </strong></h3>
+<p style="text-align: justify;">JR: Pray. Without God in your life, you are bound to fail (even if you think you’ve succeeded). Remember that apart from God, you are nothing. Focus. I think a lot of online entrepreneurs are struggling with the shiny object syndrome. I’ve had my fair share of experiencing it so my expertise ended up becoming diluted, instead of becoming laser focused on one thing.</p>
+<h3 style="text-align: justify;"><strong>8. How has your experience in the Business.com Market Expert Program benefitted your business and career?</strong></h3>
+<p style="text-align: justify;">JR: Through reading my articles at Business.com, a couple of clients had asked about my writing services. The Market Expert Program did not only help me in terms of expanding my knowledge and learning from industry experts, but I also had several leads contact me through my profile at Related Article: 10 Questions With Brian Hughes: Business.com Market Expert of the Month</p>
+<h3 style="text-align: justify;"><strong>9. Which entrepreneur do you look up to, and why?</strong></h3>
+<p style="text-align: justify;">JR: I’m a huge fan of Zig Ziglar. Though he’s no longer in this world, the ideas he shared are priceless. Reading his book The Secrets of Closing a Sale really opened my eyes to the dynamics of of how to influence others into becoming actual buyers of my products &#8211; and how to keep them as buyers. His ideas are solid and are very well articulated. But what I like most of all is how they are effective. I tried them myself, so I know at 100% that they flat out work!</p>
+<h3 style="text-align: justify;"><strong>10. What’s your favorite motivational quote? </strong></h3>
+<p style="text-align: justify;">JR: My first one is a bible verse. &#8220;Unless the Lord builds a house, the work of the builders is wasted. Unless the Lord protects a city, guarding it with sentries will do no good,&#8221; Psalm 127:1.</p>
+<p style="text-align: justify;">My second one is &#8220;Whether you think you can, or you think you can&#8217;t—you&#8217;re right” from Henry Ford. Author Bio Author image Shayna Marks Author&#8217;s Social Links: LinkedIn Twitter Shayna Marks is a writer and digital communicator that’s dedicated to creating engaging, educational content on behalf of influential brands. Before joining Business.com as the Content Manager, Shayna spent more than five years working in the social media trenches and at some of San Francisco’s hottest start-ups. She has a degree in Literary Journalism from UC Irvine, where she learned rich storytelling skills to later pair with her love of new media and technology. Outside of the 9-5, Shayna is a lifestyle blogger that loves laughter, fresh air, and dogs.</p>
+				<span class="comments-link">
+	<i class="fas fa-comment" title="comment icon" aria-hidden="true"></i>
+	Comments closed</span>			</div>
+		</div>
+	</article>
+	</div><div class="post-9 post type-post status-publish format-standard has-post-thumbnail hentry category-blog entry">
+		<article>
+		<div class="featured-image"><a href="https://www.directfb.org/how-invoice-factoring-works/">How invoice factoring works<img width="960" height="300" src="https://www.directfb.org/wp-content/uploads/2016/10/HOW-INVOICE-FACTORING-WORKS.jpg" class="attachment-full size-full wp-post-image" alt="" loading="lazy" srcset="https://www.directfb.org/wp-content/uploads/2016/10/HOW-INVOICE-FACTORING-WORKS.jpg 960w, https://www.directfb.org/wp-content/uploads/2016/10/HOW-INVOICE-FACTORING-WORKS-300x94.jpg 300w, https://www.directfb.org/wp-content/uploads/2016/10/HOW-INVOICE-FACTORING-WORKS-768x240.jpg 768w" sizes="(max-width: 960px) 100vw, 960px" /></a></div>		<div class="post-container">
+			<div class='post-header'>
+								<span class="post-date">
+					Published October 13, 2016				</span>
+				<h2 class='post-title'>
+					<a href="https://www.directfb.org/how-invoice-factoring-works/">How invoice factoring works</a>
+				</h2>
+			</div>
+			<div class="post-content">
+				
+<h3>Frequently asked questions from invoicing to collection</h3>
+
+
+
+<p>You have questions about receivable factoring and we have answers. If you are new to invoice factoring, then you are probably <em>wondering how it works and what it costs.</em></p>
+
+
+
+<p>There are not fast and easy answers, which is why we have developed this <strong>FAQ section</strong> to give you the comprehensive information to understand factoring.</p>
+
+
+
+<p>We begin with the very basics of the process and then move into areas such as developing customized plans and the seamless integration of our program<em> into your process.</em></p>
+
+
+
+<p>We want you to completely understand <em>how our factoring programs can create the cash flow</em> you need to run your <strong>business successfully.</strong></p>
+
+
+
+<p>We invite you to take the time to learn about our service and then give us a call when you are ready to move your business<em> to the next level.</em> We have the cash flow services you need to meet your financial goals.</p>
+
+
+
+<p><strong>Offers from factoring companies</strong></p>
+
+
+
+<div class="wp-block-image"><figure class="aligncenter"><img src="https://www.getharvest.com/assets/features/invoices-main-fda4376b75ad4854b4de4a0627673936204bc2c36f90e895f3926a97014f7f51.png" alt="Simple Online Billing &amp; Invoice Software - Harvest"/></figure></div>
+
+
+
+<h3>What deals are realistic for your business?</h3>
+
+
+
+<p>Wading through the specifics of a factoring offer can often feel like you are walking in wet cement. We understand just how complicated comparing factoring proposals can be.</p>
+
+
+
+<p>Like any other financial solution, it is important to learn as much as you can about factoring and understand every nuance of the offers that you will receive.</p>
+
+
+
+<p>We have put together this guide to<em> help you evaluate </em>the differences between service providers and understand the information that you are reading.</p>
+
+
+
+<p>We highly recommend that you <strong>spend some time with our guide to invoice factoring offers </strong>and then give one of our professionals a call to see exactly how we can help turn your out.</p>
+
+
+
+<p><strong>Rob Stirling is the Director of Marketing at Cape Rey Carlsbad, a Hilton Resort.</strong></p>
+
+
+
+<p>Stirling is a passionate and committed hotel executive who possesses a strong desire for success. An industry veteran with nearly 30 years experience, he has been involved in numerous high profile developments highlighted by the successful introduction of <strong>San Diego’s first Forbes Five Star Resort, The Grand Del Mar.</strong> A native of Connecticut, Stirling holds a bachelor’s of science in hospitality management from <strong>East Stroudsburg University. </strong>He is passionate about exercise, soccer and travel.</p>
+
+
+
+<p><strong>6 Things That Will Ruin Your Meeting (And How to Prevent Them)</strong><br>When executed well, a good meeting can provide a ton of benefits for a group of colleagues.</p>
+
+
+
+<p>Getting together to go over project planning, communicate with external vendors, and finalize details is fundamental to any organization. But just as colleagues can leave a meeting feeling accomplished, they can also leave feeling confused about what needs to be done. Worse,<strong> they can exit a meeting feeling as though their time has been wasted</strong> – and when you’re in a busy company, every minute counts. That’s why you should be able to identify pain points in your typical meeting setup, and how you can avoid them. A good meeting should provide clarity and unity to a situation; a bad meeting can muddy the waters even further. Fortunately, <em>there are plenty of ways you can turn a bad meeting around</em>, and even more ways to avoid getting stuck in the first place.</p>
+
+
+
+<p>Related Article: Shorter Work Days Ahead: 6 Easy Things You Can Do to Increase Productivity Let’s take a look at five things that can take a meeting off track, and how you can prevent them from happening.</p>
+
+
+
+<figure class="wp-block-embed-twitter wp-block-embed is-type-rich is-provider-twitter"><div class="wp-block-embed__wrapper">
+<blockquote class="twitter-tweet" data-width="500" data-dnt="true"><p lang="en" dir="ltr">💰<a href="https://twitter.com/hashtag/Billing?src=hash&amp;ref_src=twsrc%5Etfw">#Billing</a> is a bittersweet process. Simply put, sending out <a href="https://twitter.com/hashtag/invoices?src=hash&amp;ref_src=twsrc%5Etfw">#invoices</a> and reminding your customers that it is time to pay for your products or services can be a dirty job. But it has to be done if you want to keep your business running and profitable. 🌱<a href="https://t.co/AhY2nC7jUH">https://t.co/AhY2nC7jUH</a></p>&mdash; CCBill for Business (@CCBillBIZ) <a href="https://twitter.com/CCBillBIZ/status/1287270175092375552?ref_src=twsrc%5Etfw">July 26, 2020</a></blockquote><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+</div></figure>
+
+
+
+<h3><strong>Problem #1: Lack of Purpose</strong></h3>
+
+
+
+<p>This might be pretty obvious for the first meeting problem on our list, but it’s also probably the biggest. “It is interesting how tightly some companies try to control small expenses, yet anyone in the company is permitted to call a meeting of a dozen people and waste thousands of payroll dollars,” says an article at<em> Time Management Ninja</em>.<strong> “Often, hastily scheduled meetings result in wasting large numbers of wasted hours, especially when you multiply it by all of those present.”</strong> You need to make sure a meeting will be time well spent.</p>
+
+
+
+<p>So before you make the decision, step back and consider whether or not you actually need a meeting. Can this be resolved over an email thread, or a conference call? If so, go with either of these routes instead – they will keep employees free to multitask while they contribute. But if you believe that a face-to-face group meeting will be beneficial, then <em>set it up.</em> Just be sure to send out invitations to the meeting with enough notice – your colleagues likely have their own busy schedules, and <em>they’ll probably need to work your meeting in amongst others.</em></p>
+
+
+
+<h3><strong>Problem #2: Not Checking Equipment Beforehand</strong></h3>
+
+
+
+<p>Imagine spending all your time on a great PowerPoint presentation, but once you arrive at the meeting room, you don’t have a projector or a working computer available, or a cord is missing, or the files are unreadable by the computer. Nothing sinks a meeting faster than not having vital information available <em>because of a simple (or not so simple) tech issue.</em></p>
+
+
+
+<p>When you’re booking the meeting, take a look at the space where you’ll be holding it, and make a note of the equipment that will be available to you – you won’t want to Skype in a bunch of out-of-town colleagues <strong>if you don’t have the tech! </strong>Once you’ve got an idea of what the phone and computer capabilities will be like in the meeting room, you can then plan out what multimedia you can use.</p>
+
+
+
+<p>On the day of the meeting, if you’re bringing your own files, put them on a thumb drive and email backup copies to an inbox you can easily access in case of emergency – and instruct the same of any attendees bringing data or presentations to display. Also, be sure you know how to reach the nearest IT person if a phone cuts out in the middle of the meeting or <em>if a computer stops working.</em></p>
+
+
+
+<div class="wp-block-image"><figure class="aligncenter"><img src="https://images.unsplash.com/photo-1450101499163-c8848c66ca85?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=crop&amp;w=1000&amp;q=80" alt="man writing on paper"/></figure></div>
+
+
+
+<h3><strong>Problem #3: Lack of Preparation</strong></h3>
+
+
+
+<p>Time Management Ninja puts it plainly: <strong>“No preparation will kill a meeting before it starts. If you walk into the room at the last second, then spend 20 minutes getting the computer working or making handouts, you have already wasted half of the time.”</strong></p>
+
+
+
+<p>Instead, give yourself at least 15 minutes beforehand and get the room prepared. If you have handouts to provide to your attendees, make sure you’ve got them printed out and ready to go. (Likewise, if the people attending your meeting need to come prepared with documents of their own, give them advance notice so they can put their notes together.) Having everything ready ahead of time will go a long way in ensuring that your meeting starts on time. </p>
+
+
+
+<p>Related Article: Fast Fixes for the Bad Habits That Are Killing Your Productivity With regards to timeliness, you don’t want to get there early, spend time getting the room ready, and then sit for ten minutes past the meeting’s start date as attendees trickle in. </p>
+
+
+
+<p><strong>Emphasize clearly when the meeting will start</strong>, and decide in advance how long of a grace period you’ll allow for attendees to show up. Latecomers can disrupt the flow of a meeting agenda, so be ruthless in closing the door and starting your meeting on time!</p>
+
+
+
+<h3><strong>Problem #4: No Clear Agenda</strong></h3>
+
+
+
+<p>Speaking of agendas, if you missed <strong>Problem #1</strong>, you’re likely heading into a meeting without any sort of defined order as to how the time will be spent. While this format might work for something like a loose brainstorm session, you’re going to want your meeting to accomplish something, and so you’ll need to determine what points need to be covered – <strong>and for how long</strong>.</p>
+
+
+
+<p>A good meeting needs structure, and that’s where an agenda comes in. Figure out in advance what items you want to cover, and establish how much time should be spent on each. Once you have this accomplished, put it in a document and make <em>printouts for everyone attending</em>, so people will know what will be covered and just how much time will be spent on each item.</p>
+
+
+
+<h3><strong>Problem #5: No Help&nbsp;Planning</strong></h3>
+
+
+
+<p>An important meeting is stressful enough, and planning a meeting with no help can be a huge obstacle to overcome. If you’re planning your meeting for an offsite location, make sure that you pick a location with knowledgeable staff that understands the intricacies of what you need from your event. <em>The more help, the better.</em></p>
+
+
+
+<h3><strong>Problem #6: No Objective </strong></h3>
+
+
+
+<p>As with a lack of agenda, a missing objective can sink a meeting. If you can’t clearly state just what you hope to accomplish through a group meeting, then it can seem like a waste of time for everyone involved. “Every meeting should have a planned success or outcome,” advises Time Management Ninja. <strong>What is to be accomplished in the meeting? It could be a decision to be made, or a budget approved.</strong></p>
+
+
+
+<p>Whatever it is, make it part of the meeting details when you send out the invites.” Not only does this give a meeting some credibility, it also helps the attendees have a goal to<em> work towards. </em>Also, when you’re putting together your agenda, include a clearly defined goal at the very top of the page.</p>
+
+
+
+<p>If your attendees have a sense upfront of what needs to be accomplished, they’ll be more focused and feel more productive by the end of the session. </p>
+
+
+
+<p>Related Article: Helpful Tips for Maximizing Employee Productivity in a World of Distractions Avoid these Meeting Mistakes Although you may schedule a meeting with good intentions, it’s easy to let it fall off the rails when you don’t make the right preparations, come up with an agenda, or determine an end goal.</p>
+
+
+
+<p>Instead, always make sure that your objective is communicated to the team, and that all the necessary materials are ready to go. With a few quick fixes to common problems, you’ll be able to host a meeting that’s both productive and valuable to your organization.<strong> What’s your top issue with meetings, and how do you get around it? Tell us in the comments.</strong></p>
+
+
+
+<figure class="wp-block-embed-twitter wp-block-embed is-type-rich is-provider-twitter"><div class="wp-block-embed__wrapper">
+<blockquote class="twitter-tweet" data-width="500" data-dnt="true"><p lang="en" dir="ltr">💡Did you know that the success or failure of your business to a large extent depends on your understanding of <a href="https://twitter.com/hashtag/accounting?src=hash&amp;ref_src=twsrc%5Etfw">#accounting</a> for <a href="https://twitter.com/hashtag/ecommerce?src=hash&amp;ref_src=twsrc%5Etfw">#ecommerce</a> businesses? 📈👨‍💻<a href="https://t.co/8rs9669WCf">https://t.co/8rs9669WCf</a></p>&mdash; CCBill for Business (@CCBillBIZ) <a href="https://twitter.com/CCBillBIZ/status/1289675019035897856?ref_src=twsrc%5Etfw">August 1, 2020</a></blockquote><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+</div></figure>
+				<span class="comments-link">
+	<i class="fas fa-comment" title="comment icon" aria-hidden="true"></i>
+	Comments closed</span>			</div>
+		</div>
+	</article>
+	</div></div>
+</section> <!-- .main -->
+
+
+<footer id="site-footer" class="site-footer" role="contentinfo">
+		<div class="design-credit">
+        <span>
+            <a href="https://www.competethemes.com/morning/">Morning WordPress Theme</a> by Compete Themes.        </span>
+	</div>
+</footer>
+</div>
+</div><!-- .overflow-container -->
+
+<button id="scroll-to-top" class="scroll-to-top"><span class="screen-reader-text">Scroll to the top</span><i class="fas fa-arrow-up"></i></button>
+<script type='text/javascript' src='https://www.directfb.org/wp-includes/js/dist/vendor/wp-polyfill.min.js?ver=7.4.4' id='wp-polyfill-js'></script>
+<script type='text/javascript' id='wp-polyfill-js-after'>
+( 'fetch' in window ) || document.write( '<script src="https://www.directfb.org/wp-includes/js/dist/vendor/wp-polyfill-fetch.min.js?ver=3.0.0"></scr' + 'ipt>' );( document.contains ) || document.write( '<script src="https://www.directfb.org/wp-includes/js/dist/vendor/wp-polyfill-node-contains.min.js?ver=3.42.0"></scr' + 'ipt>' );( window.DOMRect ) || document.write( '<script src="https://www.directfb.org/wp-includes/js/dist/vendor/wp-polyfill-dom-rect.min.js?ver=3.42.0"></scr' + 'ipt>' );( window.URL && window.URL.prototype && window.URLSearchParams ) || document.write( '<script src="https://www.directfb.org/wp-includes/js/dist/vendor/wp-polyfill-url.min.js?ver=3.6.4"></scr' + 'ipt>' );( window.FormData && window.FormData.prototype.keys ) || document.write( '<script src="https://www.directfb.org/wp-includes/js/dist/vendor/wp-polyfill-formdata.min.js?ver=3.0.12"></scr' + 'ipt>' );( Element.prototype.matches && Element.prototype.closest ) || document.write( '<script src="https://www.directfb.org/wp-includes/js/dist/vendor/wp-polyfill-element-closest.min.js?ver=2.0.2"></scr' + 'ipt>' );( 'objectFit' in document.documentElement.style ) || document.write( '<script src="https://www.directfb.org/wp-includes/js/dist/vendor/wp-polyfill-object-fit.min.js?ver=2.3.4"></scr' + 'ipt>' );
+</script>
+<script type='text/javascript' src='https://www.directfb.org/wp-includes/js/dist/hooks.min.js?ver=50e23bed88bcb9e6e14023e9961698c1' id='wp-hooks-js'></script>
+<script type='text/javascript' src='https://www.directfb.org/wp-includes/js/dist/i18n.min.js?ver=db9a9a37da262883343e941c3731bc67' id='wp-i18n-js'></script>
+<script type='text/javascript' id='wp-i18n-js-after'>
+wp.i18n.setLocaleData( { 'text direction\u0004ltr': [ 'ltr' ] } );
+</script>
+<script type='text/javascript' src='https://www.directfb.org/wp-includes/js/dist/vendor/lodash.min.js?ver=4.17.19' id='lodash-js'></script>
+<script type='text/javascript' id='lodash-js-after'>
+window.lodash = _.noConflict();
+</script>
+<script type='text/javascript' src='https://www.directfb.org/wp-includes/js/dist/url.min.js?ver=0ac7e0472c46121366e7ce07244be1ac' id='wp-url-js'></script>
+<script type='text/javascript' id='wp-api-fetch-js-translations'>
+( function( domain, translations ) {
+	var localeData = translations.locale_data[ domain ] || translations.locale_data.messages;
+	localeData[""].domain = domain;
+	wp.i18n.setLocaleData( localeData, domain );
+} )( "default", { "locale_data": { "messages": { "": {} } } } );
+</script>
+<script type='text/javascript' src='https://www.directfb.org/wp-includes/js/dist/api-fetch.min.js?ver=a783d1f442d2abefc7d6dbd156a44561' id='wp-api-fetch-js'></script>
+<script type='text/javascript' id='wp-api-fetch-js-after'>
+wp.apiFetch.use( wp.apiFetch.createRootURLMiddleware( "https://www.directfb.org/wp-json/" ) );
+wp.apiFetch.nonceMiddleware = wp.apiFetch.createNonceMiddleware( "f2cee9bb37" );
+wp.apiFetch.use( wp.apiFetch.nonceMiddleware );
+wp.apiFetch.use( wp.apiFetch.mediaUploadMiddleware );
+wp.apiFetch.nonceEndpoint = "https://www.directfb.org/wp-admin/admin-ajax.php?action=rest-nonce";
+</script>
+<script type='text/javascript' id='contact-form-7-js-extra'>
+/* <![CDATA[ */
+var wpcf7 = [];
+/* ]]> */
+</script>
+<script type='text/javascript' src='https://www.directfb.org/wp-content/plugins/contact-form-7/includes/js/index.js?ver=5.4' id='contact-form-7-js'></script>
+<script type='text/javascript' id='ct-apex-js-js-extra'>
+/* <![CDATA[ */
+var ct_apex_objectL10n = {"openMenu":"open menu","closeMenu":"close menu","openChildMenu":"open dropdown menu","closeChildMenu":"close dropdown menu"};
+/* ]]> */
+</script>
+<script type='text/javascript' src='https://www.directfb.org/wp-content/themes/apex/js/build/production.min.js?ver=5.7.1' id='ct-apex-js-js'></script>
+<!--[if IE 8]>
+<script type='text/javascript' src='https://www.directfb.org/wp-content/themes/apex/js/build/respond.min.js?ver=5.7.1' id='ct-apex-respond-js'></script>
+<![endif]-->
+<script type='text/javascript' src='https://www.directfb.org/wp-includes/js/wp-embed.min.js?ver=5.7.1' id='wp-embed-js'></script>
+
+</body>
+</html>

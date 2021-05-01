@@ -3,10 +3,10 @@
 # mkisofs to build to target iso9660 filesystems
 #
 #############################################################
-MKISOFS_SOURCE:=cdrtools-2.01.01a69.tar.bz2
+MKISOFS_SOURCE:=cdrtools-2.01.tar.bz2
 MKISOFS_CAT:=$(BZCAT)
-MKISOFS_SITE:=ftp://ftp.berlios.de/pub/cdrecord/alpha
-MKISOFS_DIR:=$(BUILD_DIR)/cdrtools-2.01.01
+MKISOFS_SITE:=ftp://ftp.berlios.de/pub/cdrecord/
+MKISOFS_DIR:=$(BUILD_DIR)/cdrtools-2.01
 MKISOFS_TARGET=$(MKISOFS_DIR)/mkisofs/OBJ/$(HOST_ARCH)-linux-cc/mkisofs
 
 $(DL_DIR)/$(MKISOFS_SOURCE):
