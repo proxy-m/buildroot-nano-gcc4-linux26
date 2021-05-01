@@ -63,7 +63,18 @@ include target/u-boot/Makefile.in
 endif
 
 # and finally build the filesystems/tarballs
-include target/*/*.mk
+include target/makedevs/makedevs.mk
+include target/cloop/cloop.mk
+include target/cpio/cpioroot.mk
+include target/tar/tarroot.mk
+include target/initramfs/initramfs.mk
+include target/cramfs/cramfs.mk
+include target/romfs/romfs.mk
+include target/ext2/ext2root.mk
+include target/squashfs/squashfsroot.mk
+include target/ubifs/ubifsroot.mk
+include target/jffs2/jffs2root.mk
+include target/iso9660/iso9660.mk
 
 # kernel rules
 # We already did add the kernel target to TARGETS and now just pull in the rules
