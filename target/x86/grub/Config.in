@@ -1,6 +1,8 @@
 config BR2_TARGET_GRUB
 	bool "grub"
 	depends on BR2_i386 || BR2_x86_64
+	depends on BR2_TARGET_ROOTFS_EXT2
+	select BR2_HOST_FAKEROOT
 	help
 	  The GRand Unified Bootloader for x86 systems.
 

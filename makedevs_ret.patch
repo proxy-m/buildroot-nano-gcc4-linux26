@@ -1,0 +1,9 @@
+--- a/target/makedevs/makedevs.c	2021-05-01 14:23:13.685195972 +0300
++++ b/target/makedevs/makedevs.c	2021-05-01 12:00:28.277089457 +0300
+@@ -531,5 +531,5 @@ loop:
+ 	if (system("/bin/sync"))
+ 		bb_error_msg("sync failed, continuing anyway");
+ 
+-	return 0;
++	return ret;
+ }
