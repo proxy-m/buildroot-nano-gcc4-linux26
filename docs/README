@@ -1,10 +1,22 @@
-To build and use the buildroot stuff, do the following:
+1. To prepair build folder of the buildroot-nano:
 
-1) run 'make menuconfig'
-2) select the packages you wish to compile
-3) run 'make'
-4) wait while it compiles
-5) Use your shiny new root filesystem.  Depending on which sortof
+```
+$ git clone <buildroot_nano_repository_url> buildroot-nano-gcc4-linux26
+$ cd buildroot-nano-gcc4-linux26
+$ rm -rf ./output # remove old build stuff
+$ mkdir -p ./dl # "dl"
+$ git checkout -f ./output/dl # or make link to "dl"
+```
+
+2. To build and use the buildroot stuff, do the following:
+
+```
+$ make menuconfig
+$ # select the packages you wish to compile
+$ make source
+$ make # and wait while it compiles
+
+Use your shiny new root filesystem.  Depending on which sortof
     root filesystem you selected, you may want to loop mount it,
     chroot into it, nfs mount it on your target device, burn it
     to flash, or whatever is appropriate for your target system.
