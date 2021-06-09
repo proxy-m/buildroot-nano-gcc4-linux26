@@ -1,0 +1,7 @@
+--- uClibc-0.9.30.1.orig/extra/locale/Makefile.in	2008-12-20
+18:32:36.000000000 +0100
++++ uClibc-0.9.30.1/extra/locale/Makefile.in	2008-12-20 18:37:42.000000000
+14c14
+< LOCALE_DATA_FILENAME := uClibc-locale-20081111-$(ARCH_NATIVE_BIT)-$(if $(ARCH_LITTLE_ENDIAN),el,eb).tgz
+---
+> LOCALE_DATA_FILENAME := uClibc-locale-030818.tgz
