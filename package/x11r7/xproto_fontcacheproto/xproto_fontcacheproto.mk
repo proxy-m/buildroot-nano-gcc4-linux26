@@ -12,4 +12,3 @@ XPROTO_FONTCACHEPROTO_INSTALL_STAGING = YES
 XPROTO_FONTCACHEPROTO_INSTALL_TARGET = NO
 
 $(eval $(call AUTOTARGETS,package/x11r7,xproto_fontcacheproto))
-$(eval $(call AUTOTARGETS,package/x11r7,xproto_fontcacheproto,host))

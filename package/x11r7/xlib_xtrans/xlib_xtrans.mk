@@ -12,4 +12,3 @@ XLIB_XTRANS_INSTALL_STAGING = YES
 XLIB_XTRANS_CONF_OPT = --enable-shared --disable-static
 
 $(eval $(call AUTOTARGETS,package/x11r7,xlib_xtrans))
-$(eval $(call AUTOTARGETS,package/x11r7,xlib_xtrans,host))
