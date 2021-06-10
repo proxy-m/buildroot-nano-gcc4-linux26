@@ -3,7 +3,7 @@
 # gstreamer
 #
 #############################################################
-GSTREAMER_VERSION = 0.10.23
+GSTREAMER_VERSION = 0.10.25
 GSTREAMER_SOURCE = gstreamer-$(GSTREAMER_VERSION).tar.bz2
 GSTREAMER_SITE = http://gstreamer.freedesktop.org/src/gstreamer
 GSTREAMER_INSTALL_STAGING = YES
@@ -24,7 +24,7 @@ GSTREAMER_CONF_OPT = \
 		--disable-tests \
 		--disable-failing-tests
 
-GSTREAMER_DEPENDENCIES = libglib2 host-pkgconfig
+GSTREAMER_DEPENDENCIES = libglib2 host-pkg-config
 
 ifeq ($(BR2_PACKAGE_GSTREAMER_LIBXML2),y)
 GSTREAMER_DEPENDENCIES += libxml2

@@ -23,6 +23,9 @@ $(COREUTILS_DIR)/.unpacked: $(DL_DIR)/$(COREUTILS_SOURCE)
 	$(COREUTILS_CAT) $(DL_DIR)/$(COREUTILS_SOURCE) | tar -C $(BUILD_DIR) $(TAR_OPTIONS) -
 	toolchain/patch-kernel.sh $(COREUTILS_DIR) package/coreutils/ coreutils\*.patch
 	$(CONFIG_UPDATE) $(COREUTILS_DIR)/build-aux
+	# ensure rename.m4 file is older than configure / aclocal.m4 so
+	# auto* isn't rerun
+	touch -d '1979-01-01' $(@D)/m4/rename.m4
 	touch $@
 
 $(COREUTILS_DIR)/.configured: $(COREUTILS_DIR)/.unpacked
@@ -60,12 +63,6 @@ $(COREUTILS_DIR)/.configured: $(COREUTILS_DIR)/.unpacked
 		utils_cv_func_mkstemp_limitations=no \
 		utils_cv_func_mkdir_trailing_slash_bug=no \
 		gl_cv_func_rename_dest_exists_bug=no \
-		ac_cv_func_memcmp_working=yes \
-		ac_cv_have_decl_malloc=yes \
-		gl_cv_func_malloc_0_nonnull=yes \
-		ac_cv_func_malloc_0_nonnull=yes \
-		ac_cv_func_calloc_0_nonnull=yes \
-		ac_cv_func_realloc_0_nonnull=yes \
 		jm_cv_func_gettimeofday_clobber=no \
 		am_cv_func_working_getline=yes \
 		gl_cv_func_working_readdir=yes \

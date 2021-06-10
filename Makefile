@@ -22,7 +22,8 @@
 # Just run 'make menuconfig', configure stuff, then run 'make'.
 # You shouldn't need to mess with anything beyond this point...
 #--------------------------------------------------------------
-TOPDIR:=.
+# absolute path
+TOPDIR:=$(shell pwd)
 CONFIG_CONFIG_IN=Config.in
 CONFIG_DEFCONFIG=.defconfig
 CONFIG=package/config
@@ -30,6 +31,7 @@ DATE:=$(shell date +%Y%m%d)
 
 noconfig_targets:=menuconfig xconfig config oldconfig randconfig \
 	defconfig allyesconfig allnoconfig release \
+	randpackageconfig allyespackageconfig allnopackageconfig \
 	source-check help
 
 # Strip quotes and then whitespaces
@@ -337,7 +339,7 @@ $(BASE_TARGETS): dirs
 world: dependencies dirs $(BASE_TARGETS) $(TARGETS_ALL)
 
 
-.PHONY: all world dirs clean dirclean distclean source \
+.PHONY: all world dirs clean distclean source \
 	$(BASE_TARGETS) $(TARGETS) $(TARGETS_ALL) \
 	$(TARGETS_CLEAN) $(TARGETS_DIRCLEAN) $(TARGETS_SOURCE) \
 	$(DL_DIR) $(TOOLCHAIN_DIR) $(BUILD_DIR) $(STAGING_DIR) $(TARGET_DIR) \
@@ -439,24 +441,62 @@ external-deps:
 	@$(MAKE) -Bs BR2_WGET=$(TOPDIR)/toolchain/wget-show-external-deps.sh \
 		SPIDER=--spider source
 
-#############################################################
-#
-# Cleanup and misc junk
-#
-#############################################################
-clean: $(TARGETS_CLEAN)
-	rm -rf $(STAGING_DIR) $(TARGET_DIR) $(IMAGE) $(BUILD_DIR)/.root $(STAMP_DIR)
+ifeq ($(BR2_CONFIG_CACHE),y)
+# drop configure cache if configuration is changed
+$(BUILD_DIR)/tgt-config.cache: .config
+	rm -f $@
+	touch $@
 
-dirclean: $(TARGETS_DIRCLEAN)
-	rm -rf $(STAGING_DIR) $(TARGET_DIR) $(IMAGE) $(BUILD_DIR)/.root $(STAMP_DIR)
-
-distclean:
-ifeq ($(DL_DIR),$(TOPDIR)/dl)
-	rm -rf $(DL_DIR)
+$(BASE_TARGETS): | $(BUILD_DIR)/tgt-config.cache
 endif
-	rm -rf $(TOOLCHAIN_DIR) $(BUILD_DIR) $(BINARIES_DIR) \
-	.config.cmd
-	$(MAKE) -C $(CONFIG) clean
+
+ifeq ($(BR2_CONFIG_CACHE),y)
+$(BUILD_DIR)/tgt-config.cache: .config
+	rm -f $@
+	touch $@
+
+$(BASE_TARGETS): | $(BUILD_DIR)/tgt-config.cache
+endif
+
+ifeq ($(BR2_CONFIG_CACHE),y)
+$(BUILD_DIR)/tgt-config.cache: .config
+	rm -f $@
+	touch $@
+
+$(BASE_TARGETS): | $(BUILD_DIR)/tgt-config.cache
+endif
+
+ifeq ($(BR2_CONFIG_CACHE),y)
+$(BUILD_DIR)/tgt-config.cache: .config
+	rm -f $@
+	touch $@
+
+$(BASE_TARGETS): | $(BUILD_DIR)/tgt-config.cache
+endif
+
+ifeq ($(BR2_CONFIG_CACHE),y)
+$(BUILD_DIR)/tgt-config.cache: .config
+	rm -f $@
+	touch $@
+
+$(BASE_TARGETS): | $(BUILD_DIR)/tgt-config.cache
+endif
+
+ifeq ($(BR2_CONFIG_CACHE),y)
+$(BUILD_DIR)/tgt-config.cache: .config
+	rm -f $@
+	touch $@
+
+$(BASE_TARGETS): | $(BUILD_DIR)/tgt-config.cache
+endif
+
+ifeq ($(BR2_CONFIG_CACHE),y)
+$(BUILD_DIR)/tgt-config.cache: .config
+	rm -f $@
+	touch $@
+
+$(BASE_TARGETS): | $(BUILD_DIR)/tgt-config.cache
+endif
 
 else # ifeq ($(BR2_HAVE_DOT_CONFIG),y)
 
@@ -536,6 +576,33 @@ allnoconfig: $(CONFIG)/conf
 		KCONFIG_AUTOHEADER=$(CONFIG)/buildroot-config/autoconf.h \
 		$(CONFIG)/conf -n $(CONFIG_CONFIG_IN)
 
+randpackageconfig: $(CONFIG)/conf
+	@mkdir -p $(CONFIG)/buildroot-config
+	@grep -v BR2_PACKAGE_ .config > .config.nopkg
+	@KCONFIG_AUTOCONFIG=$(CONFIG)/buildroot-config/auto.conf \
+		KCONFIG_AUTOHEADER=$(CONFIG)/buildroot-config/autoconf.h \
+		KCONFIG_ALLCONFIG=.config.nopkg \
+		$(CONFIG)/conf -r $(CONFIG_CONFIG_IN)
+	@rm -f .config.nopkg
+
+allyespackageconfig: $(CONFIG)/conf
+	@mkdir -p $(CONFIG)/buildroot-config
+	@grep -v BR2_PACKAGE_ .config > .config.nopkg
+	@KCONFIG_AUTOCONFIG=$(CONFIG)/buildroot-config/auto.conf \
+		KCONFIG_AUTOHEADER=$(CONFIG)/buildroot-config/autoconf.h \
+		KCONFIG_ALLCONFIG=.config.nopkg \
+		$(CONFIG)/conf -y $(CONFIG_CONFIG_IN)
+	@rm -f .config.nopkg
+
+allnopackageconfig: $(CONFIG)/conf
+	@mkdir -p $(CONFIG)/buildroot-config
+	@grep -v BR2_PACKAGE_ .config > .config.nopkg
+	@KCONFIG_AUTOCONFIG=$(CONFIG)/buildroot-config/auto.conf \
+		KCONFIG_AUTOHEADER=$(CONFIG)/buildroot-config/autoconf.h \
+		KCONFIG_ALLCONFIG=.config.nopkg \
+		$(CONFIG)/conf -n $(CONFIG_CONFIG_IN)
+	@rm -f .config.nopkg
+
 defconfig: $(CONFIG)/conf
 	@mkdir -p $(CONFIG)/buildroot-config
 	@KCONFIG_AUTOCONFIG=$(CONFIG)/buildroot-config/auto.conf \
@@ -546,20 +613,26 @@ defconfig: $(CONFIG)/conf
 source-check: allyesconfig
 	$(MAKE) _source-check
 
+endif # ifeq ($(BR2_HAVE_DOT_CONFIG),y)
+
 #############################################################
 #
 # Cleanup and misc junk
 #
 #############################################################
 clean:
-	rm -f .config .config.old .config.cmd .tmpconfig.h .lognr.*
-	-$(MAKE) -C $(CONFIG) clean
+	rm -rf $(STAGING_DIR) $(TARGET_DIR) $(BINARIES_DIR) $(HOST_DIR) \
+		$(STAMP_DIR) $(BUILD_DIR) $(TOOLCHAIN_DIR)
 
 distclean: clean
-	rm -rf sources/*
-
-
-endif # ifeq ($(BR2_HAVE_DOT_CONFIG),y)
+ifeq ($(DL_DIR),$(TOPDIR)/dl)
+	rm -rf $(DL_DIR)
+endif
+ifeq ($(O),output)
+	rm -rf $(O)
+endif
+	rm -rf .config .config.old .config.cmd .auto.deps
+	-$(MAKE) -C $(CONFIG) clean
 
 flush:
 	rm -f $(BUILD_DIR)/tgt-config.cache
@@ -576,7 +649,7 @@ cross: $(BASE_TARGETS)
 
 help:
 	@echo 'Cleaning:'
-	@echo '  clean                  - delete temporary files created by build'
+	@echo '  clean                  - delete all files created by build'
 	@echo '  distclean              - delete all non-source files (including .config)'
 	@echo
 	@echo 'Build:'
@@ -590,6 +663,9 @@ help:
 	@echo '  defconfig              - New config with default answer to all options'
 	@echo '  allyesconfig           - New config where all options are accepted with yes'
 	@echo '  allnoconfig            - New config where all options are answered with no'
+	@echo '  randpackageconfig      - New config with random answer to package options'
+	@echo '  allyespackageconfig    - New config where pkg options are accepted with yes'
+	@echo '  allnopackageconfig     - New config where package options are answered with no'
 	@echo '  configured             - make {uclibc/busybox/linux26}-config'
 	@echo
 	@echo 'Miscellaneous:'
@@ -608,6 +684,5 @@ release:
 	OUT=buildroot-$$(grep -A2 BR2_VERSION $(CONFIG_CONFIG_IN)|grep default|cut -f2 -d\"); \
 	git archive --format=tar --prefix=$$OUT/ master|gzip -9 >$$OUT.tar.gz
 
-.PHONY: dummy subdirs release distclean clean config oldconfig \
-	menuconfig xconfig check test depend defconfig help
+.PHONY: $(noconfig_targets)
 

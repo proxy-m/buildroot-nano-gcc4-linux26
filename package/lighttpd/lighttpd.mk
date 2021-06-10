@@ -4,11 +4,9 @@
 #
 #############################################################
 
-LIGHTTPD_VERSION = 1.4.23
-LIGHTTPD_SOURCE = lighttpd-$(LIGHTTPD_VERSION).tar.bz2
-LIGHTTPD_SITE = http://www.lighttpd.net/download
+LIGHTTPD_VERSION = 1.4.26
+LIGHTTPD_SITE = http://download.lighttpd.net/lighttpd/releases-1.4.x
 LIGHTTPD_LIBTOOL_PATCH = NO
-LIGHTTPD_DEPENDENCIES =
 
 ifneq ($(BR2_LARGEFILE),y)
 LIGHTTPD_LFS:=$(DISABLE_LARGEFILE) --disable-lfs

@@ -1,4 +1,16 @@
-2010.02, Not yet released:
+2010.02-rc1, Released February 9th, 2010:
+
+	Fixes all over the tree and new features.
+
+	Generalized autotools infrastructure to be usable for
+	non-autotools packages, see package/Makefile.package.in for
+	details.
+
+	Cleaned up avr32 toolchain config, external source-based
+	toolchain support is gone.
+
+	Dependency checks: Also check for makeinfo, only print output
+	on errors.
 
 	Fixes all over the tree.
 
@@ -142,6 +154,115 @@
 	Toolchain: ARM cortex A8 support, GCC 4.4.2, sensible default
 	soft / hardfloat setting for architecture, ensure target-ldd
 	gets installed.
+
+	Fixes all over the tree and new features.
+
+	Cleaned up / Simplified build directory layout. Refer to
+	docs/buildroot.html#using for details.
+
+	Target defconfig files moved to configs/ and listed in 'make help'
+	output.
+
+	Fixed *clean targets. Now clean removes everything generated,
+	so you can do a fresh rebuild. Distclean furthermore removes
+	kbuild tools and .config, bringing the source tree back in a
+	pristine state.
+
+	Toolchain: ARM cortex A8 support, GCC 4.4.2, sensible default
+	soft / hardfloat setting for architecture, ensure target-ldd
+	gets installed.
+
+	Fixes all over the tree and new features.
+
+	Cleaned up / Simplified build directory layout. Refer to
+	docs/buildroot.html#using for details.
+
+	Target defconfig files moved to configs/ and listed in 'make help'
+	output.
+
+	Fixed *clean targets. Now clean removes everything generated,
+	so you can do a fresh rebuild. Distclean furthermore removes
+	kbuild tools and .config, bringing the source tree back in a
+	pristine state.
+
+	Toolchain: ARM cortex A8 support, GCC 4.4.2, sensible default
+	soft / hardfloat setting for architecture, ensure target-ldd
+	gets installed.
+
+	Fixes all over the tree and new features.
+
+	Cleaned up / Simplified build directory layout. Refer to
+	docs/buildroot.html#using for details.
+
+	Target defconfig files moved to configs/ and listed in 'make help'
+	output.
+
+	Fixed *clean targets. Now clean removes everything generated,
+	so you can do a fresh rebuild. Distclean furthermore removes
+	kbuild tools and .config, bringing the source tree back in a
+	pristine state.
+
+	Toolchain: ARM cortex A8 support, GCC 4.4.2, sensible default
+	soft / hardfloat setting for architecture, ensure target-ldd
+	gets installed.
+
+	Fixes all over the tree and new features.
+
+	Cleaned up / Simplified build directory layout. Refer to
+	docs/buildroot.html#using for details.
+
+	Target defconfig files moved to configs/ and listed in 'make help'
+	output.
+
+	Fixed *clean targets. Now clean removes everything generated,
+	so you can do a fresh rebuild. Distclean furthermore removes
+	kbuild tools and .config, bringing the source tree back in a
+	pristine state.
+
+	Toolchain: ARM cortex A8 support, GCC 4.4.2, sensible default
+	soft / hardfloat setting for architecture, ensure target-ldd
+	gets installed.
+
+	Fixes all over the tree and new features.
+
+	Cleaned up / Simplified build directory layout. Refer to
+	docs/buildroot.html#using for details.
+
+	Target defconfig files moved to configs/ and listed in 'make help'
+	output.
+
+	Fixed *clean targets. Now clean removes everything generated,
+	so you can do a fresh rebuild. Distclean furthermore removes
+	kbuild tools and .config, bringing the source tree back in a
+	pristine state.
+
+	Toolchain: ARM cortex A8 support, GCC 4.4.2, sensible default
+	soft / hardfloat setting for architecture, ensure target-ldd
+	gets installed.
+
+	Fixes all over the tree and new features.
+
+	Cleaned up / Simplified build directory layout. Refer to
+	docs/buildroot.html#using for details.
+
+	Target defconfig files moved to configs/ and listed in 'make help'
+	output.
+
+	Fixed *clean targets. Now clean removes everything generated,
+	so you can do a fresh rebuild. Distclean furthermore removes
+	kbuild tools and .config, bringing the source tree back in a
+	pristine state.
+
+	Toolchain: ARM cortex A8 support, GCC 4.4.2, sensible default
+	soft / hardfloat setting for architecture, ensure target-ldd
+	gets installed.
+
+	Fixed *clean targets. Now clean removes everything generated,
+	so you can do a fresh rebuild. Distclean furthermore removes
+	kbuild tools and .config, bringing the source tree back in a
+	pristine state.
+
+	Toolchain: ARM cortex A8 support, GCC 4.4.2.
 
 	New packages: divine, gvfs, libarchive, libmicrohttpd,
 	sdl_sound, swfdec, sysstat

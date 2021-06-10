@@ -463,7 +463,7 @@ $(UCLIBC_DIR)/lib/libc.a: $(UCLIBC_DIR)/.configured $(gcc_initial) $(LIBFLOAT_TA
 		all
 	touch -c $@
 
-uclibc-menuconfig: host-sed $(UCLIBC_DIR)/.config
+uclibc-menuconfig: host-sed dirs $(UCLIBC_DIR)/.config
 	$(MAKE1) -C $(UCLIBC_DIR) \
 		ARCH="$(UCLIBC_TARGET_ARCH)" \
 		PREFIX=$(TOOLCHAIN_DIR)/uClibc_dev/ \
@@ -581,8 +581,7 @@ uclibc-clean: uclibc-test-clean
 uclibc-dirclean: uclibc-test-dirclean
 	rm -rf $(UCLIBC_DIR)
 
-uclibc-target-utils:
-#$(TARGET_DIR)/usr/bin/ldd
+uclibc-target-utils: $(TARGET_DIR)/usr/bin/ldd
 
 uclibc-target-utils-source: $(DL_DIR)/$(UCLIBC_SOURCE)
 

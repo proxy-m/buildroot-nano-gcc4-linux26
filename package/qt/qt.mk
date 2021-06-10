@@ -12,37 +12,16 @@
 #
 ######################################################################
 
-# BUG: In "OpenSuSE 10.2", dbus.h is at dbus-1.0/dbus/dbus.h
-# instead of at "dbus/dbus.h"
-# (cd /usr/include; sudo ln -s dbus-1.0/dbus dbus)
-# to fix
-
-# BUG: There is a workaround below (search for x86x86fix) for
-# x86 crosscompiling under linux x86. Please remove it when the workaround
-# is no longer necessary.
-
 QT_VERSION:=4.5.2
+QT_SOURCE:=qt-embedded-linux-opensource-src-$(QT_VERSION).tar.bz2
+QT_SITE:=http://get.qtsoftware.com/qt/source
 QT_CAT:=$(BZCAT)
-
-BR2_PACKAGE_QT_COMMERCIAL_USERNAME:=$(call qstrip,$(BR2_PACKAGE_QT_COMMERCIAL_USERNAME))
-BR2_PACKAGE_QT_COMMERCIAL_PASSWORD:=$(call qstrip,$(BR2_PACKAGE_QT_COMMERCIAL_PASSWORD))
+QT_TARGET_DIR:=$(BUILD_DIR)/qt-embedded-linux-opensource-src-$(QT_VERSION)
 
 QT_CONFIGURE:=#empty
 
-# What to download, free or commercial version.
-ifneq ($(BR2_PACKAGE_QT_COMMERCIAL_USERNAME),)
-QT_SITE:=http://$(BR2_PACKAGE_QT_COMMERCIAL_USERNAME):$(BR2_QT_COMMERCIAL_PASSWORD)@dist.trolltech.com/$(BR2_PACKAGE_QT_COMMERCIAL_USERNAME)
-QT_SOURCE:=qt-embedded-linux-commercial-src-$(QT_VERSION).tar.bz2
-QT_TARGET_DIR:=$(BUILD_DIR)/qt-embedded-linux-commercial-src-$(QT_VERSION)
-QT_CONFIGURE+= -commercial
-else # Good, good, we are free:
-QT_SITE=http://get.qtsoftware.com/qt/source
-QT_SOURCE:=qt-embedded-linux-opensource-src-$(QT_VERSION).tar.bz2
-QT_TARGET_DIR:=$(BUILD_DIR)/qt-embedded-linux-opensource-src-$(QT_VERSION)
-QT_CONFIGURE+= -opensource
 ifeq ($(BR2_PACKAGE_QT_LICENSE_APPROVED),y)
-QT_CONFIGURE+= -confirm-license
-endif
+QT_CONFIGURE += -opensource -confirm-license
 endif
 
 # If you want extra tweaking you can copy
@@ -71,9 +50,7 @@ endif
 
 
 ### Pixel depths
-ifeq ($(BR2_PACKAGE_QT_PIXEL_DEPTH_ALL),y)
-QT_PIXEL_DEPTHS = all
-else
+QT_PIXEL_DEPTHS := # empty
 ifeq ($(BR2_PACKAGE_QT_PIXEL_DEPTH_1),y)
 QT_PIXEL_DEPTHS += 1
 endif
@@ -100,7 +77,6 @@ QT_PIXEL_DEPTHS += 24
 endif
 ifeq ($(BR2_PACKAGE_QT_PIXEL_DEPTH_32),y)
 QT_PIXEL_DEPTHS += 32
-endif
 endif
 ifneq ($(QT_PIXEL_DEPTHS),)
 QT_CONFIGURE += -depths $(subst $(space),$(comma),$(strip $(QT_PIXEL_DEPTHS)))
@@ -162,8 +138,6 @@ endif
 ifeq ($(BR2_PACKAGE_QT_MOUSE_TSLIB),y)
 QT_CONFIGURE += -qt-mouse-tslib
 QT_DEP_LIBS+=tslib
-QT_TSLIB_DEB="-D TSLIBMOUSEHANDLER_DEBUG"
-QT_TSLIB_DEB:=$(call qstrip,$(QT_TSLIB_DEB))
 else
 QT_CONFIGURE += -no-mouse-tslib
 endif
@@ -174,7 +148,7 @@ QT_CONFIGURE += -no-mouse-qvfb
 endif
 
 ifeq ($(BR2_PACKAGE_QT_DEBUG),y)
-QT_CONFIGURE+= "-debug $(QT_TSLIB_DEB)"
+QT_CONFIGURE+= -debug
 else
 QT_CONFIGURE+= -release
 endif
@@ -326,19 +300,12 @@ else
 QT_CONFIGURE+= -no-stl
 endif
 
-QT_CONFIGURE:=$(call qstrip,$(QT_CONFIGURE))
-BR2_PACKAGE_QT_EMB_PLATFORM:=$(call qstrip,$(BR2_PACKAGE_QT_EMB_PLATFORM))
+# ccache and precompiled headers don't play well together
+ifeq ($(BR2_CCACHE),y)
+QT_CONFIGURE += -no-pch
+endif
 
-# x86x86fix
-# Workaround Qt Embedded bug when crosscompiling for x86 under x86 with linux
-# host. It's unclear if this would happen on other hosts.
-ifneq ($(findstring pc-linux,$(BR2_GNU_BUILD_SUFFIX)),)
-ifeq ($(BR2_PACKAGE_QT_EMB_PLATFORM),x86)
-QT_CONFIGURE+= -platform linux-g++
-QT_CONFIGURE:=$(call qstrip,$(QT_CONFIGURE))
-endif
-endif
-# End of workaround.
+BR2_PACKAGE_QT_EMB_PLATFORM:=$(call qstrip,$(BR2_PACKAGE_QT_EMB_PLATFORM))
 
 # Figure out what libs to install in the target
 QT_LIBS=#empty
@@ -374,8 +341,6 @@ QT_LIBS+= qt-scripttools
 endif
 
 QT_QMAKE_CONF:=$(QT_TARGET_DIR)/mkspecs/qws/linux-$(BR2_PACKAGE_QT_EMB_PLATFORM)-g++/qmake.conf
-
-QT_QMAKE_AR:=$(TARGET_AR) cqs
 
 # Variable for other Qt applications to use
 QT_QMAKE:=$(STAGING_DIR)/usr/bin/qmake -spec qws/linux-$(BR2_PACKAGE_QT_EMB_PLATFORM)-g++
@@ -426,17 +391,17 @@ $(QT_TARGET_DIR)/.unpacked: $(DL_DIR)/$(QT_SOURCE)
 	touch $@
 
 $(QT_TARGET_DIR)/.configured: $(QT_TARGET_DIR)/.unpacked
+	-[ -f $(QT_TARGET_DIR)/Makefile ] && $(MAKE) -C $(QT_TARGET_DIR) confclean
 ifneq ($(BR2_INET_IPV6),y)
 	$(SED) 's/^CFG_IPV6=auto/CFG_IPV6=no/' $(QT_TARGET_DIR)/configure
 	$(SED) 's/^CFG_IPV6IFNAME=auto/CFG_IPV6IFNAME=no/' $(QT_TARGET_DIR)/configure
 endif
-	$(SED) 's/^CFG_XINERAMA=auto/CFG_XINERAMA=no/' $(QT_TARGET_DIR)/configure
 	# Fix compiler path
 	$(call QT_QMAKE_SET,CC,$(TARGET_CC))
 	$(call QT_QMAKE_SET,CXX,$(TARGET_CXX))
 	$(call QT_QMAKE_SET,LINK,$(TARGET_CXX))
 	$(call QT_QMAKE_SET,LINK_SHLIB,$(TARGET_CXX))
-	$(call QT_QMAKE_SET,AR,$(QT_QMAKE_AR))
+	$(call QT_QMAKE_SET,AR,$(TARGET_AR) cqs)
 	$(call QT_QMAKE_SET,OBJCOPY,$(TARGET_OBJCOPY))
 	$(call QT_QMAKE_SET,RANLIB,$(TARGET_RANLIB))
 	$(call QT_QMAKE_SET,STRIP,$(TARGET_STRIP))
@@ -445,22 +410,19 @@ endif
 	$(call QT_QMAKE_SET,LFLAGS,$(TARGET_LDFLAGS))
 	-[ -f $(QT_QCONFIG_FILE) ] && cp $(QT_QCONFIG_FILE) \
 		$(QT_TARGET_DIR)/$(QT_QCONFIG_FILE_LOCATION)
-# Qt doesn't use PKG_CONFIG, it searches for pkg-config with 'which'.
-# PKG_CONFIG_SYSROOT is only used to avoid a warning from Qt's configure system
-# when cross compiling, Qt 4.4.3 is wrong here.
 # Don't use TARGET_CONFIGURE_OPTS here, qmake would be compiled for the target
-# instead of the host then.
-	(cd $(QT_TARGET_DIR); rm -rf config.cache; \
-		PATH=$(TARGET_PATH) \
+# instead of the host then. So set PKG_CONFIG* manually.
+	(cd $(QT_TARGET_DIR); \
 		PKG_CONFIG_SYSROOT_DIR="$(STAGING_DIR)" \
+		PKG_CONFIG="$(PKG_CONFIG_HOST_BINARY)" \
 		PKG_CONFIG_PATH="$(STAGING_DIR)/usr/lib/pkgconfig:$(PKG_CONFIG_PATH)" \
-		PKG_CONFIG_SYSROOT="$(STAGING_DIR)" \
 		./configure \
 		$(if $(VERBOSE),-verbose,-silent) \
 		-force-pkg-config \
 		-embedded $(BR2_PACKAGE_QT_EMB_PLATFORM) \
 		$(QT_QCONFIG_COMMAND) \
 		$(QT_CONFIGURE) \
+		-no-xinerama \
 		-no-cups \
 		-no-nis \
 		-no-accessibility \
@@ -475,18 +437,18 @@ endif
 	touch $@
 
 $(QT_TARGET_DIR)/.compiled: $(QT_TARGET_DIR)/.configured
-	$(TARGET_CONFIGURE_OPTS) $(MAKE) -C $(QT_TARGET_DIR)
+	$(MAKE) -C $(QT_TARGET_DIR)
 	touch $@
 
 $(STAGING_DIR)/usr/lib/libQtCore.la: $(QT_TARGET_DIR)/.compiled
-	$(TARGET_CONFIGURE_OPTS) $(MAKE) -C $(QT_TARGET_DIR) install
+	$(MAKE) -C $(QT_TARGET_DIR) install
 
 qt-gui: $(STAGING_DIR)/usr/lib/libQtCore.la
 	mkdir -p $(TARGET_DIR)/usr/lib/fonts
-	touch $(TARGET_DIR)/usr/lib/fonts/fontdir
-	cp -dpf $(STAGING_DIR)/usr/lib/fonts/helvetica*.qpf $(TARGET_DIR)/usr/lib/fonts
-	cp -dpf $(STAGING_DIR)/usr/lib/fonts/fixed*.qpf $(TARGET_DIR)/usr/lib/fonts
-	cp -dpf $(STAGING_DIR)/usr/lib/fonts/micro*.qpf $(TARGET_DIR)/usr/lib/fonts
+	cp -dpf $(STAGING_DIR)/usr/lib/fonts/*.qpf $(TARGET_DIR)/usr/lib/fonts
+ifneq ($(BR2_PACKAGE_QT_NOFREETYPE),y)
+	cp -dpf $(STAGING_DIR)/usr/lib/fonts/*.ttf $(TARGET_DIR)/usr/lib/fonts
+endif
 	# Install image plugins if they are built
 	$(call QT_INSTALL_PLUGINS,imageformats)
 ifeq ($(BR2_PACKAGE_QT_SHARED),y)
@@ -561,11 +523,6 @@ endif
 
 qt-dirclean:
 	rm -rf $(QT_TARGET_DIR)
-
-qt-status:
-	@echo "QT_QMAKE:               " $(QT_QMAKE)
-	@echo "QT_DEP_LIBS:            " $(QT_DEP_LIBS)
-	@echo "FREETYPE_DIR:		    " $(FREETYPE_DIR)
 
 #############################################################
 #

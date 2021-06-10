@@ -5,26 +5,29 @@
 #############################################################
 LZMA_VERSION:=4.32.6
 LZMA_SOURCE:=lzma-$(LZMA_VERSION).tar.gz
-LZMA_CAT:=$(ZCAT)
 LZMA_SITE:=http://tukaani.org/lzma/
-LZMA_HOST_DIR:=$(TOOLCHAIN_DIR)/lzma-$(LZMA_VERSION)
-LZMA_TARGET_DIR:=$(BUILD_DIR)/lzma-$(LZMA_VERSION)
-LZMA_TARGET_BINARY:=bin/lzma
+LZMA_INSTALL_STAGING = YES
+LZMA_INSTALL_TARGET = YES
+LZMA_CONF_OPT = $(if $(BR2_ENABLE_DEBUG),--enable-debug,--disable-debug)
 
-# lzma binary for use on the host
-LZMA=$(TOOLCHAIN_DIR)/bin/lzma
-HOST_LZMA_BINARY=$(shell package/lzma/lzmacheck.sh)
-HOST_LZMA_IF_ANY=$(shell toolchain/dependencies/check-host-lzma.sh)
-
-
-$(DL_DIR)/$(LZMA_SOURCE):
-	$(call DOWNLOAD,$(LZMA_SITE),$(LZMA_SOURCE))
+$(eval $(call AUTOTARGETS,package,lzma))
 
 ######################################################################
 #
 # lzma host
 #
 ######################################################################
+
+LZMA_CAT:=$(ZCAT)
+LZMA_HOST_DIR:=$(TOOLCHAIN_DIR)/lzma-$(LZMA_VERSION)
+
+# lzma binary for use on the host
+LZMA=$(TOOLCHAIN_DIR)/bin/lzma
+HOST_LZMA_BINARY=$(shell package/lzma/lzmacheck.sh)
+HOST_LZMA_IF_ANY=$(shell toolchain/dependencies/check-host-lzma.sh)
+
+$(DL_DIR)/$(LZMA_SOURCE):
+	$(call DOWNLOAD,$(LZMA_SITE),$(LZMA_SOURCE))
 
 $(LZMA_HOST_DIR)/.unpacked: $(DL_DIR)/$(LZMA_SOURCE)
 	$(LZMA_CAT) $(DL_DIR)/$(LZMA_SOURCE) | tar -C $(TOOLCHAIN_DIR) $(TAR_OPTIONS) -
@@ -113,9 +116,7 @@ $(TARGET_DIR)/$(LZMA_TARGET_BINARY): $(LZMA_TARGET_DIR)/src/lzma/lzma
 	-$(STRIPCMD) $(STRIP_STRIP_UNNEEDED) $@
 	touch -c $@
 
-#lzma-headers: $(TARGET_DIR)/$(LZMA_TARGET_BINARY)
-
-lzma-target: $(TARGET_DIR)/$(LZMA_TARGET_BINARY)
+lzma: $(TARGET_DIR)/$(LZMA_TARGET_BINARY)
 
 lzma-source: $(DL_DIR)/$(LZMA_SOURCE)
 
@@ -131,15 +132,6 @@ lzma-dirclean:
 # Toplevel Makefile options
 #
 #############################################################
-ifeq ($(BR2_PACKAGE_LZMA_HOST),y)
-TARGETS+=lzma-host
-HOST_SOURCE+=lzma-source
+ifeq ($(BR2_PACKAGE_LZMA),y)
+TARGETS+=lzma
 endif
-
-ifeq ($(BR2_PACKAGE_LZMA_TARGET),y)
-TARGETS+=lzma-target
-endif
-
-#ifeq ($(BR2_PACKAGE_LZMA_TARGET_HEADERS),y)
-#TARGETS+=lzma-headers
-#endif
