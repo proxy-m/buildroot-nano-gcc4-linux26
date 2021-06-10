@@ -4,8 +4,7 @@
 #
 #############################################################
 
-DNSMASQ_VERSION = 2.50
-DNSMASQ_SOURCE = dnsmasq-$(DNSMASQ_VERSION).tar.gz
+DNSMASQ_VERSION = 2.52
 DNSMASQ_SITE = http://thekelleys.org.uk/dnsmasq
 DNSMASQ_AUTORECONF = NO
 DNSMASQ_MAKE_ENV = CC="$(TARGET_CC)" CFLAGS="$(TARGET_CFLAGS)" LDFLAGS="$(TARGET_LDFLAGS)"
@@ -24,12 +23,18 @@ ifneq ($(BR2_PACKAGE_DNSMASQ_TFTP),y)
 DNSMASQ_COPTS += -DNO_TFTP
 endif
 
+ifeq ($(BR2_PACKAGE_DNSMASQ_IDN),y)
+DNSMASQ_MAKE_OPT += all-i18n
+DNSMASQ_DEPENDENCIES += libidn libintl
+DNSMASQ_MAKE_ENV += LDFLAGS+="-lintl"
+endif
+
 ifneq ($(BR2_LARGEFILE),y)
 DNSMASQ_COPTS += -DNO_LARGEFILE
 endif
 
 ifeq ($(BR2_PACKAGE_DBUS),y)
-DNSMASQ_DEPENDENCIES += host-pkgconfig dbus
+DNSMASQ_DEPENDENCIES += host-pkg-config dbus
 endif
 
 $(eval $(call AUTOTARGETS,package,dnsmasq))

@@ -28,8 +28,6 @@ ATK_CONF_ENV = ac_cv_func_posix_getpwuid_r=yes \
 		ac_cv_func_getdelim=yes ac_cv_func_mkstemp=yes \
 		utils_cv_func_mkstemp_limitations=no utils_cv_func_mkdir_trailing_slash_bug=no \
 		ac_cv_func_memcmp_working=yes ac_cv_have_decl_malloc=yes \
-		gl_cv_func_malloc_0_nonnull=yes ac_cv_func_malloc_0_nonnull=yes \
-		ac_cv_func_calloc_0_nonnull=yes ac_cv_func_realloc_0_nonnull=yes \
 		jm_cv_func_gettimeofday_clobber=no gl_cv_func_working_readdir=yes \
 		jm_ac_cv_func_link_follows_symlink=no utils_cv_localtime_cache=no \
 		ac_cv_struct_st_mtim_nsec=no gl_cv_func_tzset_clobber=no \
@@ -53,52 +51,14 @@ else
 ATK_CONF_OPT += --without-x
 endif
 
-ATK_DEPENDENCIES = libglib2 host-pkgconfig
+ATK_DEPENDENCIES = libglib2 host-pkg-config
 
-$(eval $(call AUTOTARGETS,package,atk))
+HOST_ATK_DEPENDENCIES = host-libglib2 host-pkg-config
 
-# atk for the host
-ATK_HOST_DIR:=$(BUILD_DIR)/atk-$(ATK_VERSION)-host
-
-$(DL_DIR)/$(ATK_SOURCE):
-	$(call DOWNLOAD,$(ATK_SITE),$(ATK_SOURCE))
-
-$(STAMP_DIR)/host_atk_unpacked: $(DL_DIR)/$(ATK_SOURCE)
-	mkdir -p $(ATK_HOST_DIR)
-	$(INFLATE$(suffix $(ATK_SOURCE))) $< | \
-		$(TAR) $(TAR_STRIP_COMPONENTS)=1 -C $(ATK_HOST_DIR) $(TAR_OPTIONS) -
-	touch $@
-
-$(STAMP_DIR)/host_atk_configured: $(STAMP_DIR)/host_atk_unpacked $(STAMP_DIR)/host_libglib2_installed $(STAMP_DIR)/host_pkgconfig_installed
-	(cd $(ATK_HOST_DIR); rm -rf config.cache; \
-		$(HOST_CONFIGURE_OPTS) \
-		CFLAGS="$(HOST_CFLAGS)" \
-		LDFLAGS="$(HOST_LDFLAGS)" \
-		./configure $(QUIET) \
-		--prefix="$(HOST_DIR)/usr" \
-		--sysconfdir="$(HOST_DIR)/etc" \
+HOST_ATK_CONF_OPT = \
 		--enable-shared \
 		--disable-static \
-		--disable-glibtest \
-	)
-	touch $@
+		--disable-glibtest
 
-$(STAMP_DIR)/host_atk_compiled: $(STAMP_DIR)/host_atk_configured
-	$(HOST_MAKE_ENV) $(MAKE) -C $(ATK_HOST_DIR)
-	touch $@
-
-$(STAMP_DIR)/host_atk_installed: $(STAMP_DIR)/host_atk_compiled
-	$(HOST_MAKE_ENV) $(MAKE) -C $(ATK_HOST_DIR) install
-	touch $@
-
-host-atk: $(STAMP_DIR)/host_atk_installed
-
-host-atk-source: atk-source
-
-host-atk-clean:
-	rm -f $(addprefix $(STAMP_DIR)/host_atk_,unpacked configured compiled installed)
-	-$(MAKE) -C $(ATK_HOST_DIR) uninstall
-	-$(MAKE) -C $(ATK_HOST_DIR) clean
-
-host-atk-dirclean:
-	rm -rf $(ATK_HOST_DIR)
+$(eval $(call AUTOTARGETS,package,atk))
+$(eval $(call AUTOTARGETS,package,atk,host))
