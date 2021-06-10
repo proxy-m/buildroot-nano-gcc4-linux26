@@ -5,7 +5,9 @@ TARGET_DIR=$2
 
 echo "Copying development files to target..."
 
-cp -a ${STAGING_DIR}/usr/include ${TARGET_DIR}/usr
+cp -af ${STAGING_DIR}/usr/include ${TARGET_DIR}/usr
+cp -af ${STAGING_DIR}/usr/lib/libc.so ${TARGET_DIR}/usr/lib/libc.so
+cp -af ${STAGING_DIR}/usr/lib/libc.so ${TARGET_DIR}/lib/libc.so.6
 
 for LIBSDIR in /lib /usr/lib; do
 	for WILDCARD in *.a *.la; do
