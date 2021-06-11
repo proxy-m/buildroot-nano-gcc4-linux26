@@ -3,7 +3,7 @@
 # TCL8.4
 #
 #############################################################
-TCL_VERSION:=8.4.9
+TCL_VERSION:=8.4.19
 TCL_SOURCE:=tcl$(TCL_VERSION)-src.tar.gz
 TCL_SITE:=http://$(BR2_SOURCEFORGE_MIRROR).dl.sourceforge.net/sourceforge/tcl
 TCL_SUBDIR = unix
