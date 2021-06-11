@@ -2,7 +2,8 @@
 #
 # sshd        Starts sshd.
 #
-
+echo -n "Disabled sshd: YOU DEEN EDIT S50sshd! Disabled for speedup."
+exit 1
 # Make sure the ssh-keygen progam exists
 [ -f /usr/bin/ssh-keygen ] || exit 0
 
