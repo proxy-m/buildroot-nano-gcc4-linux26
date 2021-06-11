@@ -1,25 +1,36 @@
 #############################################################
 #
-# concierge 1.0-RC2
+# concierge 1.0.0
 #
 #############################################################
-CONCIERGE_VERSION = 1.0_RC2
+CONCIERGE_VERSION = 1.0.0
 CONCIERGE_SOURCE = concierge-$(CONCIERGE_VERSION).jar
 CONCIERGE_SITE = http://ovh.dl.sourceforge.net/sourceforge/concierge/
 CONCIERGE_DIR=$(BUILD_DIR)/concierge-$(CONCIERGE_VERSION)
 CONCIERGE_SITE_BUNDLES = http://concierge.sourceforge.net/bundles/
 
-$(DL_DIR)/concierge:
-	 mkdir -p $(DL_DIR)/concierge/
-	 $(call DOWNLOAD,$(CONCIERGE_SITE),concierge-$(CONCIERGE_VERSION).jar)
-	 $(call DOWNLOAD,$(CONCIERGE_SITE_BUNDLES)shell-1.0.0.RC2.jar)
-	 $(call DOWNLOAD,$(CONCIERGE_SITE_BUNDLES)service-tracker-1.0.0.RC2.jar)
-	 $(call DOWNLOAD,$(CONCIERGE_SITE_BUNDLES)event-admin-1.0.0.RC2.jar)
+CONCIERGE_LIBS = $(DL_DIR)/concierge-$(CONCIERGE_VERSION).jar $(DL_DIR)/shell-$(CONCIERGE_VERSION).jar \
+	$(DL_DIR)/service-tracker-$(CONCIERGE_VERSION).jar $(DL_DIR)/event-admin-$(CONCIERGE_VERSION).jar
 
-$(TARGET_DIR)/usr/lib/concierge/: $(DL_DIR)/concierge
+$(DL_DIR)/concierge-$(CONCIERGE_VERSION).jar:
+	 $(call DOWNLOAD,$(CONCIERGE_SITE),concierge-$(CONCIERGE_VERSION).jar)
+
+$(DL_DIR)/shell-$(CONCIERGE_VERSION).jar:
+	 $(call DOWNLOAD,$(CONCIERGE_SITE_BUNDLES),shell-$(CONCIERGE_VERSION).jar)
+
+$(DL_DIR)/service-tracker-$(CONCIERGE_VERSION).jar:
+	 $(call DOWNLOAD,$(CONCIERGE_SITE_BUNDLES),service-tracker-$(CONCIERGE_VERSION).jar)
+
+$(DL_DIR)/event-admin-$(CONCIERGE_VERSION).jar:
+	 $(call DOWNLOAD,$(CONCIERGE_SITE_BUNDLES),event-admin-$(CONCIERGE_VERSION).jar)
+
+$(TARGET_DIR)/usr/lib/concierge/: $(CONCIERGE_LIBS)
 	mkdir -p $(TARGET_DIR)/usr/lib
 	mkdir -p $(TARGET_DIR)/usr/lib/concierge
-	cp -dpf $(DL_DIR)/concierge/* $(TARGET_DIR)/usr/lib/concierge/
+	cp -dpf $(DL_DIR)/concierge-$(CONCIERGE_VERSION).jar $(TARGET_DIR)/usr/lib/concierge/
+	cp -dpf $(DL_DIR)/shell-$(CONCIERGE_VERSION).jar $(TARGET_DIR)/usr/lib/concierge/
+	cp -dpf $(DL_DIR)/service-tracker-$(CONCIERGE_VERSION).jar $(TARGET_DIR)/usr/lib/concierge/
+	cp -dpf $(DL_DIR)/event-admin-$(CONCIERGE_VERSION).jar $(TARGET_DIR)/usr/lib/concierge/
 	cp -dpf package/java/concierge/files/init.xargs $(TARGET_DIR)/usr/lib/concierge/
 	touch -c $@
 

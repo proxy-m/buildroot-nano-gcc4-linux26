@@ -3,7 +3,7 @@
 # classpath 0.96.1
 #
 #############################################################
-CLASSPATH_VERSION = 0.98
+CLASSPATH_VERSION = 0.96.1
 CLASSPATH_SOURCE = classpath-$(CLASSPATH_VERSION).tar.gz
 CLASSPATH_SITE = $(BR2_GNU_MIRROR)/classpath
 CLASSPATH_AUTORECONF = NO

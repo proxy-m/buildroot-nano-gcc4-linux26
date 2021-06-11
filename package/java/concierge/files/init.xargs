@@ -5,6 +5,6 @@
 -Dch.ethz.iks.concierge.log.level=4
 
 
-#-istart shell-1.0.0.RC2.jar
-#-istart service-tracker-1.0.0.RC2.jar
-#-istart event-admin-1.0.0.RC2.jar
+-istart file:///usr/lib/concierge/shell-1.0.0.jar
+-istart file:///usr/lib/concierge/service-tracker-1.0.0.jar
+-istart file:///usr/lib/concierge/event-admin-1.0.0.jar
