@@ -12,6 +12,6 @@ MESA3D_CONF_OPT = --disable-egl --disable-glu --disable-glw --disable-glut --dis
 MESA3D_INSTALL_STAGING = YES
 MESA3D_INSTALL_TARGET_OPT = DESTDIR=$(TARGET_DIR) install
 
-MESA3D_DEPENDENCIES = xproto_glproto xlib_libXxf86vm xlib_libXdamage xlib_libXfixes xproto_dri2proto libdrm expat
+MESA3D_DEPENDENCIES = xproto_glproto expat xproto_xf86vidmodeproto xlib_libXxf86vm xlib_libXmu libdrm xlib_libXdamage xlib_libXfixes xlib_libpciaccess host-xutil_makedepend
 
 $(eval $(call AUTOTARGETS,package/x11r7,mesa3d))

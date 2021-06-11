@@ -3,7 +3,7 @@
 # libdrm
 #
 #############################################################
-LIBDRM_VERSION:=2.3.0
+LIBDRM_VERSION:=2.3.1
 LIBDRM_SOURCE:=libdrm-$(LIBDRM_VERSION).tar.bz2
 LIBDRM_SITE:=http://dri.freedesktop.org/libdrm/
 LIBDRM_CAT:=$(BZCAT)
