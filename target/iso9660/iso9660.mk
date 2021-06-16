@@ -53,12 +53,17 @@ ISO9660_OPTS+=-U
 endif
 
 $(ISO9660_TARGET): host-fakeroot $(LINUX_KERNEL) $(EXT2_TARGET) grub mkisofs
+	rm -rf $(ISO9660_TARGET_DIR)
 	mkdir -p $(ISO9660_TARGET_DIR)
 	mkdir -p $(ISO9660_TARGET_DIR)/boot/grub
 	cp $(GRUB_DIR)/stage2/stage2_eltorito $(ISO9660_TARGET_DIR)/boot/grub/
 	cp $(ISO9660_BOOT_MENU) $(ISO9660_TARGET_DIR)/boot/grub/menu.lst
 	cp $(LINUX_KERNEL) $(ISO9660_TARGET_DIR)/kernel
-	cp $(EXT2_TARGET) $(ISO9660_TARGET_DIR)/initrd
+	ifneq ($(strip $(BR2_TARGET_ROOTFS_INITRAMFS)),y)
+		cp $(EXT2_TARGET) $(ISO9660_TARGET_DIR)/initrd
+	else
+		touch $(ISO9660_TARGET_DIR)/initrd
+	endif
 	# Use fakeroot to pretend all target binaries are owned by root
 	rm -f $(BUILD_DIR)/_fakeroot.$(notdir $(ISO9660_TARGET))
 	touch $(BUILD_DIR)/.fakeroot.00000
