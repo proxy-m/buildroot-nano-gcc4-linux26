@@ -1,7 +1,7 @@
 #
 # Automatically generated make config: don't edit
 # Linux kernel version: 2.6.30.5
-# Tue Jun 22 01:57:27 2021
+# Tue Jun 22 22:44:09 2021
 #
 # CONFIG_64BIT is not set
 CONFIG_X86_32=y
@@ -355,7 +355,7 @@ CONFIG_PHYSICAL_ALIGN=0x200000
 CONFIG_HOTPLUG_CPU=y
 # CONFIG_COMPAT_VDSO is not set
 CONFIG_CMDLINE_BOOL=y
-CONFIG_CMDLINE="video=vesafb:mtrr:3,ywrap"
+CONFIG_CMDLINE=""
 # CONFIG_CMDLINE_OVERRIDE is not set
 CONFIG_ARCH_ENABLE_MEMORY_HOTPLUG=y
 
@@ -1902,9 +1902,9 @@ CONFIG_FB_CIRRUS=m
 # CONFIG_FB_ARC is not set
 # CONFIG_FB_ASILIANT is not set
 # CONFIG_FB_IMSTT is not set
-# CONFIG_FB_VGA16 is not set
+CONFIG_FB_VGA16=m
 CONFIG_FB_UVESA=m
-CONFIG_FB_VESA=y
+# CONFIG_FB_VESA is not set
 CONFIG_FB_EFI=y
 # CONFIG_FB_N411 is not set
 CONFIG_FB_HGA=m
