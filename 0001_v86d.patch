@@ -1,0 +1,71 @@
+Signed-off-by: Dmitry Golubovsky<[hidden email]> 
+--- 
+ package/Config.in      |    1 + 
+ package/v86d/Config.in |    9 +++++++++ 
+ package/v86d/v86d.mk   |   26 ++++++++++++++++++++++++++ 
+ 3 files changed, 36 insertions(+), 0 deletions(-) 
+ create mode 100644 package/v86d/Config.in 
+ create mode 100644 package/v86d/v86d.mk 
+
+diff --git a/package/Config.in b/package/Config.in
+index ea0e9ed..0a56af8 100644
+--- a/package/Config.in
++++ b/package/Config.in
+@@ -584,6 +584,7 @@ endmenu
+	source "package/usb_modeswitch_data/Config.in"
+	source "package/usbmount/Config.in"
+	source "package/usbutils/Config.in"
++	source "package/v86d/Config.in"
+	source "package/w_scan/Config.in"
+	source "package/wf111/Config.in"
+	source "package/wipe/Config.in"
+diff --git a/package/v86d/Config.in b/package/v86d/Config.in 
+new file mode 100644 
+index 0000000..ba1baca 
+--- /dev/null 
++++ b/package/v86d/Config.in 
+@@ -0,0 +1,9 @@ 
++config BR2_PACKAGE_V86D 
++	bool "v86d" 
++	depends on (BR2_i386 || BR2_x86_64) 
++	help 
++	 v86d is the userspace helper that runs x86 code in an emulated 
++	 environment. uvesafb will not work without v86d. v86d currently 
++	 supports the x86 and amd64 (x86-64) architectures. 
++ 
++	 http://dev.gentoo.org/~spock/projects/uvesafb/
+diff --git a/package/v86d/v86d.mk b/package/v86d/v86d.mk 
+new file mode 100644 
+index 0000000..035797e 
+--- /dev/null 
++++ b/package/v86d/v86d.mk 
+@@ -0,0 +1,26 @@ 
++############################################ 
++# 
++# v86d 
++# 
++############################################ 
++ 
++V86D_VERSION = v86d-0.1.10 
++V86D_SITE = git://repo.or.cz/v86d.git 
++ 
++# It is necessary to define __i386__ explicitly for successful compilation. 
++ 
++define V86D_BUILD_CMDS 
++	$(MAKE) CC="$(TARGET_CC) -D__i386__" LD="$(TARGET_LD)" -C $(@D) all 
++endef 
++ 
++V86D_POST_CONFIGURE_HOOKS += V86D_REALLY_RUN_CONFIGURE 
++ 
++# v86d's configure script is not autoconf-based: parameters 
++# supplied by Buildroot cause it to produce no result; explicit 
++# invocation is needed. 
++ 
++define V86D_REALLY_RUN_CONFIGURE 
++	(cd $(@D) ; ./configure --default) 
++endef 
++ 
++$(eval $(call AUTOTARGETS)) 
+-- 
+1.7.2.5 
+

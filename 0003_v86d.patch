@@ -1,0 +1,10 @@
+diff --git a/package/v86d/v86d.mk b/package/v86d/v86d.mk
+index afe8755..7c427d3 100644
+--- a/package/v86d/v86d.mk
++++ b/package/v86d/v86d.mk
+@@ -22,4 +22,4 @@ define V86D_BUILD_CMDS
+        $(MAKE) CC="$(TARGET_CC) -D__i386__" LD="$(TARGET_LD)" -C $(@D) all 
+ endef 
+  
+-$(eval $(call GENTARGETS)) 
++$(eval $(generic-package))

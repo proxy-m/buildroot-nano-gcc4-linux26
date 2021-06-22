@@ -1,0 +1,9 @@
+config BR2_PACKAGE_V86D 
+	bool "v86d" 
+	depends on (BR2_i386 || BR2_x86_64) 
+	help 
+	 v86d is the userspace helper that runs x86 code in an emulated 
+	 environment. uvesafb will not work without v86d. v86d currently 
+	 supports the x86 and amd64 (x86-64) architectures. 
+ 
+	 http://dev.gentoo.org/~spock/projects/uvesafb/
