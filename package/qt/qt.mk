@@ -1,6 +1,6 @@
 ######################################################################
 #
-# Qt Embedded for Linux 4.5
+# Qt Embedded for Linux 4.6
 # http://www.qtsoftware.com/
 #
 # This makefile was originally composed by Thomas Lundquist <thomasez@zelow.no>
@@ -12,11 +12,11 @@
 #
 ######################################################################
 
-QT_VERSION:=4.5.2
-QT_SOURCE:=qt-embedded-linux-opensource-src-$(QT_VERSION).tar.bz2
-QT_SITE:=http://get.qtsoftware.com/qt/source
-QT_CAT:=$(BZCAT)
-QT_TARGET_DIR:=$(BUILD_DIR)/qt-embedded-linux-opensource-src-$(QT_VERSION)
+QT_VERSION:=4.6.2
+QT_SOURCE:=qt-everywhere-opensource-src-$(QT_VERSION).tar.gz
+QT_SITE:=http://get.qt.nokia.com/qt/source
+QT_CAT:=$(ZCAT)
+QT_TARGET_DIR:=$(BUILD_DIR)/qt-everywhere-opensource-src-$(QT_VERSION)
 
 QT_CONFIGURE:=#empty
 
@@ -46,6 +46,11 @@ ifeq ($(BR2_PACKAGE_QT_QT3SUPPORT),y)
 QT_CONFIGURE+= -qt3support
 else
 QT_CONFIGURE+= -no-qt3support
+endif
+
+# ensure glib is built first if enabled for Qt's glib support
+ifeq ($(BR2_PACKAGE_LIBGLIB2),y)
+QT_DEP_LIBS+=libglib2
 endif
 
 
@@ -108,6 +113,12 @@ QT_CONFIGURE += -qt-gfx-multiscreen
 else
 QT_CONFIGURE += -no-gfx-multiscreen
 endif
+ifeq ($(BR2_PACKAGE_QT_GFX_DIRECTFB),y)
+QT_CONFIGURE += -qt-gfx-directfb
+else
+QT_CONFIGURE += -no-gfx-directfb
+endif
+
 
 ### Mouse drivers
 ifeq ($(BR2_PACKAGE_QT_MOUSE_PC),y)
@@ -115,25 +126,15 @@ QT_CONFIGURE += -qt-mouse-pc
 else
 QT_CONFIGURE += -no-mouse-pc
 endif
-ifeq ($(BR2_PACKAGE_QT_MOUSE_BUS),y)
-QT_CONFIGURE += -qt-mouse-bus
-else
-QT_CONFIGURE += -no-mouse-bus
-endif
 ifeq ($(BR2_PACKAGE_QT_MOUSE_LINUXTP),y)
 QT_CONFIGURE += -qt-mouse-linuxtp
 else
 QT_CONFIGURE += -no-mouse-linuxtp
 endif
-ifeq ($(BR2_PACKAGE_QT_MOUSE_YOPY),y)
-QT_CONFIGURE += -qt-mouse-yopy
+ifeq ($(BR2_PACKAGE_QT_MOUSE_LINUXINPUT),y)
+QT_CONFIGURE += -qt-mouse-linuxinput
 else
-QT_CONFIGURE += -no-mouse-yopy
-endif
-ifeq ($(BR2_PACKAGE_QT_MOUSE_VR41XX),y)
-QT_CONFIGURE += -qt-mouse-vr41xx
-else
-QT_CONFIGURE += -no-mouse-vr41xx
+QT_CONFIGURE += -no-mouse-linuxinput
 endif
 ifeq ($(BR2_PACKAGE_QT_MOUSE_TSLIB),y)
 QT_CONFIGURE += -qt-mouse-tslib
@@ -145,6 +146,23 @@ ifeq ($(BR2_PACKAGE_QT_MOUSE_QVFB),y)
 QT_CONFIGURE += -qt-mouse-qvfb
 else
 QT_CONFIGURE += -no-mouse-qvfb
+endif
+
+### Keyboard drivers
+ifeq ($(BR2_PACKAGE_QT_KEYBOARD_TTY),y)
+QT_CONFIGURE += -qt-kbd-tty
+else
+QT_CONFIGURE += -no-kbd-tty
+endif
+ifeq ($(BR2_PACKAGE_QT_KEYBOARD_LINUXINPUT),y)
+QT_CONFIGURE += -qt-kbd-linuxinput
+else
+QT_CONFIGURE += -no-kbd-linuxinput
+endif
+ifeq ($(BR2_PACKAGE_QT_KEYBOARD_QVFB),y)
+QT_CONFIGURE += -qt-kbd-qvfb
+else
+QT_CONFIGURE += -no-kbd-qvfb
 endif
 
 ifeq ($(BR2_PACKAGE_QT_DEBUG),y)
@@ -220,6 +238,14 @@ endif
 endif
 
 
+QT_FONTS = $(addprefix $(STAGING_DIR)/usr/lib/fonts/, $(addsuffix *.qpf, \
+	   $(if $(BR2_PACKAGE_QT_FONT_MICRO),micro) \
+	   $(if $(BR2_PACKAGE_QT_FONT_FIXED),fixed) \
+	   $(if $(BR2_PACKAGE_QT_FONT_HELVETICA),helvetica) \
+	   $(if $(BR2_PACKAGE_QT_FONT_JAPANESE),japanese) \
+	   $(if $(BR2_PACKAGE_QT_FONT_UNIFONT),unifont)))
+
+
 ifeq ($(BR2_PACKAGE_QT_QTFREETYPE),y)
 QT_CONFIGURE+= -qt-freetype
 else
@@ -275,11 +301,29 @@ else
 QT_CONFIGURE+= -no-xmlpatterns
 endif
 
+ifeq ($(BR2_PACKAGE_QT_MULTIMEDIA),y)
+QT_CONFIGURE+= -multimedia
+else
+QT_CONFIGURE+= -no-multimedia
+endif
+
+ifeq ($(BR2_PACKAGE_QT_AUDIO_BACKEND),y)
+QT_CONFIGURE+= -audio-backend
+else
+QT_CONFIGURE+= -no-audio-backend
+endif
+
 ifeq ($(BR2_PACKAGE_QT_PHONON),y)
 QT_CONFIGURE+= -phonon
 QT_DEP_LIBS+=gstreamer gst-plugins-base
 else
 QT_CONFIGURE+= -no-phonon
+endif
+
+ifeq ($(BR2_PACKAGE_QT_PHONON_BACKEND),y)
+QT_CONFIGURE+= -phonon-backend
+else
+QT_CONFIGURE+= -no-phonon-backend
 endif
 
 ifeq ($(BR2_PACKAGE_QT_SVG),y)
@@ -294,6 +338,24 @@ else
 QT_CONFIGURE+= -no-webkit
 endif
 
+ifeq ($(BR2_PACKAGE_QT_SCRIPT),y)
+QT_CONFIGURE+= -script
+else
+QT_CONFIGURE+= -no-script
+endif
+
+ifeq ($(BR2_PACKAGE_QT_SCRIPTTOOLS),y)
+QT_CONFIGURE+= -scripttools
+else
+QT_CONFIGURE+= -no-scripttools
+endif
+
+ifeq ($(BR2_PACKAGE_QT_JAVASCRIPTCORE),y)
+QT_CONFIGURE+= -javascript-jit
+else
+QT_CONFIGURE+= -no-javascript-jit
+endif
+
 ifeq ($(BR2_PACKAGE_QT_STL),y)
 QT_CONFIGURE+= -stl
 else
@@ -306,6 +368,16 @@ QT_CONFIGURE += -no-pch
 endif
 
 BR2_PACKAGE_QT_EMB_PLATFORM:=$(call qstrip,$(BR2_PACKAGE_QT_EMB_PLATFORM))
+
+# x86x86fix
+# Workaround Qt Embedded bug when crosscompiling for x86 under x86 with linux
+# host. It's unclear if this would happen on other hosts.
+ifneq ($(findstring linux,$(GNU_HOST_NAME)),)
+ifneq ($(findstring x86,$(BR2_PACKAGE_QT_EMB_PLATFORM)),)
+QT_CONFIGURE+= -platform linux-g++
+endif
+endif
+# End of workaround.
 
 # Figure out what libs to install in the target
 QT_LIBS=#empty
@@ -329,6 +401,10 @@ QT_LIBS+= qt-webkit
 endif
 ifeq ($(BR2_PACKAGE_QT_XML),y)
 QT_LIBS+= qt-xml
+endif
+ifeq ($(BR2_PACKAGE_QT_DBUS),y)
+QT_LIBS+= qt-dbus
+QT_DEP_LIBS+= dbus
 endif
 ifeq ($(BR2_PACKAGE_QT_XMLPATTERNS),y)
 QT_LIBS+= qt-xmlpatterns
@@ -422,6 +498,9 @@ endif
 		-embedded $(BR2_PACKAGE_QT_EMB_PLATFORM) \
 		$(QT_QCONFIG_COMMAND) \
 		$(QT_CONFIGURE) \
+		-no-gfx-qnx \
+		-no-kbd-qnx \
+		-no-mouse-qnx \
 		-no-xinerama \
 		-no-cups \
 		-no-nis \
@@ -445,7 +524,9 @@ $(STAGING_DIR)/usr/lib/libQtCore.la: $(QT_TARGET_DIR)/.compiled
 
 qt-gui: $(STAGING_DIR)/usr/lib/libQtCore.la
 	mkdir -p $(TARGET_DIR)/usr/lib/fonts
-	cp -dpf $(STAGING_DIR)/usr/lib/fonts/*.qpf $(TARGET_DIR)/usr/lib/fonts
+ifneq ($(QT_FONTS),)
+	cp -dpf $(QT_FONTS) $(TARGET_DIR)/usr/lib/fonts
+endif
 ifneq ($(BR2_PACKAGE_QT_NOFREETYPE),y)
 	cp -dpf $(STAGING_DIR)/usr/lib/fonts/*.ttf $(TARGET_DIR)/usr/lib/fonts
 endif
@@ -491,6 +572,11 @@ endif
 qt-xmlpatterns: $(STAGING_DIR)/usr/lib/libQtCore.la
 ifeq ($(BR2_PACKAGE_QT_SHARED),y)
 	cp -dpf $(STAGING_DIR)/usr/lib/libQtXmlPatterns.so.* $(TARGET_DIR)/usr/lib/
+endif
+
+qt-dbus: $(STAGING_DIR)/usr/lib/libQtCore.la
+ifeq ($(BR2_PACKAGE_QT_SHARED),y)
+	cp -dpf $(STAGING_DIR)/usr/lib/libQtDBus.so.* $(TARGET_DIR)/usr/lib/
 endif
 
 qt-script: $(STAGING_DIR)/usr/lib/libQtCore.la

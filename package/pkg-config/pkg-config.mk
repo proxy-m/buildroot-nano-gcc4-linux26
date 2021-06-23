@@ -13,6 +13,14 @@ endif
 
 PKG_CONFIG_DEPENDENCIES = libglib2
 
+
+
+HOST_PKG_CONFIG_CONF_OPT = \
+ 		--with-pc-path="$(STAGING_DIR)/usr/lib/pkgconfig" \
+		--disable-static
+
+
+
 PKG_CONFIG_CONF_OPT = --with-installed-glib
 
 $(eval $(call AUTOTARGETS,package,pkg-config))
@@ -44,6 +52,9 @@ $(STAMP_DIR)/host_pkgconfig_configured: $(STAMP_DIR)/host_pkgconfig_unpacked
 	)
 	touch $@
 
+
+
+
 $(STAMP_DIR)/host_pkgconfig_compiled: $(STAMP_DIR)/host_pkgconfig_configured
 	$(MAKE) -C $(PKG_CONFIG_HOST_DIR)
 	touch $@
@@ -54,12 +65,25 @@ $(STAMP_DIR)/host_pkgconfig_installed: $(STAMP_DIR)/host_pkgconfig_compiled
 		$(STAGING_DIR)/usr/share/aclocal/pkg.m4
 	touch $@
 
+define HOST_PKG_CONFIG_INSTALL_M4
+install -D -m 0644 $(HOST_DIR)/usr/share/aclocal/pkg.m4 \
+		$(STAGING_DIR)/usr/share/aclocal/pkg.m4
+endef
+
+
 host-pkgconfig: $(STAMP_DIR)/host_pkgconfig_installed
+
+HOST_PKG_CONFIG_POST_INSTALL_HOOKS += HOST_PKG_CONFIG_INSTALL_M4
 
 host-pkgconfig-clean:
 	rm -f $(addprefix $(STAMP_DIR)/host_pkgconfig_,unpacked configured compiled installed)
 	-$(MAKE) -C $(PKG_CONFIG_HOST_DIR) uninstall
 	-$(MAKE) -C $(PKG_CONFIG_HOST_DIR) clean
 
+$(eval $(call AUTOTARGETS,package,pkg-config))
+$(eval $(call AUTOTARGETS,package,pkg-config,host))
+
 host-pkgconfig-dirclean:
 	rm -rf $(PKG_CONFIG_HOST_DIR)
+
+PKG_CONFIG_HOST_BINARY:=$(HOST_DIR)/usr/bin/pkg-config

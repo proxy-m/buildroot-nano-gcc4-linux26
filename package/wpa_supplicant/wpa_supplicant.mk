@@ -5,7 +5,6 @@
 #############################################################
 
 WPA_SUPPLICANT_VERSION = 0.6.9
-WPA_SUPPLICANT_SOURCE = wpa_supplicant-$(WPA_SUPPLICANT_VERSION).tar.gz
 WPA_SUPPLICANT_SITE = http://hostap.epitest.fi/releases
 WPA_SUPPLICANT_LIBTOOL_PATCH = NO
 WPA_SUPPLICANT_INSTALL_TARGET_OPT = DESTDIR=$(TARGET_DIR) install
@@ -27,6 +26,7 @@ $(eval $(call AUTOTARGETS,package,wpa_supplicant))
 $(WPA_SUPPLICANT_TARGET_CONFIGURE):
 	cp $(WPA_SUPPLICANT_DIR)/wpa_supplicant/defconfig $(WPA_SUPPLICANT_CONFIG)
 	echo "CFLAGS += $(TARGET_CFLAGS)" >>$(WPA_SUPPLICANT_CONFIG)
+	echo "LDFLAGS += $(TARGET_LDFLAGS)" >>$(WPA_SUPPLICANT_CONFIG)
 	echo "CC = $(TARGET_CC)" >>$(WPA_SUPPLICANT_CONFIG)
 	$(SED) "s/\/local//" $(WPA_SUPPLICANT_DIR)/wpa_supplicant/Makefile
 ifneq ($(BR2_PACKAGE_WPA_SUPPLICANT_EAP),y)
@@ -42,6 +42,9 @@ endif
 endif
 ifeq ($(BR2_PACKAGE_DBUS),y)
 	echo "CONFIG_CTRL_IFACE_DBUS=y" >>$(WPA_SUPPLICANT_CONFIG)
+endif
+ifeq ($(BR2_PACKAGE_LIBNL),y)
+	echo "CONFIG_DRIVER_NL80211=y" >>$(WPA_SUPPLICANT_CONFIG)
 endif
 	touch $@
 

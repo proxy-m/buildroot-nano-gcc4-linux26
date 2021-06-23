@@ -54,13 +54,12 @@ $(LTRACE_DIR)/.configured: $(LTRACE_DIR)/.patched
 	touch $@
 
 $(LTRACE_DIR)/$(LTRACE_BINARY): $(LTRACE_DIR)/.configured
-	$(MAKE) CC=$(TARGET_CC) LD=$(TARGET_CROSS)ld ARCH=$(LTRACE_ARCH) \
-		-C $(LTRACE_DIR)
+	$(MAKE) ARCH=$(LTRACE_ARCH) -C $(LTRACE_DIR)
 
 $(TARGET_DIR)/$(LTRACE_TARGET_BINARY): $(LTRACE_DIR)/$(LTRACE_BINARY)
 	#$(MAKE) DESTDIR=$(TARGET_DIR) ARCH=$(LTRACE_ARCH)  -C $(LTRACE_DIR) install
 	$(INSTALL) -D $(LTRACE_DIR)/$(LTRACE_BINARY) $@
-ifeq ($(BR2_HAVE_MANPAGES),y)
+ifeq ($(BR2_HAVE_DOCUMENTATION),y)
 	$(INSTALL) -D $(LTRACE_DIR)/ltrace.1 \
 		$(TARGET_DIR)/usr/share/man/man1/ltrace.1
 endif

@@ -1,5 +1,4 @@
 # /etc/inittab
-# Note: updated to add ttyS0 terminal, serial console and enable autologin.
 #
 # Copyright (C) 2001 Erik Andersen <andersen@codepoet.org>
 #
@@ -15,45 +14,33 @@
 # process   == program to run
 
 # Startup the system
-
+::sysinit:/bin/mount -t proc none /proc
 ::sysinit:/bin/mount -t sysfs none /sys
 ::sysinit:/bin/mount -t tmpfs -o size=64k,mode=0755 none /dev
-::sysinit:/bin/mount -t proc proc /proc
-::sysinit:/bin/mkdir -p /dev/pts
+::sysinit:/bin/mkdir /dev/pts
 ::sysinit:/bin/mount -t devpts devpts /dev/pts
 ::sysinit:/bin/echo /sbin/mdev > /proc/sys/kernel/hotplug
 ::sysinit:/sbin/mdev -s
 ::sysinit:/bin/mount -o remount,rw /
-::sysinit:/bin/mkdir -p /tmp /var/cache
-::sysinit:/bin/mkdir -p /mnt/h9p
-::sysinit:/bin/mkdir -p /media /mnt/data /mnt/flash /mnt/cdrom
 ::sysinit:/bin/mount -a
 ::sysinit:/bin/hostname -F /etc/hostname
-::sysinit:/sbin/ifconfig lo 127.0.0.1 up || true
-::sysinit:/sbin/route add -net 127.0.0.0 netmask 255.0.0.0 lo || true
+::sysinit:/sbin/ifconfig lo 127.0.0.1 up
+::sysinit:/sbin/route add -net 127.0.0.0 netmask 255.0.0.0 lo
 # now run any rc scripts
-::sysinit:/etc/init.d/rcS # you are warned about lock on dhpc
+::sysinit:/etc/init.d/rcS
 
 # Set up a couple of getty's
-##tty1::respawn:/sbin/getty 38400 tty1
+tty1::respawn:/sbin/getty 38400 tty1
 tty2::respawn:/sbin/getty 38400 tty2
-tty4::respawn:/sbin/getty 38400 tty4
 
 # Put a getty on the serial port
-ttyS0::respawn:/sbin/getty -L ttyS0 115200 vt100 # GENERIC_SERIAL
+#ttyS0::respawn:/sbin/getty -L ttyS0 115200 vt100 # GENERIC_SERIAL
 
 # Logging junk
 null::sysinit:/bin/touch /var/log/messages
 null::respawn:/sbin/syslogd -n
 null::respawn:/sbin/klogd -n
 tty3::respawn:/usr/bin/tail -f /var/log/messages
-
-# run (u)vesafb
-::sysinit:/bin/sh -c 'rmmod -f vga16fb || true'
-::sysinit:/bin/sh -c 'modprobe uvesafb mode_option=1024x768-24 mtrr=3 scroll=ywrap || modprobe vga16fb'
-
-# Auto-login on serial console
-::respawn:-/bin/sh
 
 # Stuff to do for the 3-finger salute
 ::ctrlaltdel:/sbin/reboot

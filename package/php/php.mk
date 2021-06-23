@@ -4,7 +4,7 @@
 #
 #############################################################
 
-PHP_VERSION = 5.2.11
+PHP_VERSION = 5.2.13
 PHP_SOURCE = php-$(PHP_VERSION).tar.bz2
 PHP_SITE = http://www.php.net/distributions
 PHP_INSTALL_STAGING = YES
@@ -12,8 +12,7 @@ PHP_INSTALL_STAGING_OPT = INSTALL_ROOT=$(STAGING_DIR) install
 PHP_INSTALL_TARGET_OPT = INSTALL_ROOT=$(TARGET_DIR) install
 PHP_LIBTOOL_PATCH = NO
 PHP_DEPENDENCIES =
-PHP_CONF_OPT =	$(DISABLE_IPV6) \
-		--mandir=/usr/share/man \
+PHP_CONF_OPT =  --mandir=/usr/share/man \
 		--infodir=/usr/share/info \
 		--disable-all \
 		--without-pear \
@@ -85,7 +84,7 @@ endif
 
 ifeq ($(BR2_PACKAGE_PHP_EXT_GETTEXT),y)
 	PHP_CONF_OPT += --with-gettext=$(STAGING_DIR)/usr
-	PHP_DEPENDENCIES += gettext
+	PHP_DEPENDENCIES += $(if $(BR2_NEEDS_GETTEXT),gettext)
 endif
 
 ifeq ($(BR2_PACKAGE_PHP_EXT_GMP),y)
@@ -156,6 +155,9 @@ else
 	PHP_CONF_OPT += --with-pdo-sqlite
 endif
 	PHP_CONF_ENV += CFLAGS+=" -DSQLITE_OMIT_LOAD_EXTENSION"
+ifneq ($(BR2_LARGEFILE),y)
+	PHP_CONF_ENV += CFLAGS+=" -DSQLITE_DISABLE_LFS"
+endif
 endif
 ifeq ($(BR2_PACKAGE_PHP_EXT_PDO_MYSQL),y)
 	PHP_CONF_OPT += --with-pdo-mysql=$(STAGING_DIR)/usr

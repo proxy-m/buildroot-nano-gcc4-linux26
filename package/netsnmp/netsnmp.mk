@@ -52,13 +52,13 @@ else
 NETSNMP_CONFIGURE_OPENSSL:=--without-openssl
 endif
 
-ifneq ($(findstring y,$(BR2_HAVE_MANPAGES)$(BR2_HAVE_INFOPAGES)),y)
+ifneq ($(BR2_HAVE_DOCUMENTATION),y)
 NETSNMP_DOCS:=--disable-manuals
 endif
 
 $(NETSNMP_DIR)/.configured: $(NETSNMP_DIR)/.unpacked
 	(cd $(NETSNMP_DIR); rm -f config.cache; \
-		autoconf && \
+		$(AUTOCONF) && \
 		ac_cv_NETSNMP_CAN_USE_SYSCTL=yes \
 		$(NETSNMP_CONFIGURE_PERL_ENV) \
 		$(TARGET_CONFIGURE_OPTS) \
@@ -111,13 +111,6 @@ $(TARGET_DIR)/usr/sbin/snmpd: $(NETSNMP_DIR)/agent/snmpd
 	    includedir=$(STAGING_DIR)/usr/include/net-snmp \
 	    ucdincludedir=$(STAGING_DIR)/usr/include/ucd-snmp \
 	    -C $(NETSNMP_DIR) install
-	rm -rf $(TARGET_DIR)/usr/share/doc
-ifneq ($(BR2_HAVE_MANPAGES),y)
-	rm -rf $(TARGET_DIR)/usr/share/man
-endif
-ifneq ($(BR2_HAVE_INFOPAGES),y)
-	rm -rf $(TARGET_DIR)/usr/share/info
-endif
 	# Copy the .conf files.
 	$(INSTALL) -D -m 0644 $(NETSNMP_DIR)/EXAMPLE.conf $(TARGET_DIR)/etc/snmp/snmpd.conf
 	-mv $(TARGET_DIR)/usr/share/snmp/mib2c*.conf $(TARGET_DIR)/etc/snmp
@@ -130,7 +123,7 @@ endif
 	$(INSTALL) -D -m 0644 $(NETSNMP_DIR)/agent/mibgroup/header_complex.h $(STAGING_DIR)/usr/include/net-snmp/agent/header_complex.h
 	$(INSTALL) -D -m 0755 package/netsnmp/S59snmpd $(TARGET_DIR)/etc/init.d/S59snmpd
 
-netsnmp: $(if $(BR2_PACKAGE_OPENSSL),openssl) $(TARGET_DIR)/usr/sbin/snmpd
+netsnmp: host-autoconf $(if $(BR2_PACKAGE_OPENSSL),openssl) $(TARGET_DIR)/usr/sbin/snmpd
 
 netsnmp-headers: $(TARGET_DIR)/usr/include/net-snmp/net-snmp-config.h
 	$(INSTALL) -d $(TARGET_DIR)/usr/include/net-snmp

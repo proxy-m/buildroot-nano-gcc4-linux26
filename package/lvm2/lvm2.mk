@@ -61,11 +61,6 @@ $(LVM2_DIR)/.configured: $(LVM2_DIR)/.unpacked
 	(cd $(LVM2_DIR); rm -rf config.cache; \
 		$(TARGET_CONFIGURE_OPTS) \
 		$(TARGET_CONFIGURE_ARGS) \
-		ac_cv_have_decl_malloc=yes \
-		gl_cv_func_malloc_0_nonnull=yes \
-		ac_cv_func_malloc_0_nonnull=yes \
-		ac_cv_func_calloc_0_nonnull=yes \
-		ac_cv_func_realloc_0_nonnull=yes \
 		./configure $(QUIET) \
 		--target=$(GNU_TARGET_NAME) \
 		--host=$(GNU_TARGET_NAME) \
@@ -79,7 +74,7 @@ $(LVM2_DIR)/.configured: $(LVM2_DIR)/.unpacked
 
 
 $(LVM2_DIR)/.built: $(LVM2_DIR)/.configured
-	$(MAKE1) CC=$(TARGET_CC) RANLIB=$(TARGET_RANLIB) AR=$(TARGET_AR) -C $(LVM2_DIR) DESTDIR=$(STAGING_DIR)
+	$(MAKE1) -C $(LVM2_DIR) DESTDIR=$(STAGING_DIR)
 	$(MAKE1) -C $(LVM2_DIR) DESTDIR=$(STAGING_DIR) install
 	# Fixup write permissions so that the files can be overwritten
 	# several times in the $(TARGET_DIR)
@@ -91,9 +86,11 @@ $(LVM2_DIR)/.built: $(LVM2_DIR)/.configured
 
 $(LVM2_TARGET_SBINS) $(LVM2_TARGET_DMSETUP_SBINS): $(LVM2_DIR)/.built
 	cp -a $(STAGING_DIR)/sbin/$(notdir $@) $@
+	touch $@
 
 $(LVM2_TARGET_LIBS): $(LVM2_DIR)/.built
 	cp -a $(STAGING_DIR)/lib/$(notdir $@) $@
+	touch $@
 
 
 ifeq ($(BR2_PACKAGE_LVM2_DMSETUP_ONLY),y)
