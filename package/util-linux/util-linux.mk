@@ -3,7 +3,7 @@
 # util-linux
 #
 #############################################################
-UTIL-LINUX_VERSION:=2.20.1
+UTIL-LINUX_VERSION:=2.13-pre7
 UTIL-LINUX_SOURCE:=util-linux-$(UTIL-LINUX_VERSION).tar.bz2
 UTIL-LINUX_SITE:=$(BR2_KERNEL_MIRROR)/linux/utils/util-linux/testing
 UTIL_LINUX_AUTORECONF = YES
@@ -76,10 +76,6 @@ $(UTIL-LINUX_DIR)/.configured: $(UTIL-LINUX_DIR)/.unpacked
 		$(if $(BR2_PACKAGE_UTIL_LINUX_RENAME),,--disable-rename) \
 		$(if $(BR2_PACKAGE_UTIL_LINUX_WALL),,--disable-wall) \
 		$(if $(BR2_PACKAGE_UTIL_LINUX_PARTX),,--disable-partx) \
-		--disable-disk-utils \
-		--disable-disk \
-		--disable-swap \
-		--disable-swapon \
 		--prefix=/ \
 		$(if $(BR2_PACKAGE_UTIL_LINUX_ARCH),--enable-arch) \
 		$(if $(BR2_PACKAGE_UTIL_LINUX_INIT),--enable-init) \
