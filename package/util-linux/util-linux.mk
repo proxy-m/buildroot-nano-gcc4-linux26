@@ -3,11 +3,11 @@
 # util-linux
 #
 #############################################################
-UTIL-LINUX_VERSION:=2.27.1
-UTIL-LINUX_SOURCE:=util-linux-$(UTIL-LINUX_VERSION).tar.gz
+UTIL-LINUX_VERSION:=2.19.1
+UTIL-LINUX_SOURCE:=util-linux-$(UTIL-LINUX_VERSION).tar.bz2
 UTIL-LINUX_SITE:=$(BR2_KERNEL_MIRROR)/linux/utils/util-linux/testing
 UTIL-LINUX_DIR:=$(BUILD_DIR)/util-linux-$(UTIL-LINUX_VERSION)
-UTIL-LINUX_CAT:=$(ZCAT)
+UTIL-LINUX_CAT:=$(BZCAT)
 UTIL-LINUX_BINARY:=$(UTIL-LINUX_DIR)/misc-utils/chkdupexe
 UTIL-LINUX_TARGET_BINARY:=$(TARGET_DIR)/usr/bin/chkdupexe
 
