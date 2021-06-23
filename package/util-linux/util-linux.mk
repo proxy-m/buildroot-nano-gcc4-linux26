@@ -3,7 +3,7 @@
 # util-linux
 #
 #############################################################
-UTIL-LINUX_VERSION:=2.19.1
+UTIL-LINUX_VERSION:=2.13-pre7
 UTIL-LINUX_SOURCE:=util-linux-$(UTIL-LINUX_VERSION).tar.bz2
 UTIL-LINUX_SITE:=$(BR2_KERNEL_MIRROR)/linux/utils/util-linux/testing
 UTIL-LINUX_DIR:=$(BUILD_DIR)/util-linux-$(UTIL-LINUX_VERSION)
@@ -21,6 +21,10 @@ endif
 ifeq ($(BR2_NEEDS_GETTEXT_IF_LOCALE),y)
 UTIL-LINUX_DEPENDENCIES += gettext libintl
 UTIL-LINUX_MAKE_OPT = LIBS=-lintl
+endif
+
+ifeq ($(BR2_PACKAGE_NCURSES),y)
+UTIL-LINUX_DEPENDENCIES += ncurses
 endif
 
 $(DL_DIR)/$(UTIL-LINUX_SOURCE):
