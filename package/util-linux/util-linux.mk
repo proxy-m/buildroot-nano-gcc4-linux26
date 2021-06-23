@@ -3,7 +3,7 @@
 # util-linux
 #
 #############################################################
-UTIL-LINUX_VERSION:=2.19.1
+UTIL-LINUX_VERSION:=2.20.1
 UTIL-LINUX_SOURCE:=util-linux-$(UTIL-LINUX_VERSION).tar.bz2
 UTIL-LINUX_SITE:=$(BR2_KERNEL_MIRROR)/linux/utils/util-linux/testing
 UTIL_LINUX_AUTORECONF = YES
