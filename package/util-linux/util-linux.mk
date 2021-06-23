@@ -14,6 +14,8 @@ UTIL-LINUX_CAT:=$(BZCAT)
 UTIL-LINUX_BINARY:=$(UTIL-LINUX_DIR)/misc-utils/chkdupexe
 UTIL-LINUX_TARGET_BINARY:=$(TARGET_DIR)/usr/bin/chkdupexe
 
+UTIL_LINUX_CONF_OPT += --disable-rpath --disable-makeinstall-chown
+
 # schedutils isn't support for all archs
 ifneq ($(BR2_i386)$(BR2_powerpc)$(BR2_x86_64)$(BR2_ia64)$(BR2_alpha),)
 UTIL-LINUX_SCHED_UTILS:=--enable-schedutils
@@ -21,14 +23,25 @@ else
 UTIL-LINUX_SCHED_UTILS:=--disable-schedutils
 endif
 
-ifeq ($(BR2_NEEDS_GETTEXT_IF_LOCALE),y)
-UTIL-LINUX_DEPENDENCIES += gettext libintl
-UTIL-LINUX_MAKE_OPT = LIBS=-lintl
+# If both util-linux and busybox are selected, make certain util-linux
+# wins the fight over who gets to have their utils actually installed
+ifeq ($(BR2_PACKAGE_BUSYBOX),y)
+UTIL_LINUX_DEPENDENCIES += busybox
 endif
 
 ifeq ($(BR2_PACKAGE_NCURSES),y)
-UTIL-LINUX_DEPENDENCIES += ncurses
+UTIL_LINUX_DEPENDENCIES += ncurses
+else
+UTIL_LINUX_CONF_OPT += --without-ncurses
 endif
+
+ifeq ($(BR2_PACKAGE_LIBINTL),y)
+UTIL_LINUX_DEPENDENCIES += libintl
+UTIL_LINUX_MAKE_OPT += LIBS=-lintl
+endif
+
+UTIL_LINUX_INSTALL_STAGING_OPT += MKINSTALLDIRS=$(@D)/config/mkinstalldirs
+UTIL_LINUX_INSTALL_TARGET_OPT += MKINSTALLDIRS=$(@D)/config/mkinstalldirs
 
 $(DL_DIR)/$(UTIL-LINUX_SOURCE):
 	$(call DOWNLOAD,$(UTIL-LINUX_SITE),$(UTIL-LINUX_SOURCE))
@@ -47,8 +60,36 @@ $(UTIL-LINUX_DIR)/.configured: $(UTIL-LINUX_DIR)/.unpacked
 		--target=$(GNU_TARGET_NAME) \
 		--host=$(GNU_TARGET_NAME) \
 		--build=$(GNU_HOST_NAME) \
-		--disable-use-tty-group \
+		$(UTIL_LINUX_CONF_OPT) \
+		$(if $(BR2_PACKAGE_UTIL_LINUX_MOUNT),,--disable-mount) \
+		$(if $(BR2_PACKAGE_UTIL_LINUX_FSCK),,--disable-fsck) \
+		$(if $(BR2_PACKAGE_UTIL_LINUX_LIBMOUNT),,--disable-libmount) \
+		$(if $(BR2_PACKAGE_UTIL_LINUX_LIBUUID),,--disable-libuuid) \
+		$(if $(BR2_PACKAGE_UTIL_LINUX_UUIDD),,--disable-uuidd) \
+		$(if $(BR2_PACKAGE_UTIL_LINUX_LIBBLKID),,--disable-libblkid) \
+		$(if $(BR2_PACKAGE_UTIL_LINUX_AGETTY),,--disable-agetty) \
+		$(if $(BR2_PACKAGE_UTIL_LINUX_CRAMFS),,--disable-cramfs) \
+		$(if $(BR2_PACKAGE_UTIL_LINUX_SWITCH_ROOT),,--disable-switch_root) \
+		$(if $(BR2_PACKAGE_UTIL_LINUX_PIVOT_ROOT),,--disable-pivot_root) \
+		$(if $(BR2_PACKAGE_UTIL_LINUX_FALLOCATE),,--disable-fallocate) \
+		$(if $(BR2_PACKAGE_UTIL_LINUX_UNSHARE),,--disable-unshare) \
+		$(if $(BR2_PACKAGE_UTIL_LINUX_RENAME),,--disable-rename) \
+		$(if $(BR2_PACKAGE_UTIL_LINUX_WALL),,--disable-wall) \
+		--disable-disk-utils \
+		--disable-disk \
+		--disable-swap \
+		--disable-swapon \
 		--prefix=/ \
+		$(if $(BR2_PACKAGE_UTIL_LINUX_ARCH),--enable-arch) \
+		$(if $(BR2_PACKAGE_UTIL_LINUX_INIT),--enable-init) \
+		$(if $(BR2_PACKAGE_UTIL_LINUX_KILL),--enable-kill) \
+		$(if $(BR2_PACKAGE_UTIL_LINUX_LAST),--enable-last) \
+		$(if $(BR2_PACKAGE_UTIL_LINUX_MESG),--enable-mesg) \
+		$(if $(BR2_PACKAGE_UTIL_LINUX_PARTX),--enable-partx) \
+		$(if $(BR2_PACKAGE_UTIL_LINUX_RAW),--enable-raw) \
+		$(if $(BR2_PACKAGE_UTIL_LINUX_RESET),--enable-reset) \
+		$(if $(BR2_PACKAGE_UTIL_LINUX_LOGIN_UTILS),--enable-login-utils) \
+		$(if $(BR2_PACKAGE_UTIL_LINUX_WRITE),--enable-write) \
 		--exec-prefix=/ \
 		--sysconfdir=/etc \
 		--datadir=/usr/share \
