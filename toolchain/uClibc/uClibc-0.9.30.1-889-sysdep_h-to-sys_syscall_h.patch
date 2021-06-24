@@ -1,0 +1,11 @@
+--- uClibc-0.9.30.1/libpthread/linuxthreads/sysdeps/i386/useldt.h.orig	2007-05-15 03:35:00.000000000 +0300
++++ uClibc-0.9.30.1/libpthread/linuxthreads/sysdeps/i386/useldt.h	2021-06-24 20:58:34.719861537 +0300
+@@ -22,7 +22,7 @@
+ #ifndef __ASSEMBLER__
+ #include <stddef.h>	/* For offsetof.  */
+ #include <stdlib.h>	/* For abort().	 */
+-#include <sysdep.h>
++#include <sys/syscall.h>
+ 
+ 
+ /* We don't want to include the kernel header.	So duplicate the

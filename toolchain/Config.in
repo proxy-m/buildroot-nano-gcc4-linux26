@@ -43,8 +43,6 @@ config BR2_USE_MMU
 	  If your target has a MMU, you should say Y here.  If you
 	  are unsure, just say Y.
 
-
-
 source "target/device/Config.in.toolchain"
 
 source "toolchain/Config.in.1"
@@ -59,5 +57,9 @@ comment "Common Toolchain Options"
 source "toolchain/Config.in.2"
 source "toolchain/external-toolchain/Config.in.2"
 source "toolchain/toolchain-common.in"
+
+config BR2_TOOLCHAIN_HAS_THREADS
+	bool
+	default y if (BR2_PTHREADS || BR2_PTHREADS_OLD || BR2_PTHREADS_NATIVE)
 
 endmenu
