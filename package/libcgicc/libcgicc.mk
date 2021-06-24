@@ -11,6 +11,8 @@ LIBCGICC_LIBTOOL_PATCH=NO
 LIBCGICC_AUTORECONF=YES
 
 LIBCGICC_CONF_OPT = \
+	--localstatedir=/var \
+	--sysconfdir=/etc \
 	--disable-demos \
 	--disable-doc
 

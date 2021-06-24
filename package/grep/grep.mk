@@ -10,6 +10,6 @@ export MAKEINFO=true
 GREP_CONF_OPT = --disable-perl-regexp --without-included-regex \
 	$(DISABLE_NLS) $(DISABLE_LARGEFILE)
 
-GREP_DEPENDENCIES = $(if $(BR2_ENABLE_LOCALE),gettext libintl)
+GREP_DEPENDENCIES = $(if $(BR2_NEEDS_GETTEXT_IF_LOCALE),gettext)
 
 $(eval $(call AUTOTARGETS,package,grep))

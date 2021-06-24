@@ -11,6 +11,7 @@ SYSSTAT_AUTORECONF = NO
 SYSSTAT_LIBTOOL_PATCH = NO
 SYSSTAT_INSTALL_STAGING = NO
 SYSSTAT_INSTALL_TARGET = YES
+SYSSTAT_DEPENDENCIES += gettext
 
 # Should be --disable-man-group, it might be a little mistake in the
 # configure.in script.

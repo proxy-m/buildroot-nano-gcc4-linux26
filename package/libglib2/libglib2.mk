@@ -51,7 +51,7 @@ LIBGLIB2_CONF_ENV =	\
 LIBGLIB2_CONF_OPT = --enable-shared \
 		--enable-static
 
-LIBGLIB2_DEPENDENCIES = gettext libintl host-pkgconfig host-libglib2
+LIBGLIB2_DEPENDENCIES = host-pkgconfig host-libglib2 libffi zlib $(if $(BR2_NEEDS_GETTEXT),gettext)
 
 ifneq ($(BR2_ENABLE_LOCALE),y)
 LIBGLIB2_DEPENDENCIES+=libiconv

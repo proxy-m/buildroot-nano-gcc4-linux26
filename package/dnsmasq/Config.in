@@ -1,5 +1,8 @@
 config BR2_PACKAGE_DNSMASQ
 	bool "dnsmasq"
+	depends on BR2_USE_WCHAR
+ 	select BR2_PACKAGE_LIBIDN
+ 	select BR2_PACKAGE_GETTEXT if BR2_NEEDS_GETTEXT_IF_LOCALE
 	help
 	  A lightweight DNS and DHCP server.  It is intended to provide
 	  coupled DNS and DHCP service to a LAN.

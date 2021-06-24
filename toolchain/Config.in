@@ -26,6 +26,25 @@ config BR2_TOOLCHAIN_SOURCE
 	default y if BR2_TOOLCHAIN_BUILDROOT || BR2_TOOLCHAIN_EXTERNAL_SOURCE
 	default n if BR2_TOOLCHAIN_EXTERNAL
 
+config BR2_NEEDS_GETTEXT
+	bool
+	default y if BR2_TOOLCHAIN_BUILDROOT
+	default y if BR2_TOOLCHAIN_EXTERNAL_UCLIBC
+	default y if BR2_TOOLCHAIN_CTNG_uClibc
+
+config BR2_NEEDS_GETTEXT_IF_LOCALE
+	bool
+	default y if (BR2_NEEDS_GETTEXT && BR2_ENABLE_LOCALE)
+
+config BR2_USE_MMU
+	bool "Enable MMU support" if BR2_arm || BR2_armeb || BR2_mips || BR2_mipsel || BR2_sh || BR2_xtensa
+	default y
+	help
+	  If your target has a MMU, you should say Y here.  If you
+	  are unsure, just say Y.
+
+
+
 source "target/device/Config.in.toolchain"
 
 source "toolchain/Config.in.1"
@@ -39,5 +58,6 @@ comment "Common Toolchain Options"
 
 source "toolchain/Config.in.2"
 source "toolchain/external-toolchain/Config.in.2"
+source "toolchain/toolchain-common.in"
 
 endmenu
