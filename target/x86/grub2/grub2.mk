@@ -98,7 +98,8 @@ $(GRUB2_DIR)/.configured: $(GRUB2_DIR)/.unpacked
 	touch $@
 
 $(GRUB2_DIR)/$(GRUB2_BINARY): $(GRUB2_DIR)/.configured
-	$(MAKE) CC=$(TARGET_CC) -C $(GRUB2_DIR)
+	$(MAKE) CC="$(TARGET_CC)" -C $(GRUB2_DIR)
+	touch $@
 
 $(GRUB2_DIR)/.installed: $(GRUB2_DIR)/$(GRUB2_BINARY)
 	cp $(GRUB2_DIR)/$(GRUB2_BINARY) $(TARGET_DIR)/$(GRUB2_TARGET_BINARY)
@@ -113,7 +114,7 @@ endif
 grub2: uclibc $(GRUB2_DIR)/.installed
 
 grub2-clean:
-	$(MAKE) DESTDIR=$(TARGET_DIR) CC=$(TARGET_CC) -C $(GRUB2_DIR) uninstall
+	$(MAKE) DESTDIR=$(TARGET_DIR) CC="$(TARGET_CC)" -C $(GRUB2_DIR) uninstall
 	-$(MAKE) -C $(GRUB2_DIR) clean
 	rm -f $(TARGET_DIR)/boot/grub2/$(GRUB2_SPLASHIMAGE) \
 		$(TARGET_DIR)/sbin/$(GRUB2_BINARY) \
