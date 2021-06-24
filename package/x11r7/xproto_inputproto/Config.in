@@ -1,5 +1,5 @@
 config BR2_PACKAGE_XPROTO_INPUTPROTO
 	bool "inputproto"
 	help
-	  inputproto 2.0
+	  inputproto 1.3.2
 	  X.Org Input protocol headers
