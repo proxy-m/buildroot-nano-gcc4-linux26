@@ -1,35 +1,157 @@
 >>> pixman 0.17.6 Downloading
+>>> e2fsprogs 1.41.9 Downloading
 >>> automake 1.10 Downloading
 >>> libffi 3.0.11 Downloading
 >>> intltool 0.40.6 Downloading
->>> gnuchess 5.07 Downloading
 >>> libtool 1.5.24 Downloading
 >>> libconfig 1.3 Downloading
+>>> matchbox-panel 0.9.3 Downloading
+>>> matchbox-keyboard 0.1 Downloading
+>>> matchbox-desktop 0.9.1 Downloading
+>>> matchbox-lib 1.9 Downloading
+>>> matchbox-wm 1.2 Downloading
 >>> fbdump 0.4.2 Downloading
 >>> m4 1.4.9 Downloading
 >>> flex 2.5.37 Downloading
+>>> wpa_supplicant 0.6.9 Downloading
 >>> fontconfig 2.6.0 Downloading
 >>> expat 2.0.1 Downloading
 >>> ed 1.1 Downloading
->>> autoconf 2.63 Downloading
+>>> autoconf 2.65 Downloading
 >>> dropbear 0.52 Downloading
 >>> less 394 Downloading
 >>> grep 2.5.3 Downloading
->>> libxml2 2.7.3 Downloading
+>>> libxml2 2.7.7 Downloading
 >>> libxslt 1.1.24 Downloading
 >>> findutils 4.2.31 Downloading
 >>> screen 4.0.2 Downloading
 >>> patch 2.6 Downloading
->>> e2fsprogs 1.41.9 Downloading
->>> freetype 2.3.9 Downloading
+>>> freetype 2.3.12 Downloading
 >>> libarchive 2.7.1 Downloading
 >>> sqlite 3.6.16 Downloading
+>>> libdrm 2.4.19 Downloading
 >>> tar 1.21 Downloading
 >>> bison 2.3 Downloading
 >>> strace 4.5.18 Downloading
+>>> which 2.20 Downloading
+>>> popt 1.15 Downloading
 >>> libungif 4.1.4 Downloading
->>> libpng 1.2.38 Downloading
+>>> libpng 1.2.43 Downloading
 >>> rsync 3.0.5 Downloading
 >>> jpeg 6b Downloading
+>>> xlib_libXres 1.0.4 Downloading
+>>> xlib_libXprintUtil 1.0.1 Downloading
+>>> xproto_inputproto 2.0 Downloading
+>>> xlib_libXrandr 1.3.0 Downloading
+>>> xapp_xrandr 1.3.2 Downloading
+>>> xlib_libxkbui 1.0.2 Downloading
+>>> xapp_xkbcomp 1.1.1 Downloading
+>>> xproto_glproto 1.4.10 Downloading
+>>> xproto_kbproto 1.0.4 Downloading
+>>> xlib_libXrender 0.9.5 Downloading
+>>> mesa3d 7.6.1 Downloading
+>>> xfont_font-xfree86-type1 1.0.2 Downloading
+>>> xlib_libICE 1.0.6 Downloading
+>>> xlib_libXdamage 1.1.2 Downloading
+>>> xdriver_xf86-video-cirrus 1.3.2 Downloading
+>>> xlib_libXft 2.1.14 Downloading
+>>> xproto_printproto 1.0.3 Downloading
+>>> xlib_libfontenc 1.0.5 Downloading
+>>> xlib_libXp 1.0.0 Downloading
+>>> xlib_libXtst 1.1.0 Downloading
+>>> xproto_xf86rushproto 1.1.2 Downloading
+>>> xproto_renderproto 0.11 Downloading
+>>> xlib_libXmu 1.0.5 Downloading
+>>> xlib_libxkbfile 1.0.6 Downloading
+>>> libxcb 1.5 Downloading
+>>> pthread-stubs 0.3 Downloading
+
+>>> xkeyboard-config 1.8 Downloading
+>>> xlib_libXext 1.1.1 Downloading
+>>> xproto_xextproto 7.1.1 Downloading
+>>> xfont_font-alias 1.0.2 Downloading
+>>> xlib_libXxf86vm 1.1.0 Downloading
+>>> xproto_resourceproto 1.1.0 Downloading
+>>> xproto_xf86vidmodeproto 2.3 Downloading
+>>> xlib_libXpm 3.5.8 Downloading
+>>> xapp_xeyes 1.0.1 Downloading
+>>> xdriver_xf86-video-vesa 2.2.1 Downloading
+
+>>> xlib_libXinerama 1.1 Downloading
+>>> xlib_libXdmcp 1.0.3 Downloading
+>>> xlib_libXt 1.0.7 Downloading
+>>> xproto_fontsproto 2.1.0 Downloading
+>>> xproto_xf86dgaproto 2.1 Downloading
+>>> xlib_libXaw 1.0.7 Downloading
+
+>>> xserver_xorg-server 1.7.5 Downloading
+
+>>> xproto_bigreqsproto 1.1.0 Downloading
+>>> xlib_libXfixes 4.0.4 Downloading
+>>> xdriver_xf86-input-synaptics 1.2.0 Downloading
+>>> xutil_util-macros 1.3.0 Downloading
+>>> xdriver_xf86-input-evdev 2.3.0 Downloading
+
+>>> xproto_randrproto 1.3.1 Downloading
+>>> xdriver_xf86-video-intel 2.10.0 Downloading
+>>> xdriver_xf86-video-dummy 0.3.2 Downloading
+>>> xlib_xtrans 1.2.5 Downloading
+>>> xproto_xineramaproto 1.2 Downloading
+>>> xdriver_xf86-input-mouse 1.5.0 Downloading
+>>> xproto_xcmiscproto 1.2.0 Downloading
+>>> xapp_xset 1.1.0 Downloading
+>>> xcb-util 0.3.6 Downloading
+>>> xlib_libSM 1.1.1 Downloading
+>>> xproto_xf86driproto 2.1.0 Downloading
+>>> xlib_libXfont 1.4.1 Downloading
+>>> xproto_compositeproto 0.4.1 Downloading
+>>> xcb-proto 1.6 Downloading
+>>> xdriver_xf86-input-void 1.3.0 Downloading
+>>> xlib_libXi 1.3 Downloading
+>>> xdriver_xf86-video-vmware 10.16.8 Downloading
+
+>>> xlib_libXau 1.0.5 Downloading
+>>> xlib_libXv 1.0.5 Downloading
+>>> xlib_libXfontcache 1.0.5 Downloading
+
+>>> xlib_libXcursor 1.1.10 Downloading
+>>> xdriver_xf86-video-trident 1.3.3 Downloading
+>>> xapp_xmessage 1.0.2 Downloading
+
+
+>>> xlib_libXvMC 1.0.5 Downloading
+>>> xdriver_xf86-input-vmmouse 12.6.5 Downloading
+>>> xdata_xbitmaps 1.1.0 Downloading
+>>> xproto_recordproto 1.14 Downloading
+>>> xfont_encodings 1.0.3 Downloading
+>>> xapp_xinit 1.0.5 Downloading
+>>> xproto_xproto 7.0.16 Downloading
+>>> xproto_xf86bigfontproto 1.2.0 Downloading
+
+>>> xlib_libpciaccess 0.11.0 Downloading
+
+>>> xfont_font-cursor-misc 1.0.1 Downloading
+>>> xfont_font-misc-misc 1.1.0 Downloading
+>>> xproto_fixesproto 4.1.1 Downloading
+>>> xproto_damageproto 1.2.0 Downloading
+>>> xproto_dri2proto 2.3 Downloading
+>>> xlib_libX11 1.3.2 Downloading
+>>> xlib_libXprintAppUtil 1.0.1 Downloading
+>>> xlib_libXScrnSaver 1.2.0 Downloading
+>>> xdriver_xf86-input-keyboard 1.4.0 Downloading
+>>> xapp_xauth 1.0.4 Downloading
+
+
+>>> xproto_videoproto 2.3.0 Downloading
+>>> xproto_scrnsaverproto 1.2.0 Downloading
+>>> xproto_fontcacheproto 0.1.3 Downloading
+
 >>> lzma 4.32.7 Downloading
 >>> openssl 0.9.8k Downloading
+
+
+
+
+
+
+

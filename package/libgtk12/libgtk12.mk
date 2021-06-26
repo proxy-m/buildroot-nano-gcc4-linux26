@@ -27,7 +27,7 @@ $(LIBGTK12_DIR)/.configured: $(LIBGTK12_DIR)/.unpacked
 		$(TARGET_CONFIGURE_OPTS) \
 		$(TARGET_CONFIGURE_ARGS) \
 		GLIB_CONFIG=$(STAGING_DIR)/bin/glib-config \
-		./configure \
+		./configure $(QUIET) \
 		--target=$(GNU_TARGET_NAME) \
 		--host=$(GNU_TARGET_NAME) \
 		--build=$(GNU_HOST_NAME) \
@@ -86,7 +86,7 @@ $(TARGET_DIR)/lib/libgtk-1.2.so.0.9.1: $(STAGING_DIR)/lib/$(LIBGTK12_BINARY)
 	$(STRIPCMD) $(STRIP_STRIP_UNNEEDED) $(TARGET_DIR)/lib/libgdk-1.2.so.0.9.1
 	touch -c $(TARGET_DIR)/lib/libgtk-1.2.so.0.9.1
 
-libgtk12: uclibc libglib12 $(XSERVER) $(TARGET_DIR)/lib/libgtk-1.2.so.0.9.1
+libgtk12: libglib12 xserver_xorg-server $(TARGET_DIR)/lib/libgtk-1.2.so.0.9.1
 
 libgtk12-clean:
 	rm -f $(TARGET_DIR)/lib/libgtk* $(TARGET_DIR)/lib/libgdk*
