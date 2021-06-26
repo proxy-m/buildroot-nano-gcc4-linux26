@@ -3,7 +3,7 @@
 # libxml2
 #
 #############################################################
-LIBXML2_VERSION = 2.7.3
+LIBXML2_VERSION = 2.6.32
 LIBXML2_SOURCE = libxml2-sources-$(LIBXML2_VERSION).tar.gz
 LIBXML2_SITE = ftp://xmlsoft.org/libxml2
 LIBXML2_INSTALL_STAGING = YES
@@ -18,7 +18,14 @@ LIBXML2_CONF_OPT = --with-gnu-ld --enable-shared \
 		--without-debugging --without-python \
 		--without-threads 
 
+LIBXML2_DEPENDENCIES = uclibc
+
 $(eval $(call AUTOTARGETS,package,libxml2))
+
+$(LIBXML2_HOOK_POST_EXTRACT):
+	rm -f $(LIBXML2_DIR)/win32/Makefile.msvc.rej
+	rm -f $(LIBXML2_DIR)/macos/src/XMLTestPrefix.h.rej
+	touch $@
 
 $(LIBXML2_HOOK_POST_INSTALL):
 	$(SED) "s,^prefix=.*,prefix=\'$(STAGING_DIR)/usr\',g" $(STAGING_DIR)/usr/bin/xml2-config
@@ -46,7 +53,7 @@ $(STAMP_DIR)/host_libxml2_configured: $(STAMP_DIR)/host_libxml2_unpacked $(STAMP
 		$(HOST_CONFIGURE_OPTS) \
 		CFLAGS="$(HOST_CFLAGS)" \
 		LDFLAGS="$(HOST_LDFLAGS)" \
-		./configure $(QUIET) \
+		./configure \
 		--prefix="$(HOST_DIR)/usr" \
 		--sysconfdir="$(HOST_DIR)/etc" \
 		--enable-shared --without-debugging --without-python \

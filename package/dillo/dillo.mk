@@ -21,7 +21,7 @@ $(DILLO_DIR)/.configured: $(DILLO_DIR)/.unpacked
 	(cd $(DILLO_DIR); rm -rf config.cache; \
 		$(TARGET_CONFIGURE_OPTS) \
 		$(TARGET_CONFIGURE_ARGS) \
-		./configure $(QUIET) \
+		./configure \
 		--target=$(GNU_TARGET_NAME) \
 		--host=$(GNU_TARGET_NAME) \
 		--build=$(GNU_HOST_NAME) \
@@ -33,13 +33,13 @@ $(DILLO_DIR)/.configured: $(DILLO_DIR)/.unpacked
 	touch $(DILLO_DIR)/.configured
 
 $(DILLO_DIR)/src/dillo: $(DILLO_DIR)/.configured
-	$(MAKE) CC="$(TARGET_CC)" -C $(DILLO_DIR)
+	$(MAKE) CC=$(TARGET_CC) -C $(DILLO_DIR)
 
 $(DILLO_DIR)/.installed: $(DILLO_DIR)/src/dillo
 	$(MAKE) -C $(DILLO_DIR) DESTDIR=$(TARGET_DIR) install
 	touch $(DILLO_DIR)/.installed
 
-dillo: xserver_xorg-server libglib12 libgtk12 jpeg libpng $(DILLO_DIR)/.installed
+dillo: uclibc $(XSERVER) libglib12 libgtk12 jpeg libpng $(DILLO_DIR)/.installed
 
 dillo-source: $(DL_DIR)/$(DILLO_SOURCE)
 

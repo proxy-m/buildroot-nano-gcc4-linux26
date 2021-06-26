@@ -85,13 +85,13 @@ ifeq ($(BR2_PACKAGE_DIRECTFB),y)
 	LIBGTK2_DEPENDENCIES += directfb
 endif
 
-ifeq ($(BR2_PACKAGE_XORG7),y)
+ifneq ($(BR2_PACKAGE_XSERVER_none),y)
 	LIBGTK2_CONF_OPT += \
 		--with-x \
 		--x-includes=$(STAGING_DIR)/usr/include/X11 \
 		--x-libraries=$(STAGING_DIR)/usr/lib \
 		--with-gdktarget=x11
-	LIBGTK2_DEPENDENCIES += xlib_libXcomposite xserver_xorg-server
+	LIBGTK2_DEPENDENCIES += xlib_libXcomposite $(XSERVER)
 else
 	LIBGTK2_CONF_OPT += --without-x
 endif
@@ -149,7 +149,7 @@ $(STAMP_DIR)/host_libgtk2_configured: $(STAMP_DIR)/host_libgtk2_unpacked $(STAMP
 		$(HOST_CONFIGURE_OPTS) \
 		CFLAGS="$(HOST_CFLAGS)" \
 		LDFLAGS="$(HOST_LDFLAGS)" \
-		./configure $(QUIET) \
+		./configure \
 		--prefix="$(HOST_DIR)/usr" \
 		--sysconfdir="$(HOST_DIR)/etc" \
 		--disable-static \

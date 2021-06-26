@@ -11,7 +11,7 @@ ifeq ($(BR2_ENABLE_DEBUG),y) # install-exec doesn't install aclocal stuff
 AUTOMAKE_INSTALL_TARGET_OPT = DESTDIR=$(TARGET_DIR) install
 endif
 
-AUTOMAKE_DEPENDENCIES = autoconf microperl
+AUTOMAKE_DEPENDENCIES = uclibc autoconf microperl
 
 $(eval $(call AUTOTARGETS,package,automake))
 
@@ -38,7 +38,7 @@ $(STAMP_DIR)/host_automake_configured: $(STAMP_DIR)/host_automake_unpacked $(STA
 		$(HOST_CONFIGURE_OPTS) \
 		CFLAGS="$(HOST_CFLAGS)" \
 		LDFLAGS="$(HOST_LDFLAGS)" \
-		./configure $(QUIET) \
+		./configure \
 		--prefix="$(HOST_DIR)/usr" \
 		--sysconfdir="$(HOST_DIR)/etc" \
 		--disable-static \

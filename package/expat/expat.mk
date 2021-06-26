@@ -16,7 +16,7 @@ EXPAT_INSTALL_TARGET_OPT = DESTDIR=$(TARGET_DIR) installlib
 
 EXPAT_CONF_OPT = --enable-shared
 
-EXPAT_DEPENDENCIES = host-pkgconfig
+EXPAT_DEPENDENCIES = uclibc host-pkgconfig
 
 $(eval $(call AUTOTARGETS,package,expat))
 
@@ -41,7 +41,7 @@ $(STAMP_DIR)/host_expat_configured: $(STAMP_DIR)/host_expat_unpacked
 		$(HOST_CONFIGURE_OPTS) \
 		CFLAGS="$(HOST_CFLAGS)" \
 		LDFLAGS="$(HOST_LDFLAGS)" \
-		./configure $(QUIET) \
+		./configure \
 		--prefix="$(HOST_DIR)/usr" \
 		--sysconfdir="$(HOST_DIR)/etc" \
 	)
@@ -55,7 +55,7 @@ $(STAMP_DIR)/host_expat_installed: $(STAMP_DIR)/host_expat_compiled
 	$(MAKE) -C $(EXPAT_HOST_DIR) installlib
 	touch $@
 
-host-expat: $(STAMP_DIR)/host_expat_installed
+host-expat: $(STAM_DIR)/host_expat_installed
 
 host-expat-source: expat-source
 

@@ -28,7 +28,7 @@ $(XFONT_FONT_UTIL_DIR)/.configured: $(XFONT_FONT_UTIL_DIR)/.unpacked
 	(cd $(XFONT_FONT_UTIL_DIR) && \
 		$(TARGET_CONFIGURE_OPTS) \
 		$(TARGET_CONFIGURE_ARGS) \
-		./configure $(QUIET) \
+		./configure \
 		--target=$(GNU_TARGET_NAME) \
 		--host=$(GNU_TARGET_NAME) \
 		--build=$(GNU_HOST_NAME) \
@@ -59,7 +59,7 @@ $(XFONT_FONT_UTIL_DIR)/.hacked: $(XFONT_FONT_UTIL_DIR)/.installed
 	( package/x11r7/xfont_font-util/post-install.sh $(STAGING_DIR) )
 	touch $@
 
-xfont_font-util: host-pkgconfig $(XFONT_FONT_UTIL_DIR)/.hacked
+xfont_font-util: uclibc host-pkgconfig $(XFONT_FONT_UTIL_DIR)/.hacked
 
 xfont_font-util-unpacked: $(XFONT_FONT_UTIL_DIR)/.unpacked
 

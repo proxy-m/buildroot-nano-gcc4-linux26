@@ -3,7 +3,7 @@
 # libpng (Portable Network Graphic library)
 #
 #############################################################
-LIBPNG_VERSION:=1.2.38
+LIBPNG_VERSION:=1.2.35
 LIBPNG_SITE = http://$(BR2_SOURCEFORGE_MIRROR).dl.sourceforge.net/sourceforge/libpng
 LIBPNG_SOURCE = libpng-$(LIBPNG_VERSION).tar.bz2
 LIBPNG_LIBTOOL_PATCH = NO
@@ -16,7 +16,7 @@ LIBPNG_CONF_ENV = \
 		ac_cv_func_calloc_0_nonnull=yes \
 		ac_cv_func_realloc_0_nonnull=yes
 LIBPNG_CONF_OPT = --without-libpng-compat
-LIBPNG_DEPENDENCIES = host-pkgconfig zlib
+LIBPNG_DEPENDENCIES = uclibc host-pkgconfig zlib
 
 $(eval $(call AUTOTARGETS,package,libpng))
 

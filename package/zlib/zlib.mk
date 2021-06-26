@@ -18,14 +18,14 @@ $(ZLIB_DIR)/.patched: $(DL_DIR)/$(ZLIB_SOURCE)
 	$(CONFIG_UPDATE) $(@D)
 	touch $@
 
-ifeq ($(BR2_PREFER_STATIC_LIB),y)
-ZLIB_PIC :=
-ZLIB_SHARED :=
-ZLIB_TARGET := $(STAGING_DIR)/usr/lib/libz.a
-else
+ifneq ($(BR2_PREFER_STATIC_LIB),y)
 ZLIB_PIC := -fPIC
 ZLIB_SHARED := --shared
 ZLIB_TARGET := $(TARGET_DIR)/usr/lib/libz.so
+else
+ZLIB_PIC :=
+ZLIB_SHARED :=
+ZLIB_TARGET := $(STAGING_DIR)/usr/lib/libz.a
 endif
 
 $(ZLIB_DIR)/.configured: $(ZLIB_DIR)/.patched
@@ -70,7 +70,7 @@ $(TARGET_DIR)/usr/lib/libz.a: $(STAGING_DIR)/usr/lib/libz.a
 
 zlib-headers: $(TARGET_DIR)/usr/lib/libz.a
 
-zlib: $(ZLIB_TARGET)
+zlib: uclibc $(ZLIB_TARGET)
 
 zlib-source: $(DL_DIR)/$(ZLIB_SOURCE)
 

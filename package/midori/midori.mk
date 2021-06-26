@@ -11,14 +11,6 @@ MIDORI_AUTORECONF = YES
 MIDORI_INSTALL_STAGING = NO
 MIDORI_INSTALL_TARGET = YES
 
-MIDORI_DEPENDENCIES = \
-	host-pkgconfig \
-	xserver_xorg-server \
-	libsexy \
- 	libgtk2 \
- 	libsexy \
- 	webkit \
-	$(if $(BR2_NEEDS_GETTEXT_IF_LOCALE),gettext) \
- 	$(if $(BR2_PACKAGE_LIBICONV),libiconv)
- 	
+MIDORI_DEPENDENCIES = uclibc host-pkgconfig webkit libsexy $(XSERVER)
+
 $(eval $(call AUTOTARGETS,package,midori))

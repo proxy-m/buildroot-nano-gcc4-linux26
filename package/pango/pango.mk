@@ -40,20 +40,19 @@ PANGO_CONF_ENV = ac_cv_func_posix_getpwuid_r=yes glib_cv_stack_grows=no \
 		ac_use_included_regex=no gl_cv_c_restrict=no \
 		ac_cv_path_FREETYPE_CONFIG=$(STAGING_DIR)/usr/bin/freetype-config
 
-PANGO_CONF_OPT = --enable-shared --enable-static \
-		--enable-explicit-deps=no --disable-debug
-
-PANGO_DEPENDENCIES = $(if $(BR2_NEEDS_GETTEXT_IF_LOCALE),gettext) host-pkgconfig libglib2 cairo
-
-
-ifeq ($(BR2_PACKAGE_XORG7),y)
-        PANGO_CONF_OPT += --with-x \
+ifneq ($(BR2_PACKAGE_XSERVER_none),y)
+        PANGO_CONF_OPT_X = --with-x \
 		--x-includes=$(STAGING_DIR)/usr/include/X11 \
 		--x-libraries=$(STAGING_DIR)/usr/lib --disable-glibtest
-	PANGO_DEPENDENCIES += xserver_xorg-server
 else
-        PANGO_CONF_OPT += --without-x
+        PANGO_CONF_OPT_X = --without-x
 endif
+
+PANGO_CONF_OPT = --enable-shared --enable-static \
+		$(PANGO_CONF_OPT_X) \
+		--enable-explicit-deps=no --disable-debug
+
+PANGO_DEPENDENCIES = uclibc gettext libintl host-pkgconfig libglib2 $(XSERVER) cairo
 
 $(eval $(call AUTOTARGETS,package,pango))
 
@@ -82,17 +81,17 @@ $(STAMP_DIR)/host_pango_configured: $(STAMP_DIR)/host_pango_unpacked $(STAMP_DIR
 		$(HOST_CONFIGURE_OPTS) \
 		CFLAGS="$(HOST_CFLAGS)" \
 		LDFLAGS="$(HOST_LDFLAGS)" \
-		./configure $(QUIET) \
+		./configure \
 		--prefix="$(HOST_DIR)/usr" \
 		--sysconfdir="$(HOST_DIR)/etc" \
 		--disable-static \
-		$(if $(BR2_PACKAGE_XORG7),--with-x,--without-x) \
+		$(if $(BR2_PACKAGE_XSERVER_none),--without-x,--with-x) \
 		--disable-debug \
 	)
 	touch $@
 
 $(STAMP_DIR)/host_pango_compiled: $(STAMP_DIR)/host_pango_configured
-	$(HOST_MAKE_ENV) $(MAKE) -C $(PANGO_HOST_DIR)
+	$(HOST_MAKE_ENV) PKG_CONFIG_PATH="$(HOST_DIR)/usr/lib/pkgconfig$(PKG_CONFIG_PATH)" $(MAKE) -C $(PANGO_HOST_DIR)
 	touch $@
 
 $(STAMP_DIR)/host_pango_installed: $(STAMP_DIR)/host_pango_compiled

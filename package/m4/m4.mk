@@ -17,6 +17,8 @@ ifneq ($(BR2_USE_WCHAR),y)
 M4_CONF_ENV += gt_cv_c_wchar_t=no gl_cv_absolute_wchar_h=__fpending.h
 endif
 
+M4_DEPENDENCIES = uclibc
+
 $(eval $(call AUTOTARGETS,package,m4))
 
 # m4 for the host
@@ -37,7 +39,7 @@ $(STAMP_DIR)/host_m4_configured: $(STAMP_DIR)/host_m4_unpacked
 		$(HOST_CONFIGURE_OPTS) \
 		CFLAGS="$(HOST_CFLAGS)" \
 		LDFLAGS="$(HOST_LDFLAGS)" \
-		./configure $(QUIET) \
+		./configure \
 		--prefix="$(HOST_DIR)/usr" \
 		--sysconfdir="$(HOST_DIR)/etc" \
 		--disable-static \
