@@ -11,15 +11,7 @@ ifeq ($(BR2_ENABLE_DEBUG),y) # install-exec doesn't install aclocal stuff
 PKG_CONFIG_INSTALL_TARGET_OPT = DESTDIR=$(TARGET_DIR) install
 endif
 
-PKG_CONFIG_DEPENDENCIES = libglib2
-
-
-
-HOST_PKG_CONFIG_CONF_OPT = \
- 		--with-pc-path="$(STAGING_DIR)/usr/lib/pkgconfig" \
-		--disable-static
-
-
+PKG_CONFIG_DEPENDENCIES = uclibc libglib2
 
 PKG_CONFIG_CONF_OPT = --with-installed-glib
 
@@ -44,16 +36,13 @@ $(STAMP_DIR)/host_pkgconfig_configured: $(STAMP_DIR)/host_pkgconfig_unpacked
 		$(HOST_CONFIGURE_OPTS) \
 		CFLAGS="$(HOST_CFLAGS)" \
 		LDFLAGS="$(HOST_LDFLAGS)" \
-		./configure $(QUIET) \
+		./configure \
 		--prefix="$(HOST_DIR)/usr" \
 		--sysconfdir="$(HOST_DIR)/etc" \
 		--with-pc-path="$(STAGING_DIR)/usr/lib/pkgconfig" \
 		--disable-static \
 	)
 	touch $@
-
-
-
 
 $(STAMP_DIR)/host_pkgconfig_compiled: $(STAMP_DIR)/host_pkgconfig_configured
 	$(MAKE) -C $(PKG_CONFIG_HOST_DIR)
@@ -65,25 +54,12 @@ $(STAMP_DIR)/host_pkgconfig_installed: $(STAMP_DIR)/host_pkgconfig_compiled
 		$(STAGING_DIR)/usr/share/aclocal/pkg.m4
 	touch $@
 
-define HOST_PKG_CONFIG_INSTALL_M4
-install -D -m 0644 $(HOST_DIR)/usr/share/aclocal/pkg.m4 \
-		$(STAGING_DIR)/usr/share/aclocal/pkg.m4
-endef
-
-
 host-pkgconfig: $(STAMP_DIR)/host_pkgconfig_installed
-
-HOST_PKG_CONFIG_POST_INSTALL_HOOKS += HOST_PKG_CONFIG_INSTALL_M4
 
 host-pkgconfig-clean:
 	rm -f $(addprefix $(STAMP_DIR)/host_pkgconfig_,unpacked configured compiled installed)
 	-$(MAKE) -C $(PKG_CONFIG_HOST_DIR) uninstall
 	-$(MAKE) -C $(PKG_CONFIG_HOST_DIR) clean
 
-$(eval $(call AUTOTARGETS,package,pkg-config))
-$(eval $(call AUTOTARGETS,package,pkg-config,host))
-
 host-pkgconfig-dirclean:
 	rm -rf $(PKG_CONFIG_HOST_DIR)
-
-PKG_CONFIG_HOST_BINARY:=$(HOST_DIR)/usr/bin/pkg-config

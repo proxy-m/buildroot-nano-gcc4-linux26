@@ -23,7 +23,7 @@ $(LIBGLIB12_DIR)/.configured: $(LIBGLIB12_DIR)/.unpacked
 	(cd $(LIBGLIB12_DIR); rm -rf config.cache; \
 		$(TARGET_CONFIGURE_OPTS) \
 		$(TARGET_CONFIGURE_ARGS) \
-		./configure $(QUIET) \
+		./configure \
 		--target=$(GNU_TARGET_NAME) \
 		--host=$(GNU_TARGET_NAME) \
 		--build=$(GNU_HOST_NAME) \
@@ -78,7 +78,7 @@ libglib12-source: $(DL_DIR)/$(LIBGLIB12_SOURCE)
 
 libglib12-unpacked: $(LIBGLIB12_DIR)/.unpacked
 
-libglib12: $(TARGET_DIR)/lib/libglib-1.2.so.0.0.10
+libglib12: uclibc $(TARGET_DIR)/lib/libglib-1.2.so.0.0.10
 
 libglib12-clean:
 	rm -f $(TARGET_DIR)/lib/$(LIBGLIB12_BINARY)
