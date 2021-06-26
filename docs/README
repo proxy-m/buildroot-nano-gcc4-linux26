@@ -29,6 +29,14 @@ You do not need to be root to build or run buildroot.  Have fun!
 
 ```
 $ make source && make || { make xserver_xorg-server-dirclean xproto_dri2proto-dirclean libdrm-dirclean mesa3d-dirclean && make xproto_dri2proto libdrm mesa3d xserver_xorg-server && make; }
+
+```
+
+4. To avoiding conflicts and fast rebuilding after modifications of makefiles, run smth like this:
+
+```
+$ make xlib_libXext-dirclean xlib_libXfixes-dirclean xlib_libXrender-dirclean xlib_libXrandr-dirclean pixman-dirclean xproto_recordproto-dirclean xproto_inputproto-dirclean xproto_bigreqsproto-dirclean xlib_xtrans-dirclean xproto_xextproto-dirclean xproto_xcmiscproto-dirclean xproto_fixesproto-dirclean xproto_renderproto-dirclean xproto_randrproto-dirclean libxcb-dirclean  pixman-dirclean xutil_util-macros-dirclean xcb-proto-dirclean xcb-util-dirclean xlib_libX11-dirclean
+
 ```
 
 Offline build:

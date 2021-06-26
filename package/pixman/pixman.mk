@@ -10,4 +10,4 @@ PIXMAN_AUTORECONF = NO
 PIXMAN_INSTALL_STAGING = YES
 
 $(eval $(call AUTOTARGETS,package,pixman))
-$(eval $(call AUTOTARGETS,package,pixman,host))
+
