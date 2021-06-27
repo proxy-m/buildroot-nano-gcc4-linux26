@@ -19,9 +19,12 @@
 ::sysinit:/bin/mount -t sysfs none /sys
 ::sysinit:/bin/mount -t tmpfs -o size=64k,mode=0755 none /dev
 ::sysinit:/bin/mount -t proc proc /proc
+::sysinit:/bin/mkdir -p /dev/input
 ::sysinit:/bin/mkdir -p /dev/pts
 ::sysinit:/bin/mount -t devpts devpts /dev/pts
 ::sysinit:/bin/echo /sbin/mdev > /proc/sys/kernel/hotplug
+# Alternatively, without procfs the above becomes:
+### sysctl -w kernel.hotplug=/sbin/mdev
 ::sysinit:/sbin/mdev -s
 ::sysinit:/bin/mount -o remount,rw /
 ::sysinit:/bin/mkdir -p /tmp /var/cache
@@ -31,6 +34,10 @@
 ::sysinit:/bin/hostname -F /etc/hostname
 ::sysinit:/sbin/ifconfig lo 127.0.0.1 up || true
 ::sysinit:/sbin/route add -net 127.0.0.0 netmask 255.0.0.0 lo || true
+::sysinit:/bin/sh -c 'which which || ln -s /bin/busybox /bin/which || true'
+::sysinit:/bin/sh -c 'which sed || ln -s /bin/busybox /bin/sed || true'
+::sysinit:/bin/sh -c 'which grep || ln -s /bin/busybox /bin/grep || true'
+::sysinit:/bin/sh -c 'which find || ln -s /bin/busybox /bin/find || true'
 # now run any rc scripts
 ::sysinit:/etc/init.d/rcS # you are warned about lock on dhpc
 

@@ -66,12 +66,11 @@ XSERVER_XORG_SERVER_CONF_OPT = --disable-config-hal \
 
 ifeq ($(BR2_PACKAGE_XSERVER_xorg),y)
 XSERVER_XORG_SERVER_CONF_OPT += --enable-xorg --disable-glx
-else
-XSERVER_XORG_SERVER_CONF_OPT += --disable-xorg
 endif
 
 ifeq ($(BR2_PACKAGE_XSERVER_tinyx),y)
-XSERVER_XORG_SERVER_CONF_OPT += --enable-kdrive --enable-xfbdev --disable-glx --disable-dri
+XSERVER_XORG_SERVER_CONF_OPT += --disable-xorg
+XSERVER_XORG_SERVER_CONF_OPT += --enable-kdrive --enable-xfbdev --enable-kdrive-mouse --enable-kdrive-evdev --disable-glx --disable-dri
 else
 XSERVER_XORG_SERVER_CONF_OPT += --disable-kdrive --disable-xfbdev
 endif

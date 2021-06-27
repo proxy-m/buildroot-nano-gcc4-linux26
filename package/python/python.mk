@@ -3,14 +3,14 @@
 # python
 #
 #############################################################
-PYTHON_VERSION=2.4.5
-PYTHON_VERSION_MAJOR=2.4
+PYTHON_VERSION=2.7
+PYTHON_VERSION_MAJOR=2.7
 PYTHON_SOURCE:=Python-$(PYTHON_VERSION).tar.bz2
 PYTHON_SITE:=http://python.org/ftp/python/$(PYTHON_VERSION)
 PYTHON_DIR:=$(BUILD_DIR)/Python-$(PYTHON_VERSION)
 PYTHON_CAT:=$(BZCAT)
 PYTHON_BINARY:=python
-PYTHON_TARGET_BINARY:=usr/bin/python
+PYTHON_TARGET_BINARY:=usr/bin/python$(PYTHON_VERSION_MAJOR)
 PYTHON_DEPS:=
 PYTHON_SITE_PACKAGE_DIR=$(TARGET_DIR)/usr/lib/python$(PYTHON_VERSION_MAJOR)/site-packages
 
@@ -84,7 +84,7 @@ $(PYTHON_DIR)/.patched: $(PYTHON_DIR)/.unpacked
 $(PYTHON_DIR)/.hostpython: $(PYTHON_DIR)/.patched
 	(cd $(PYTHON_DIR); rm -rf config.cache; \
 		CC="$(HOSTCC)" OPT="-O2" \
-		./configure \
+		./configure $(QUIET) \
 		--with-cxx=no \
 		$(DISABLE_NLS) && \
 		$(MAKE) python Parser/pgen && \
@@ -99,7 +99,7 @@ $(PYTHON_DIR)/.configured: $(PYTHON_DIR)/.hostpython
 		$(TARGET_CONFIGURE_OPTS) \
 		$(TARGET_CONFIGURE_ARGS) \
 		OPT="$(TARGET_CFLAGS)" \
-		./configure \
+		./configure $(QUIET) \
 		--target=$(GNU_TARGET_NAME) \
 		--host=$(GNU_TARGET_NAME) \
 		--build=$(GNU_HOST_NAME) \
@@ -116,7 +116,7 @@ $(PYTHON_DIR)/$(PYTHON_BINARY): $(PYTHON_DIR)/.configured
 ifneq ($(BR2_PACKAGE_PYTHON_SSL),y)
 	export PYTHON_DISABLE_SSL=1
 endif
-	$(MAKE) CC=$(TARGET_CC) -C $(PYTHON_DIR) DESTDIR=$(TARGET_DIR) \
+	$(MAKE) CC="$(TARGET_CC)" -C $(PYTHON_DIR) DESTDIR=$(TARGET_DIR) \
 		PYTHON_MODULES_INCLUDE=$(STAGING_DIR)/usr/include \
 		PYTHON_MODULES_LIB="$(STAGING_DIR)/lib $(STAGING_DIR)/usr/lib" \
 		PYTHON_DISABLE_MODULES="$(BR2_PYTHON_DISABLED_MODULES)" \
@@ -128,7 +128,15 @@ ifneq ($(BR2_PACKAGE_PYTHON_SSL),y)
 endif
 	rm -rf $(PYTHON_DIR)/Lib/test
 	LD_LIBRARY_PATH=$(STAGING_DIR)/lib
-	$(MAKE) CC=$(TARGET_CC) -C $(PYTHON_DIR) install \
+	# FIXME: The make -i just below is to work around python's bug
+	# #1669349 (http://bugs.python.org/issue1669349) which is introducing
+	# a failure at make install on a python-free system. Since none of
+	# the other the provided workaround work, the make -i is the only
+	# solution. The failing lib is install later in the process, so
+	# even if the compilation is failing without the patch, with it, the
+	# target python is fully functionnal.
+	# The "-i" will have to be removed when the bug will be solved.
+	$(MAKE) CC="$(TARGET_CC)" -C $(PYTHON_DIR) -i install \
 		DESTDIR=$(TARGET_DIR) CROSS_COMPILE=yes \
 		PYTHON_MODULES_INCLUDE=$(STAGING_DIR)/usr/include \
 		PYTHON_MODULES_LIB="$(STAGING_DIR)/lib $(STAGING_DIR)/usr/lib" \
@@ -155,7 +163,6 @@ endif
 ifneq ($(BR2_PACKAGE_PYTHON_DEV),y)
 	rm -rf $(TARGET_DIR)/usr/include/python$(PYTHON_VERSION_MAJOR)
 	rm -rf $(TARGET_DIR)/usr/lib/python$(PYTHON_VERSION_MAJOR)/config
-	find $(TARGET_DIR)/usr/lib/ -name '*.py' -exec rm {} \;
 endif
 ifneq ($(BR2_PACKAGE_PYTHON_BSDDB),y)
 	rm -rf $(TARGET_DIR)/usr/lib/python$(PYTHON_VERSION_MAJOR)/bsddb
@@ -166,8 +173,9 @@ endif
 ifneq ($(BR2_PACKAGE_PYTHON_TKINTER),y)
 	rm -rf $(TARGET_DIR)/usr/lib/python$(PYTHON_VERSION_MAJOR)/lib-tk
 endif
+	touch -c $@
 
-python: uclibc $(PYTHON_DEPS) $(TARGET_DIR)/$(PYTHON_TARGET_BINARY)
+python: $(PYTHON_DEPS) $(TARGET_DIR)/$(PYTHON_TARGET_BINARY)
 
 python-clean:
 	-$(MAKE) -C $(PYTHON_DIR) distclean
@@ -186,7 +194,7 @@ LIBPYTHON_BINARY:=libpython$(PYTHON_VERSION_MAJOR).so
 libpython:	python $(TARGET_DIR)/usr/lib/$(LIBPYTHON_BINARY)
 
 
-$(STAGING_DIR)/usr/lib/libpython$(PYTHON_VERSION_MAJOR).so: $(TARGET_DIR)/$(PYTHON_TARGET_BINARY)
+$(STAGING_DIR)/usr/lib/$(LIBPYTHON_BINARY): $(TARGET_DIR)/$(PYTHON_TARGET_BINARY)
 		cp -dpr $(PYTHON_DIR)/$(LIBPYTHON_BINARY).* $(STAGING_DIR)/usr/lib
 		(\
 		cd $(STAGING_DIR)/usr/lib ; \
