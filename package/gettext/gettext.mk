@@ -30,7 +30,9 @@ $(GETTEXT_DIR)/.unpacked: $(DL_DIR)/$(GETTEXT_SOURCE)
 	touch $@
 
 ifneq ($(BR2_TOOLCHAIN_BUILDROOT),y)
-IGNORE_EXTERNAL_GETTEXT:=--with-included-gettext
+IGNORE_EXTERNAL_GETTEXT := --with-included-gettext --enable-nls
+else
+IGNORE_EXTERNAL_GETTEXT := --without-included-gettext
 endif
 
 $(GETTEXT_DIR)/.configured: $(GETTEXT_DIR)/.unpacked
