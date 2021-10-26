@@ -25,7 +25,7 @@ You do not need to be root to build or run buildroot.  Have fun!
 
  -Erik
 
-3. To build X11 xserver_xorg-server 1.5.2 + mesa3d 7.6.1 + libdrm 2.4.19 + xproto_dri2proto, after config do smth like this:
+3. To build X11 xserver_xorg-server 1.7.5 + mesa3d 7.6.1 + libdrm 2.4.19 + xproto_dri2proto + libxcb 1.5+ python 2.7 (or 2.7.12), after config do smth like this (prefer commit f47d199ff89b8757be0ab41c837848d48e114779 "xserver_xorg-server: Xvfb support"):
 
 ```
 $ make source && make || { make xserver_xorg-server-dirclean xproto_dri2proto-dirclean libdrm-dirclean mesa3d-dirclean && make xcb-proto && make libxcb && make xproto_dri2proto && make libdrm && make mesa3d && make xserver_xorg-server && make; }
