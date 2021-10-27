@@ -7,17 +7,19 @@ VIM_VERSION:=7.1
 VIM_SOURCE:=vim-$(VIM_VERSION).tar.bz2
 VIM_SITE:=http://ftp.vim.org/pub/vim
 VIM_SOURCE_SITE:=$(VIM_SITE)/unix
-###VIM_PATCH_SITE:=$(VIM_SITE)/patches/7.1
+VIM_PATCH_SITE:=$(VIM_SITE)/patches/7.1
 VIM_DIR:=$(BUILD_DIR)/vim71
-###VIM_PATCHES:=$(shell sed -e 's:^:$(DL_DIR)/$(VIM_VERSION).:' package/editors/vim/patches)
+VIM_PATCHES:=$(shell sed -e 's:^:vim__/$(VIM_VERSION).:' package/editors/vim/patches)
 VIM_CONFIG_H:=$(VIM_DIR)/src/auto/config.h
 VIM_CONFIG_MK:=$(VIM_DIR)/src/auto/config.mk
 
 $(DL_DIR)/$(VIM_SOURCE):
 	$(call DOWNLOAD,$(VIM_SOURCE_SITE),$(VIM_SOURCE))
 
-$(DL_DIR)/$(VIM_VERSION).%:
+vim__/$(VIM_VERSION).%:
 	$(call DOWNLOAD,$(VIM_PATCH_SITE),$(notdir $@))
+	mkdir -p $(DL_DIR)/vim__/
+	mv -f $(DL_DIR)/$(notdir $@) $(DL_DIR)/vim__/
 
 vim-source: $(DL_DIR)/$(VIM_SOURCE) $(VIM_PATCHES)
 
@@ -29,9 +31,10 @@ $(VIM_DIR)/.patched: $(VIM_DIR)/.unpacked
 	@for i in $(VIM_PATCHES); do ( \
 		echo "Patching with $$i"; \
 		cd $(VIM_DIR); \
-		patch -p0 < $$i) \
+		patch -p0 < $(DL_DIR)/$$i) \
 	done
 	toolchain/patch-kernel.sh $(VIM_DIR) package/editors/vim/ \*.patch
+	rm -f $(DL_DIR)/vim__/$(VIM_VERSION)*
 	touch $@
 
 $(VIM_DIR)/.configured: $(VIM_DIR)/.patched

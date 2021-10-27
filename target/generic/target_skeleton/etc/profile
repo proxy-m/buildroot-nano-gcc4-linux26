@@ -1,12 +1,14 @@
 # ~/.bashrc: executed by bash(1) for non-login interactive shells.
 
 export PATH=\
-/bin:\
-/sbin:\
 /usr/bin:\
 /usr/sbin:\
+/bin:\
+/sbin:\
 /usr/bin/X11:\
-/usr/local/bin
+/usr/X11R6/bin:\
+/usr/local/bin:\
+/usr/local/sbin
 
 # If running interactively, then:
 if [ "$PS1" ]; then
