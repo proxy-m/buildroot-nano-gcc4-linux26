@@ -3,9 +3,10 @@
 # atk
 #
 #############################################################
-ATK_VERSION = 1.22.0
+ATK_VERSION = 1.30.0
 ATK_SOURCE = atk-$(ATK_VERSION).tar.bz2
-ATK_SITE = http://ftp.gnome.org/pub/gnome/sources/atk/1.22/
+ATK_SITE = http://ftp.gnome.org/pub/gnome/sources/atk/1.30/
+ATK_LIBTOOL_PATCH = NO
 ATK_INSTALL_STAGING = YES
 ATK_INSTALL_TARGET = YES
 ATK_INSTALL_STAGING_OPT = DESTDIR=$(STAGING_DIR) LDFLAGS=-L$(STAGING_DIR)/usr/lib install
