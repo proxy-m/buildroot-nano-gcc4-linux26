@@ -3,8 +3,8 @@
 # libglib2
 #
 #############################################################
-LIBGLIB2_VERSION_MAJOR = 2.24
-LIBGLIB2_VERSION_MINOR = 2
+LIBGLIB2_VERSION_MAJOR = 2.56
+LIBGLIB2_VERSION_MINOR = 1
 LIBGLIB2_VERSION = $(LIBGLIB2_VERSION_MAJOR).$(LIBGLIB2_VERSION_MINOR)
 LIBGLIB2_SOURCE = glib-$(LIBGLIB2_VERSION).tar.bz2
 LIBGLIB2_SITE = http://ftp.gnome.org/pub/gnome/sources/glib/$(LIBGLIB2_VERSION_MAJOR)
@@ -54,9 +54,9 @@ HOST_LIBGLIB2_CONF_OPT = \
 		--disable-gtk-doc \
 		--enable-debug=no \
 
-LIBGLIB2_DEPENDENCIES = host-pkgconfig zlib gettext
+LIBGLIB2_DEPENDENCIES = host-pkgconfig zlib gettext libffi
 
-HOST_LIBGLIB2_DEPENDENCIES = host-pkgconfig host-zlib
+HOST_LIBGLIB2_DEPENDENCIES = host-pkgconfig host-zlib host-libffi
 
 ifneq ($(BR2_ENABLE_LOCALE),y)
 LIBGLIB2_DEPENDENCIES+=libiconv
