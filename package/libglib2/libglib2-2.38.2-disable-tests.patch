@@ -1,0 +1,35 @@
+--- libglib2-2.38.2/glib/Makefile.am.orig	2013-11-07 18:29:13.000000000 +0300
++++ libglib2-2.38.2/glib/Makefile.am	2021-10-28 14:00:59.376420938 +0300
+@@ -31,8 +31,8 @@
+ MAYBE_PCRE = pcre 
+ endif
+ 
+-SUBDIRS = libcharset $(PRINTF_SUBDIR) $(MAYBE_PCRE) update-pcre . tests
+-DIST_SUBDIRS = libcharset gnulib pcre update-pcre tests
++SUBDIRS = libcharset $(PRINTF_SUBDIR) $(MAYBE_PCRE) update-pcre .
++DIST_SUBDIRS = libcharset gnulib pcre update-pcre
+ 
+ AM_CPPFLAGS = 				\
+ 	$(glib_INCLUDES) 		\
+--- libglib2-2.38.2/gio/Makefile.am.orig	2013-11-12 08:30:22.000000000 +0300
++++ libglib2-2.38.2/gio/Makefile.am	2021-10-28 13:59:36.309414407 +0300
+@@ -233,7 +233,7 @@
+ platform_deps += win32/libgiowin32.la
+ endif
+ 
+-SUBDIRS += . tests
++SUBDIRS += .
+ 
+ if HAVE_FAM
+ SUBDIRS += fam
+--- libglib2-2.38.2/Makefile.am.orig	2013-11-07 18:29:13.000000000 +0300
++++ libglib2-2.38.2/Makefile.am	2021-10-28 13:58:47.735656202 +0300
+@@ -6,7 +6,7 @@
+ 
+ ACLOCAL_AMFLAGS = -I m4macros ${ACLOCAL_FLAGS}
+ 
+-SUBDIRS = . m4macros glib gmodule gthread gobject gio po docs tests
++SUBDIRS = . m4macros glib gmodule gthread gobject gio po docs
+ DIST_SUBDIRS = $(SUBDIRS) build
+ 
+ bin_SCRIPTS = glib-gettextize

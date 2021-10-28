@@ -3,15 +3,16 @@
 # automake
 #
 #############################################################
-AUTOMAKE_VERSION = 1.10
-AUTOMAKE_SOURCE = automake-$(AUTOMAKE_VERSION).tar.bz2
+AUTOMAKE_VERSION = 1.14
+AUTOMAKE_SOURCE = automake-$(AUTOMAKE_VERSION).tar.gz
 AUTOMAKE_SITE = $(BR2_GNU_MIRROR)/automake
+
 
 ifeq ($(BR2_ENABLE_DEBUG),y) # install-exec doesn't install aclocal stuff
 AUTOMAKE_INSTALL_TARGET_OPT = DESTDIR=$(TARGET_DIR) install
 endif
 
-AUTOMAKE_DEPENDENCIES = uclibc autoconf microperl
+AUTOMAKE_DEPENDENCIES = host-autoconf microperl
 
 $(eval $(call AUTOTARGETS,package,automake))
 
@@ -38,7 +39,7 @@ $(STAMP_DIR)/host_automake_configured: $(STAMP_DIR)/host_automake_unpacked $(STA
 		$(HOST_CONFIGURE_OPTS) \
 		CFLAGS="$(HOST_CFLAGS)" \
 		LDFLAGS="$(HOST_LDFLAGS)" \
-		./configure \
+		./configure $(QUIET) \
 		--prefix="$(HOST_DIR)/usr" \
 		--sysconfdir="$(HOST_DIR)/etc" \
 		--disable-static \
@@ -63,3 +64,4 @@ host-automake-clean:
 
 host-automake-dirclean:
 	rm -rf $(AUTOMAKE_HOST_DIR)
+

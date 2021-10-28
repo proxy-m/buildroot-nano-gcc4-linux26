@@ -3,7 +3,7 @@
 # autoconf
 #
 #############################################################
-AUTOCONF_VERSION = 2.71
+AUTOCONF_VERSION = 2.65
 AUTOCONF_SOURCE = autoconf-$(AUTOCONF_VERSION).tar.gz
 AUTOCONF_SITE = $(BR2_GNU_MIRROR)/autoconf
 
