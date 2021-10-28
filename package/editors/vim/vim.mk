@@ -17,8 +17,9 @@ $(DL_DIR)/$(VIM_SOURCE):
 	$(call DOWNLOAD,$(VIM_SOURCE_SITE),$(VIM_SOURCE))
 
 vim__/$(VIM_VERSION).%:
-	$(call DOWNLOAD,$(VIM_PATCH_SITE),$(notdir $@))
 	mkdir -p $(DL_DIR)/vim__/
+	cp -a $(DL_DIR)/vim__/$(notdir $@) $(DL_DIR)/ || true
+	$(call DOWNLOAD,$(VIM_PATCH_SITE),$(notdir $@))
 	mv -f $(DL_DIR)/$(notdir $@) $(DL_DIR)/vim__/
 
 vim-source: $(DL_DIR)/$(VIM_SOURCE) $(VIM_PATCHES)
@@ -34,7 +35,6 @@ $(VIM_DIR)/.patched: $(VIM_DIR)/.unpacked
 		patch -p0 < $(DL_DIR)/$$i) \
 	done
 	toolchain/patch-kernel.sh $(VIM_DIR) package/editors/vim/ \*.patch
-	rm -f $(DL_DIR)/vim__/$(VIM_VERSION)*
 	touch $@
 
 $(VIM_DIR)/.configured: $(VIM_DIR)/.patched
