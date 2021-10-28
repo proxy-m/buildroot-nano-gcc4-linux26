@@ -132,7 +132,7 @@ HOST_LIBGTK2_CONF_OPT = \
 		--disable-debug
 
 $(eval $(call AUTOTARGETS,package,libgtk2))
-###$(eval $(call AUTOTARGETS,package,libgtk2,host))
+$(eval $(call AUTOTARGETS,package,libgtk2,host))
 
 $(LIBGTK2_HOOK_POST_INSTALL):
 	$(INSTALL) -m 755 package/libgtk2/S26libgtk2 $(TARGET_DIR)/etc/init.d/
