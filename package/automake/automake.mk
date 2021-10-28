@@ -3,7 +3,7 @@
 # automake
 #
 #############################################################
-AUTOMAKE_VERSION = 1.14
+AUTOMAKE_VERSION = 1.10
 AUTOMAKE_SOURCE = automake-$(AUTOMAKE_VERSION).tar.gz
 AUTOMAKE_SITE = $(BR2_GNU_MIRROR)/automake
 
@@ -38,7 +38,7 @@ $(STAMP_DIR)/host_automake_configured: $(STAMP_DIR)/host_automake_unpacked $(STA
 		$(HOST_CONFIGURE_OPTS) \
 		CFLAGS="$(HOST_CFLAGS)" \
 		LDFLAGS="$(HOST_LDFLAGS)" \
-		./configure \
+		./configure $(QUIET) \
 		--prefix="$(HOST_DIR)/usr" \
 		--sysconfdir="$(HOST_DIR)/etc" \
 		--disable-static \
