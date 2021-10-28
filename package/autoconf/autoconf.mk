@@ -3,8 +3,8 @@
 # autoconf
 #
 #############################################################
-AUTOCONF_VERSION = 2.63
-AUTOCONF_SOURCE = autoconf-$(AUTOCONF_VERSION).tar.bz2
+AUTOCONF_VERSION = 2.71
+AUTOCONF_SOURCE = autoconf-$(AUTOCONF_VERSION).tar.gz
 AUTOCONF_SITE = $(BR2_GNU_MIRROR)/autoconf
 
 ifeq ($(BR2_ENABLE_DEBUG),y) # install-exec doesn't install aclocal stuff
