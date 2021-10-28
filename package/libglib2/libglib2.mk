@@ -54,9 +54,9 @@ HOST_LIBGLIB2_CONF_OPT = \
 		--disable-gtk-doc \
 		--enable-debug=no \
 
-LIBGLIB2_DEPENDENCIES = host-pkgconfig zlib gettext libffi
-
 HOST_LIBGLIB2_DEPENDENCIES = host-pkgconfig zlib libffi
+
+LIBGLIB2_DEPENDENCIES = gettext uclibc libffi
 
 ifneq ($(BR2_ENABLE_LOCALE),y)
 LIBGLIB2_DEPENDENCIES+=libiconv
@@ -88,6 +88,6 @@ LIBGLIB2_POST_INSTALL_TARGET_HOOKS += LIBGLIB2_REMOVE_GDB_FILES
 endif
 
 $(eval $(call AUTOTARGETS,package,libglib2))
-$(eval $(call AUTOTARGETS,package,libglib2,host))
+###$(eval $(call AUTOTARGETS,package,libglib2,host))
 
 LIBGLIB2_HOST_BINARY:=$(HOST_DIR)/usr/bin/glib-genmarshal

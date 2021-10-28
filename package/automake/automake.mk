@@ -12,7 +12,7 @@ ifeq ($(BR2_ENABLE_DEBUG),y) # install-exec doesn't install aclocal stuff
 AUTOMAKE_INSTALL_TARGET_OPT = DESTDIR=$(TARGET_DIR) install
 endif
 
-AUTOMAKE_DEPENDENCIES = autoconf microperl
+AUTOMAKE_DEPENDENCIES = uclibc autoconf microperl
 
 $(eval $(call AUTOTARGETS,package,automake))
 
