@@ -3,16 +3,21 @@
 # libglib2
 #
 #############################################################
-LIBGLIB2_VERSION_MAJOR = 2.38
-LIBGLIB2_VERSION_MINOR = 2
+LIBGLIB2_VERSION_MAJOR = 2.28
+LIBGLIB2_VERSION_MINOR = 8
 LIBGLIB2_VERSION = $(LIBGLIB2_VERSION_MAJOR).$(LIBGLIB2_VERSION_MINOR)
 LIBGLIB2_SOURCE = glib-$(LIBGLIB2_VERSION).tar.bz2
 LIBGLIB2_SITE = http://ftp.gnome.org/pub/gnome/sources/glib/$(LIBGLIB2_VERSION_MAJOR)
 
+LIBGLIB2_AUTORECONF = NO
 LIBGLIB2_LIBTOOL_PATCH = NO
 LIBGLIB2_INSTALL_STAGING = YES
 LIBGLIB2_INSTALL_TARGET = YES
 LIBGLIB2_INSTALL_STAGING_OPT = DESTDIR=$(STAGING_DIR) LDFLAGS=-L$(STAGING_DIR)/usr/lib install
+
+# detect install prefix of host glib development stuff
+HOST_GLIB_BIN:=`dirname $(shell which glib-genmarshal || echo /usr/bin/glib-genmarshal)`
+HOST_GLIB:=$(shell dirname $(HOST_GLIB_BIN) || echo /usr)
 
 LIBGLIB2_CONF_ENV =	\
 		ac_cv_func_posix_getpwuid_r=yes glib_cv_stack_grows=no \
@@ -32,7 +37,9 @@ LIBGLIB2_CONF_ENV =	\
 		ac_cv_func_getcwd_null=yes ac_cv_func_getdelim=yes \
 		ac_cv_func_mkstemp=yes utils_cv_func_mkstemp_limitations=no \
 		utils_cv_func_mkdir_trailing_slash_bug=no \
-		jm_cv_func_gettimeofday_clobber=no \
+		ac_cv_have_decl_malloc=yes gl_cv_func_malloc_0_nonnull=yes \
+		ac_cv_func_malloc_0_nonnull=yes ac_cv_func_calloc_0_nonnull=yes \
+		ac_cv_func_realloc_0_nonnull=yes jm_cv_func_gettimeofday_clobber=no \
 		gl_cv_func_working_readdir=yes jm_ac_cv_func_link_follows_symlink=no \
 		utils_cv_localtime_cache=no ac_cv_struct_st_mtim_nsec=no \
 		gl_cv_func_tzset_clobber=no gl_cv_func_getcwd_null=yes \
@@ -41,22 +48,14 @@ LIBGLIB2_CONF_ENV =	\
 		gl_cv_func_mkdir_trailing_slash_bug=no gl_cv_func_mkstemp_limitations=no \
 		ac_cv_func_working_mktime=yes jm_cv_func_working_re_compile_pattern=yes \
 		ac_use_included_regex=no gl_cv_c_restrict=no \
-		ac_cv_path_GLIB_GENMARSHAL=$(HOST_DIR)/usr/bin/glib-genmarshal ac_cv_prog_F77=no \
+		ac_cv_path_GLIB_GENMARSHAL=$(HOST_GLIB)/bin/glib-genmarshal ac_cv_prog_F77=no \
 		ac_cv_func_posix_getgrgid_r=no \
 		gt_cv_c_wchar_t=$(if $(BR2_USE_WCHAR),yes,no)
 
 LIBGLIB2_CONF_OPT = --enable-shared \
 		--enable-static
 
-HOST_LIBGLIB2_CONF_OPT = \
-		--enable-shared \
-		--disable-static \
-		--disable-gtk-doc \
-		--enable-debug=no \
-
-HOST_LIBGLIB2_DEPENDENCIES = host-pkgconfig zlib libffi
-
-LIBGLIB2_DEPENDENCIES = gettext uclibc libffi
+LIBGLIB2_DEPENDENCIES = uclibc gettext host-pkgconfig
 
 ifneq ($(BR2_ENABLE_LOCALE),y)
 LIBGLIB2_DEPENDENCIES+=libiconv
@@ -67,27 +66,12 @@ LIBGLIB2_CONF_OPT += --with-libiconv=gnu
 LIBGLIB2_DEPENDENCIES+=libiconv
 endif
 
-define LIBGLIB2_REMOVE_DEV_FILES
-	rm -rf $(TARGET_DIR)/usr/lib/glib-2.0
-	rm -rf $(TARGET_DIR)/usr/share/glib-2.0/gettext
-	rmdir --ignore-fail-on-non-empty $(TARGET_DIR)/usr/share/glib-2.0
-	rm -f $(addprefix $(TARGET_DIR)/usr/bin/,glib-genmarshal glib-gettextize glib-mkenums gobject-query gtester gtester-report)
-endef
-
-ifneq ($(BR2_HAVE_DEVFILES),y)
-LIBGLIB2_POST_INSTALL_TARGET_HOOKS += LIBGLIB2_REMOVE_DEV_FILES
-endif
-
-define LIBGLIB2_REMOVE_GDB_FILES
-	rm -rf $(TARGET_DIR)/usr/share/glib-2.0/gdb
-	rmdir --ignore-fail-on-non-empty $(TARGET_DIR)/usr/share/glib-2.0
-endef
-
-ifneq ($(BR2_PACKAGE_GDB),y)
-LIBGLIB2_POST_INSTALL_TARGET_HOOKS += LIBGLIB2_REMOVE_GDB_FILES
-endif
-
 $(eval $(call AUTOTARGETS,package,libglib2))
-###$(eval $(call AUTOTARGETS,package,libglib2,host))
 
-LIBGLIB2_HOST_BINARY:=$(HOST_DIR)/usr/bin/glib-genmarshal
+# we NEED a host glib-genmarshal
+ifeq ($(BR2_PACKAGE_LIBGLIB2),y)
+ifeq ($(wildcard $(HOST_GLIB)/bin/glib-genmarshal),)
+$(error Host glib-genmarshal not found. Please install glib development package on your host (something like libglib2.0-dev))
+endif
+endif
+

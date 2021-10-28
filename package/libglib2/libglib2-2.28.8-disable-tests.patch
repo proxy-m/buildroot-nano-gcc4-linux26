@@ -1,0 +1,47 @@
+--- libglib2-2.28.8/Makefile.am.orig	2010-09-27 21:48:33.000000000 +0300
++++ libglib2-2.28.8/Makefile.am	2021-10-28 17:10:48.452206643 +0300
+@@ -3,7 +3,7 @@
+ 
+ ACLOCAL_AMFLAGS = -I m4macros ${ACLOCAL_FLAGS}
+ 
+-SUBDIRS = . m4macros glib gmodule gthread gobject gio tests po docs
++SUBDIRS = . m4macros glib gmodule gthread gobject gio po docs
+ DIST_SUBDIRS = $(SUBDIRS) build
+ 
+ bin_SCRIPTS = glib-gettextize
+--- libglib2-2.28.8/glib/Makefile.am.orig	2011-06-06 02:18:49.000000000 +0300
++++ libglib2-2.28.8/glib/Makefile.am	2021-10-28 17:12:29.795872045 +0300
+@@ -48,9 +48,9 @@
+ gatomic_c = gatomic.c
+ endif
+ 
+-SUBDIRS = libcharset $(PRINTF_SUBDIR) $(MAYBE_PCRE) update-pcre . tests
++SUBDIRS = libcharset $(PRINTF_SUBDIR) $(MAYBE_PCRE) update-pcre .
+ 
+-DIST_SUBDIRS = libcharset gnulib pcre update-pcre tests
++DIST_SUBDIRS = libcharset gnulib pcre update-pcre
+ 
+ AM_CPPFLAGS = 				\
+ 	$(glib_INCLUDES) 		\
+--- libglib2-2.28.8/gio/Makefile.am.orig	2011-06-06 02:18:49.000000000 +0300
++++ libglib2-2.28.8/gio/Makefile.am	2021-10-28 17:14:14.915673933 +0300
+@@ -279,8 +279,6 @@
+ 
+ endif
+ 
+-SUBDIRS += tests
+-
+ libgio_2_0_la_SOURCES =		\
+ 	gappinfo.c 		\
+ 	gasynchelper.c 		\
+--- libglib2-2.28.8/gobject/Makefile.am.orig	2011-06-06 02:18:50.000000000 +0300
++++ libglib2-2.28.8/gobject/Makefile.am	2021-10-28 17:15:40.498769162 +0300
+@@ -4,7 +4,7 @@
+ ## Process this file with automake to produce Makefile.in
+ include $(top_srcdir)/Makefile.decl
+ 
+-SUBDIRS = . tests
++SUBDIRS = .
+ 
+ CLEANFILES=
+ 
