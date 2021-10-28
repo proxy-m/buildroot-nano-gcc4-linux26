@@ -4,7 +4,7 @@
 #
 ################################################################################
 
-LIBFFI_VERSION = 3.0.9
+LIBFFI_VERSION = 3.0.10
 LIBFFI_SITE = ftp://sourceware.org/pub/libffi
 LIBFFI_LIBTOOL_PATCH = NO
 LIBFFI_INSTALL_STAGING = YES
