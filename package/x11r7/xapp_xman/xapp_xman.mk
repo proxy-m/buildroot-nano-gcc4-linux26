@@ -7,6 +7,10 @@ XAPP_XMAN_VERSION:=1.0.3
 XAPP_XMAN_SOURCE:=xman-$(XAPP_XMAN_VERSION).tar.bz2
 XAPP_XMAN_SITE:=http://xorg.freedesktop.org/releases/individual/app
 XAPP_XMAN_DIR:=$(BUILD_DIR)/xman-$(XAPP_XMAN_VERSION)
+XAPP_XMAN_AUTORECONF = NO
+XAPP_XMAN_LIBTOOL_PATCH = NO
+XAPP_XMAN_INSTALL_TARGET = YES
+XAPP_XMAN_DEPENDENCIES = xlib_libXprintUtil xlib_libXprintUtil xlib_libXaw
 
 $(DL_DIR)/$(XAPP_XMAN_SOURCE):
 	$(call DOWNLOAD,$(XAPP_XMAN_SITE),$(XAPP_XMAN_SOURCE))
@@ -30,6 +34,9 @@ $(XAPP_XMAN_DIR)/.configured: $(XAPP_XMAN_DIR)/.patched
 		LDFLAGS="$(TARGET_LDFLAGS)" \
 		STAGING_DIR=$(STAGING_DIR) \
  \
+ ac_cv_file__etc_man_conf=no \
+ ac_cv_file__etc_man_config=no \
+ ac_cv_file__etc_manpath_config=no \
 		./configure \
 		--target=$(GNU_TARGET_NAME) \
 		--host=$(GNU_TARGET_NAME) \
@@ -65,13 +72,12 @@ xapp_xman-clean:
 xapp_xman-dirclean:
 	rm -rf $(XAPP_XMAN_DIR)
 
-xapp_xman-depends: xlib_libXprintUtil xlib_libXprintUtil
 xapp_xman-source: $(XAPP_XMAN_DIR)/.extracted
 xapp_xman-patch: $(XAPP_XMAN_DIR)/.patched
 xapp_xman-configure: $(XAPP_XMAN_DIR)/.configured
 xapp_xman-build: $(XAPP_XMAN_DIR)/.built
 
-xapp_xman: xapp_xman-depends $(XAPP_XMAN_DIR)/.installed
+xapp_xman: $(XAPP_XMAN_DIR)/.installed
 
 #############################################################
 #
