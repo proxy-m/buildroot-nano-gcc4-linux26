@@ -4,8 +4,8 @@
 #
 #############################################################
 
-OPENVPN_VERSION = 2.1.1
-OPENVPN_SITE = http://openvpn.net/release
+OPENVPN_VERSION = 2.2.2
+OPENVPN_SITE = https://build.openvpn.net/downloads/releases/
 OPENVPN_CONF_OPT = --enable-small
 
 ifeq ($(BR2_PTHREADS_NATIVE),y)

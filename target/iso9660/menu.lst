@@ -3,9 +3,13 @@ timeout		2
 color cyan/blue white/blue
 
 title		BuildRoot ISO9660 image
-kernel		/kernel ramdisk_size=200000 # set 200000 KiB max, because default was 16000 max
+kernel		/kernel ramdisk_size=150000 # set 150000 KiB max, because default was 16000 max
 initrd		/initrd
 
 title		Hard Drive (first partition)
 rootnoverify	(hd0)
 chainloader	+1
+
+title		BuildRoot ISO9660 and Hard ext
+kernel		/kernel root=/dev/sda
+
