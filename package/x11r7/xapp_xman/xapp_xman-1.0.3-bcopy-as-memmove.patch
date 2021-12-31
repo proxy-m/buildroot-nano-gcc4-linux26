@@ -1,0 +1,13 @@
+--- a/main.c.orig	2007-08-10 17:14:12.000000000 +0300
++++ b/main.c	2021-12-31 13:32:41.175046748 +0300
+@@ -140,6 +140,10 @@
+  */
+ Atom wm_delete_window;
+ 
++#ifndef bcopy
++#define bcopy(b1,b2,len) (memmove((b2), (b1), (len)), (void) 0)
++#endif
++
+ /*	Function Name: main
+  *	Description: This is the main driver for Xman.
+  *	Arguments: argc, argv - the command line arguments.

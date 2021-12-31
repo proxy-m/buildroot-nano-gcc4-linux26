@@ -10,7 +10,11 @@ XAPP_XMAN_DIR:=$(BUILD_DIR)/xman-$(XAPP_XMAN_VERSION)
 XAPP_XMAN_AUTORECONF = NO
 XAPP_XMAN_LIBTOOL_PATCH = NO
 XAPP_XMAN_INSTALL_TARGET = YES
-XAPP_XMAN_DEPENDENCIES = xlib_libXprintUtil xlib_libXprintUtil xlib_libXaw
+XAPP_XMAN_DEPENDENCIES = xlib_libXaw
+
+ifeq ($(BR2_PACKAGE_XLIB_LIBXPRINTUTIL),y)
+XAPP_XMAN_CONF_OPT += --enable-xprint
+endif
 
 $(DL_DIR)/$(XAPP_XMAN_SOURCE):
 	$(call DOWNLOAD,$(XAPP_XMAN_SITE),$(XAPP_XMAN_SOURCE))
@@ -58,7 +62,7 @@ $(XAPP_XMAN_DIR)/.built: $(XAPP_XMAN_DIR)/.configured
 $(XAPP_XMAN_DIR)/.installed: $(XAPP_XMAN_DIR)/.built
 	$(MAKE) prefix=$(TARGET_DIR)/usr -C $(XAPP_XMAN_DIR) install-exec
 	$(MAKE) prefix=$(STAGING_DIR)/usr -C $(XAPP_XMAN_DIR) install
-	toolchain/replace.sh $(STAGING_DIR)/usr/lib ".*\.la" "\(['= ]\)/usr" "\\1$(STAGING_DIR)/usr"
+#	toolchain/replace.sh $(STAGING_DIR)/usr/lib ".*\.la" "\(['= ]\)/usr" "\\1$(STAGING_DIR)/usr"
 	find $(TARGET_DIR)/usr -name '*.la' -print -delete
 	touch $@
 
