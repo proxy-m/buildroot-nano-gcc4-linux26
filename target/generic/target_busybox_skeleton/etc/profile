@@ -49,4 +49,3 @@ if [ "$PS1" ]; then
     alias bc='calc -Cd '
 fi;
 
-startx&

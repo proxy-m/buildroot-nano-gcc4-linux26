@@ -3,7 +3,7 @@ timeout		2
 color cyan/blue white/blue
 
 title		BuildRoot ISO9660 image
-kernel		/kernel ramdisk_size=150000 tsc=reliable mitigations=off random.trust_cpu=on # set 150000 KiB max, because default was 16000 max
+kernel		/kernel ramdisk_size=300000 tsc=reliable mitigations=off random.trust_cpu=on # set 300000 KiB max, because default was 16000 max
 initrd		/initrd
 
 title		Hard Drive (first partition)

@@ -1,7 +1,7 @@
 #
 # Automatically generated make config: don't edit
 # Linux kernel version: 2.6.30.5
-# Tue Jun 22 22:44:09 2021
+# Mon Jan  3 15:37:36 2022
 #
 # CONFIG_64BIT is not set
 CONFIG_X86_32=y
@@ -340,8 +340,8 @@ CONFIG_X86_PAT=y
 CONFIG_EFI=y
 CONFIG_SECCOMP=y
 # CONFIG_CC_STACKPROTECTOR is not set
-CONFIG_HZ_100=y is not set
-# CONFIG_HZ_250 is not set
+# CONFIG_HZ_100 is not set
+CONFIG_HZ_250=y
 # CONFIG_HZ_300 is not set
 # CONFIG_HZ_1000 is not set
 CONFIG_HZ=250
@@ -355,7 +355,7 @@ CONFIG_PHYSICAL_ALIGN=0x200000
 CONFIG_HOTPLUG_CPU=y
 # CONFIG_COMPAT_VDSO is not set
 CONFIG_CMDLINE_BOOL=y
-CONFIG_CMDLINE=""
+CONFIG_CMDLINE="tsc=reliable mitigations=off random.trust_cpu=on "
 # CONFIG_CMDLINE_OVERRIDE is not set
 CONFIG_ARCH_ENABLE_MEMORY_HOTPLUG=y
 

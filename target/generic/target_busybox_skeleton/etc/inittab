@@ -56,8 +56,8 @@ null::respawn:/sbin/klogd -n
 tty3::respawn:/usr/bin/tail -f /var/log/messages
 
 # run (u)vesafb
-::sysinit:/bin/sh -c 'rmmod -f vga16fb || true'
-::sysinit:/bin/sh -c 'modprobe uvesafb mode_option=1024x768-24 mtrr=3 scroll=ywrap || modprobe vga16fb'
+::sysinit:/bin/sh -c 'rmmod -f uvesafb || true'
+::sysinit:/bin/sh -c 'modprobe vga16fb || modprobe uvesafb mode_option=640x480-24 mtrr=3 scroll=ywrap'
 
 # Auto-login on serial console
 ::respawn:-/bin/sh
