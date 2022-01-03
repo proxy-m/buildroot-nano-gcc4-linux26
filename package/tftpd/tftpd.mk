@@ -3,7 +3,7 @@
 # tftpd
 #
 #############################################################
-TFTP_HPA_VERSION:=0.40
+TFTP_HPA_VERSION:=0.48
 TFTP_HPA_SOURCE:=tftp-hpa-$(TFTP_HPA_VERSION).tar.bz2
 TFTP_HPA_SITE:=$(BR2_KERNEL_MIRROR)/software/network/tftp/
 TFTP_HPA_DIR:=$(BUILD_DIR)/tftp-hpa-$(TFTP_HPA_VERSION)
