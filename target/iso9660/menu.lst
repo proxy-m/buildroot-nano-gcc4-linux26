@@ -1,9 +1,9 @@
-default		0
+default		2
 timeout		2
 color cyan/blue white/blue
 
 title		BuildRoot ISO9660 image
-kernel		/kernel ramdisk_size=300000 tsc=reliable mitigations=off random.trust_cpu=on # set 300000 KiB max, because default was 16000 max
+kernel		/kernel ramdisk_size=50000 tsc=reliable mitigations=off random.trust_cpu=on raid=noautodetect dma_debug=off highres=off noexec=off noexec32=off page_poison=off powersave=off thermal.off=1 # set 50000 KiB max, because default was 16000 max
 initrd		/initrd
 
 title		Hard Drive (first partition)
@@ -11,5 +11,5 @@ rootnoverify	(hd0)
 chainloader	+1
 
 title		BuildRoot ISO9660 and Hard ext
-kernel		/kernel root=/dev/sda ro tsc=reliable mitigations=off random.trust_cpu=on
+kernel		/kernel root=/dev/sda ro tsc=reliable mitigations=off random.trust_cpu=on raid=noautodetect dma_debug=off highres=off noexec=off noexec32=off page_poison=off powersave=off thermal.off=1
 
