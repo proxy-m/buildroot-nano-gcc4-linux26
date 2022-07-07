@@ -32,6 +32,8 @@
 ::sysinit:/bin/mkdir -p /media /mnt/data /mnt/flash /mnt/cdrom
 ::sysinit:/bin/mount -a
 ::sysinit:/bin/hostname -F /etc/hostname
+::sysinit:/sbin/sysctl -w net.ipv6.conf.all.disable_ipv6=1
+::sysinit:/sbin/sysctl -w net.ipv6.conf.default.disable_ipv6=1
 ::sysinit:/sbin/ifconfig lo 127.0.0.1 up || true
 ::sysinit:/sbin/route add -net 127.0.0.0 netmask 255.0.0.0 lo || true
 ::sysinit:/bin/sh -c 'which which || ln -s /bin/busybox /bin/which || true'
