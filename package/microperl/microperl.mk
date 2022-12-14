@@ -18,15 +18,15 @@ MICROPERL_LIBTOOL_PATCH = no
 MICROPERL_DEPENDENCIES = autoconf uclibc busybox bash
 
 # Minimal set of modules required for 'perl -V' to work
-MICROPERL_ARCH_MODS = Config.pm Config_git.pl Config_heavy.pl
+MICROPERL_ARCH_MODS = Config.pm Config_git.pl Config_heavy.pl ../cpan/Cwd/Cwd.pm
 MICROPERL_BASE_MODS = strict.pm
 
 MICROPERL_MODS += $(MICROPERL_BASE_MODS)
 
 ifeq ($(BR2_PACKAGE_AUTOMAKE),y)
-MICROPERL_MODS+=File/Basename.pm Errno.pm Config.pm IO/Zlib.pm Symbol.pm \
+MICROPERL_MODS+=File/Basename.pm Errno.pm File/Temp.pm Config.pm IO/File.pm IO/Zlib.pm Symbol.pm \
 	SelectSaver.pm IO/Seekable.pm IO/Handle.pm IO.pm XSLoader.pm \
-	DynaLoader.pm AutoLoader.pm Carp/Heavy.pm
+	DynaLoader AutoLoader.pm Carp/Heavy.pm
 endif
 
 # CGI bundle
@@ -99,10 +99,16 @@ endif
 define MICROPERL_BUILD_EXTENSIONS
 	cd $(MICROPERL_DIR); (cd $(TARGET_DIR)/usr/bin; ls perl;); \
 	for i in $(MICROPERL_MODS); do \
+		export PERL5LIB=$(TARGET_DIR)/$(MICROPERL_MODS_DIR)/lib:$(TARGET_DIR)/$(MICROPERL_MODS_DIR)/cpan/Cwd:$(TARGET_DIR)/$(MICROPERL_MODS_DIR)/cpan:$(TARGET_DIR)/$(MICROPERL_MODS_DIR)/ext:$(TARGET_DIR)/$(MICROPERL_MODS_DIR)/dist; \
+		CONFIG=uconfig.h ./miniperl make_ext.pl MAKE='$(MAKE)' --nonxs \
+		`echo $$i|sed -e 's/.pm//'` || \
 		chroot $(TARGET_DIR) bash -c "cd $(MICROPERL_MODS_DIR); \
 		PERL5LIB=./lib \
-		/usr/bin/microperl make_ext.pl MAKE='$(MAKE)' --nonxs \
-		`echo $$i|sed -e 's/.pm//'`"; \
+		CONFIG=uconfig.h perl make_ext.pl MAKE='$(MAKE)' --nonxs \
+		`echo $$i|sed -e 's/.pm//'`" || true; \
+		(cd $(MICROPERL_DIR); \
+		 cp -a *.sh *.pm *.pod *.pl make_patchnum.pl make_ext.pl lib/ dist/ cpan/ ext/ $(TARGET_DIR)/$(MICROPERL_MODS_DIR) || true; \
+		) \
 	done
 endef
 
@@ -142,10 +148,10 @@ $(MICROPERL_DIR)/.configured: $(MICROPERL_DIR)/.host_make_fixed
 	echo "PERL_CONFIG_SH=true" >>$(@D)/config.sh
 	mkdir -p $(TARGET_DIR)/$(MICROPERL_MODS_DIR)
 	(cd $(MICROPERL_DIR); \
-	 cp -a *.pl make_patchnum.pl make_ext.pl lib/ dist/ cpan/ $(TARGET_DIR)/$(MICROPERL_MODS_DIR); \
-	 export PERL5LIB=$(TARGET_DIR)/$(MICROPERL_MODS_DIR)/lib; \
-	 ./miniperl make_patchnum.pl || chroot $(TARGET_DIR) bash -c 'cd $(MICROPERL_MODS_DIR); PERL5LIB=./lib perl make_patchnum.pl || PERL5LIB=./lib  ./miniperl make_patchnum.pl' ; \
-	 ./miniperl configpm || chroot $(TARGET_DIR) bash -c 'cd $(MICROPERL_MODS_DIR); PERL5LIB=./lib perl configpm || PERL5LIB=./lib ./miniperl configpm'; \
+	 cp -a *.sh *.pm *.pod *.pl make_patchnum.pl make_ext.pl lib/ dist/ cpan/ ext/ $(TARGET_DIR)/$(MICROPERL_MODS_DIR) || true; \
+	 export PERL5LIB=$(TARGET_DIR)/$(MICROPERL_MODS_DIR)/lib:$(TARGET_DIR)/$(MICROPERL_MODS_DIR)/cpan/Cwd:$(TARGET_DIR)/$(MICROPERL_MODS_DIR)/cpan:$(TARGET_DIR)/$(MICROPERL_MODS_DIR)/ext:$(TARGET_DIR)/$(MICROPERL_MODS_DIR)/dist; \
+	 ./miniperl make_patchnum.pl || echo chroot $(TARGET_DIR) bash -c 'cd $(MICROPERL_MODS_DIR); PERL5LIB=./lib perl make_patchnum.pl || PERL5LIB=./lib  ./miniperl make_patchnum.pl' ; \
+	 ./miniperl configpm || echo chroot $(TARGET_DIR) bash -c 'cd $(MICROPERL_MODS_DIR); PERL5LIB=./lib perl configpm || PERL5LIB=./lib ./miniperl configpm'; \
 	)
 	# we need to build a perl for the host just for Errno.pm
 	(cd $(MICROPERL_DIR); \
@@ -154,6 +160,10 @@ $(MICROPERL_DIR)/.configured: $(MICROPERL_DIR)/.host_make_fixed
 		 -e 's,PRIVLIB_EXP ".*,PRIVLIB_EXP "$(MICROPERL_MODS_DIR)",' \
 		 -e 's,BIN ".*,BIN "/usr/bin",' \
 		 ./uconfig.h; \
+	)
+	(cd $(MICROPERL_DIR); \
+	 cp -a *.h $(TARGET_DIR)/$(MICROPERL_MODS_DIR) || true; \
+	 cp -a *.sh *.pm *.pod *.pl make_patchnum.pl make_ext.pl lib/ dist/ cpan/ ext/ $(TARGET_DIR)/$(MICROPERL_MODS_DIR) || true; \
 	)
 	#(cd $(MICROPERL_DIR); \
 	# chmod u+w uconfig.h; ./uconfig.sh; \
@@ -177,7 +187,7 @@ ifeq ($(BR2_PACKAGE_AUTOMAKE),y)
 	# CONFIG=uconfig.h $(SHELL) ext/util/make_ext nonxs Errno MAKE="$(firstword $(MAKE))"; \
 	#)
 endif
-	cd $(MICROPERL_DIR); cp -a make_ext.pl lib/ $(TARGET_DIR)/$(MICROPERL_MODS_DIR)/
+	cd $(MICROPERL_DIR); cp -a make_ext.pl lib/ dist/ cpan/ ext/ $(TARGET_DIR)/$(MICROPERL_MODS_DIR)/
 	touch $@
 
 $(TARGET_DIR)/usr/bin/microperl: $(MICROPERL_DIR)/microperl
@@ -204,7 +214,13 @@ endif
 		$(INSTALL) -m 0644 -D $(MICROPERL_DIR)/lib/$$i \
 			$(TARGET_DIR)/$(MICROPERL_MODS_DIR)/$$i; \
 	done
+	(cd $(MICROPERL_DIR); \
+	 cp -a *.sh *.pm *.pod *.pl make_patchnum.pl make_ext.pl lib/ dist/ cpan/ ext/ $(TARGET_DIR)/$(MICROPERL_MODS_DIR) || true; \
+	)
 	$(MICROPERL_BUILD_EXTENSIONS)
+	(cd $(MICROPERL_DIR); \
+	 cp -a *.sh *.pm *.pod *.pl make_patchnum.pl make_ext.pl lib/ dist/ cpan/ ext/ $(TARGET_DIR)/$(MICROPERL_MODS_DIR) || true; \
+	)
 	for i in $(MICROPERL_MODS); do \
 		j=`echo $$i|cut -d : -f 1` ; \
 		[ -d $(MICROPERL_DIR)/lib/$$j ] && cp -af $(MICROPERL_DIR)/lib/$$j \
