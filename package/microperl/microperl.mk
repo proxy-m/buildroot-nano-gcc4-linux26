@@ -15,17 +15,17 @@ MICROPERL_MODS = $(call qstrip,$(BR2_PACKAGE_MICROPERL_MODULES))
 MICROPERL_DIR=$(BUILD_DIR)/perl-$(MICROPERL_VERSION)
 MICROPERL_LIBTOOL_PATCH = yes
 
+# Minimal set of modules required for 'perl -V' to work
+MICROPERL_ARCH_MODS = Config.pm Config_git.pl Config_heavy.pl
+MICROPERL_BASE_MODS = strict.pm
+
+MICROPERL_MODS += $(MICROPERL_BASE_MODS)
+
 ifeq ($(BR2_PACKAGE_AUTOMAKE),y)
 MICROPERL_MODS+=File/Basename.pm Errno.pm Config.pm IO/File.pm Symbol.pm \
 	SelectSaver.pm IO/Seekable.pm IO/Handle.pm IO.pm XSLoader.pm \
 	DynaLoader.pm AutoLoader.pm Carp/Heavy.pm
 endif
-
-# Minimal set of modules required for 'perl -V' to work
-MICROPERL_ARCH_MODS = Config.pm Config_git.pl Config_heavy.pl
-MICROPERL_BASE_MODS = strict.pm
-
-#####MICROPERL_MODS += $(MICROPERL_BASE_MODS)
 
 # CGI bundle
 ifeq ($(BR2_PACKAGE_MICROPERL_BUNDLE_CGI),y)
@@ -33,6 +33,7 @@ MICROPERL_MODS += constant.pm CGI CGI.pm Carp.pm Exporter.pm overload.pm \
 	vars.pm warnings.pm warnings/register.pm
 endif
 
+MICROPERL_MODS += $(MICROPERL_ARCH_MODS)
 
 $(DL_DIR)/$(MICROPERL_SOURCE):
 	$(call DOWNLOAD,$(MICROPERL_SITE),$(MICROPERL_SOURCE))
@@ -129,25 +130,26 @@ $(MICROPERL_DIR)/.configured: $(MICROPERL_DIR)/.host_make_fixed
 	# we need to build a perl for the host just for Errno.pm
 	(cd $(MICROPERL_DIR); \
 	 chmod u+wx uconfig.h uconfig.sh; ./uconfig.sh; \
+	 $(SED) 's,PRIVLIB ".*,PRIVLIB "/$(MICROPERL_MODS_DIR)",' \
+		 -e 's,PRIVLIB_EXP ".*,PRIVLIB_EXP "$(MICROPERL_MODS_DIR)",' \
+		 -e 's,BIN ".*,BIN "/usr/bin",' \
+		 ./uconfig.h; \
 	)
 	#(cd $(MICROPERL_DIR); \
 	# chmod u+w uconfig.h; ./uconfig.sh; \
 	# $(MAKE) -f $(MICROPERL_DIR)/Makefile.micro regen_uconfig; \
-	# $(SED) 's,PRIVLIB ".*,PRIVLIB "/$(MICROPERL_MODS_DIR)",' \
-	#	 -e 's,PRIVLIB_EXP ".*,PRIVLIB_EXP "$(MICROPERL_MODS_DIR)",' \
-	#	 -e 's,BIN ".*,BIN "/usr/bin",' \
-	#	 ./uconfig.h; \
+	#)
+	#(cd $(MICROPERL_DIR); \
+	# echo "ln -sf $(HOST_DIR)/usr/bin/perl miniperl; "; \
+	# echo "ln -sf `which perl` miniperl; "; \
+	# echo "PERL5LIB=$(TARGET_DIR)/$(MICROPERL_ARCH_DIR);"; \
+	# CONFIG=uconfig.h \
+	# ./miniperl make_ext.pl -Ilib LIBPERL_A=libperl.a MAKE="$(firstword $(MAKE))" --nonxs \
+	# `echo Errno.pm|sed -e 's/.pm//'`; \
 	#)
 	touch $@
 
 $(MICROPERL_DIR)/microperl: $(MICROPERL_DIR)/.configured
-	#(cd $(MICROPERL_DIR); \
-	# echo "ln -sf $(HOST_DIR)/usr/bin/perl miniperl; "; \
-	# echo "ln -sf `which perl` miniperl; "; \
-	# PERL5LIB=$(TARGET_DIR)/$(MICROPERL_ARCH_DIR) \
-	# ./miniperl make_ext.pl MAKE="$(firstword $(MAKE))" --nonxs \
-	# `echo Errno|sed -e 's/.pm//'`; \
-	#)
 	$(MAKE) -f $(MICROPERL_DIR)/Makefile.micro CC="$(TARGET_CC)" \
 		OPTIMIZE="$(TARGET_CFLAGS)" -C $(MICROPERL_DIR) CONFIG=uconfig.h
 ifeq ($(BR2_PACKAGE_AUTOMAKE),y)
