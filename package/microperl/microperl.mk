@@ -10,10 +10,11 @@ MICROPERL_SOURCE = perl-$(MICROPERL_VERSION).tar.bz2
 MICROPERL_CAT:=$(BZCAT)
 MICROPERL_DEPENDENCIES = host-microperl
 MICROPERL_MODS_DIR = /usr/lib/perl5/$(MICROPERL_VERSION)
-MICROPERL_ARCH_DIR = $(MICROPERL_MODS_DIR)/$(REAL_GNU_TARGET_NAME)
+#MICROPERL_ARCH_DIR = $(MICROPERL_MODS_DIR)/$(REAL_GNU_TARGET_NAME)
+MICROPERL_ARCH_DIR = $(MICROPERL_MODS_DIR)
 MICROPERL_MODS = $(call qstrip,$(BR2_PACKAGE_MICROPERL_MODULES))
 MICROPERL_DIR=$(BUILD_DIR)/perl-$(MICROPERL_VERSION)
-MICROPERL_LIBTOOL_PATCH = yes
+MICROPERL_LIBTOOL_PATCH = no
 
 # Minimal set of modules required for 'perl -V' to work
 MICROPERL_ARCH_MODS = Config.pm Config_git.pl Config_heavy.pl
@@ -91,6 +92,19 @@ define MICROPERL_WCHAR
 endef
 endif
 
+# Some extensions don't need a build run
+# We try to build anyway to avoid a huge black list
+# Just ignore make_ext.pl warning/errors
+define MICROPERL_BUILD_EXTENSIONS
+	cd $(MICROPERL_DIR); (cd $(TARGET_DIR)/usr/bin; ls perl;); \
+	for i in $(MICROPERL_MODS); do \
+		chroot $(TARGET_DIR) bash -c "cd $(MICROPERL_DIR); \
+		PERL5LIB=$(MICROPERL_ARCH_DIR) \
+		/usr/bin/microperl make_ext.pl MAKE='$(MAKE)' --nonxs \
+		`echo $$i|sed -e 's/.pm//'`"; \
+	done
+endef
+
 $(MICROPERL_DIR)/.configured: $(MICROPERL_DIR)/.host_make_fixed
 	$(SED) '/^archlib=/d' -e '/^archlibexp=/d' -e '/^optimize=/d' \
 		-e '/^archname=/d' -e '/^d_poll=/d' -e '/^i_poll=/d' \
@@ -125,8 +139,10 @@ $(MICROPERL_DIR)/.configured: $(MICROPERL_DIR)/.host_make_fixed
 	cp -f $(@D)/uconfig.sh $(@D)/config.sh
 	echo "ccname='$(TARGET_CC)'" >>$(@D)/config.sh
 	echo "PERL_CONFIG_SH=true" >>$(@D)/config.sh
-	cd $(@D) ; perl make_patchnum.pl || ./miniperl make_patchnum.pl ; \
-	perl configpm || ./miniperl configpm
+	cd $(MICROPERL_DIR)
+	cp -a make_patchnum.pl make_ext.pl lib/ $(TARGET_DIR)/$(MICROPERL_DIR)
+	cd $(@D) ; chroot $(TARGET_DIR) bash -c 'cd $(MICROPERL_DIR); perl make_patchnum.pl || ./miniperl make_patchnum.pl' ; \
+	chroot $(TARGET_DIR) bash -c 'cd $(MICROPERL_DIR); perl configpm || ./miniperl configpm'
 	# we need to build a perl for the host just for Errno.pm
 	(cd $(MICROPERL_DIR); \
 	 chmod u+wx uconfig.h uconfig.sh; ./uconfig.sh; \
@@ -157,7 +173,7 @@ ifeq ($(BR2_PACKAGE_AUTOMAKE),y)
 	# CONFIG=uconfig.h $(SHELL) ext/util/make_ext nonxs Errno MAKE="$(firstword $(MAKE))"; \
 	#)
 endif
-	true
+	cd $(MICROPERL_DIR); cp -a make_ext.pl lib/ $(TARGET_DIR)/$(MICROPERL_MODS_DIR)/
 	touch $@
 
 $(TARGET_DIR)/usr/bin/microperl: $(MICROPERL_DIR)/microperl
@@ -175,7 +191,27 @@ endif
 ifneq ($(BR2_STRIP_none),y)
 	$(STRIPCMD) $(STRIP_STRIP_ALL) $@
 endif
-	(cd $(TARGET_DIR)/usr/bin; rm -f perl; ln -s microperl perl;)
+	(cd $(TARGET_DIR)/usr/bin; rm -f perl; ln -sf microperl perl;)
+	for i in $(MICROPERL_ARCH_MODS); do \
+		$(INSTALL) -m 0644 -D $(MICROPERL_DIR)/lib/$$i \
+			$(TARGET_DIR)/$(MICROPERL_ARCH_DIR)/$$i; \
+	done
+	for i in $(MICROPERL_BASE_MODS); do \
+		$(INSTALL) -m 0644 -D $(MICROPERL_DIR)/lib/$$i \
+			$(TARGET_DIR)/$(MICROPERL_MODS_DIR)/$$i; \
+	done
+	$(MICROPERL_BUILD_EXTENSIONS)
+	for i in $(MICROPERL_MODS); do \
+		j=`echo $$i|cut -d : -f 1` ; \
+		[ -d $(MICROPERL_DIR)/lib/$$j ] && cp -af $(MICROPERL_DIR)/lib/$$j \
+			$(TARGET_DIR)/$(MICROPERL_MODS_DIR) ; \
+		[ -f $(MICROPERL_DIR)/lib/$$i ] && $(INSTALL) -m 0644 -D $(MICROPERL_DIR)/lib/$$i \
+			$(TARGET_DIR)/$(MICROPERL_MODS_DIR)/$$i; \
+	done
+	# Remove test files
+	find $(TARGET_DIR)/$(MICROPERL_MODS_DIR) -type f -name *.t \
+		-exec rm -f {} \;
+	touch $@
 
 microperl: $(TARGET_DIR)/usr/bin/microperl
 
