@@ -98,8 +98,9 @@ endif
 # Just ignore make_ext.pl warning/errors
 define MICROPERL_BUILD_EXTENSIONS
 	cd $(MICROPERL_DIR); (cd $(TARGET_DIR)/usr/bin; ls perl;); \
+	export PERL5LIB=$(TARGET_DIR)/$(MICROPERL_MODS_DIR)/lib:$(TARGET_DIR)/$(MICROPERL_MODS_DIR)/cpan/Cwd:$(TARGET_DIR)/$(MICROPERL_MODS_DIR)/cpan:$(TARGET_DIR)/$(MICROPERL_MODS_DIR)/ext:$(TARGET_DIR)/$(MICROPERL_MODS_DIR)/dist; \
+	IN="$$PERL5LIB"; while IFS=':' read -ra ADDR; do for P in "$${ADDR[@]}"; do export PERL5LIB=$$P; \
 	for i in $(MICROPERL_MODS); do \
-		export PERL5LIB=$(TARGET_DIR)/$(MICROPERL_MODS_DIR)/lib:$(TARGET_DIR)/$(MICROPERL_MODS_DIR)/cpan/Cwd:$(TARGET_DIR)/$(MICROPERL_MODS_DIR)/cpan:$(TARGET_DIR)/$(MICROPERL_MODS_DIR)/ext:$(TARGET_DIR)/$(MICROPERL_MODS_DIR)/dist; \
 		CONFIG=uconfig.h ./miniperl make_ext.pl MAKE='$(MAKE)' --nonxs \
 		`echo $$i|sed -e 's/.pm//'` || \
 		chroot $(TARGET_DIR) bash -c "cd $(MICROPERL_MODS_DIR); \
@@ -109,7 +110,8 @@ define MICROPERL_BUILD_EXTENSIONS
 		(cd $(MICROPERL_DIR); \
 		 cp -a *.sh *.pm *.pod *.pl make_patchnum.pl make_ext.pl lib/ dist/ cpan/ ext/ $(TARGET_DIR)/$(MICROPERL_MODS_DIR) || true; \
 		) \
-	done
+	done \
+	done; done <<< "$$IN"
 endef
 
 $(MICROPERL_DIR)/.configured: $(MICROPERL_DIR)/.host_make_fixed
