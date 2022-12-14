@@ -14,7 +14,7 @@ $ git checkout -f ./output/dl # or make link to "dl"
 $ make menuconfig
 $ # select the packages you wish to compile
 $ make source
-$ make # and wait while it compiles
+$ make || make -j1 # and wait while it compiles
 
 Use your shiny new root filesystem.  Depending on which sortof
     root filesystem you selected, you may want to loop mount it,
