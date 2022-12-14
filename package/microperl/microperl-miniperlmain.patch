@@ -1,0 +1,20 @@
+diff -Nura a/miniperlmain.c b/miniperlmain.c
+--- a/miniperlmain.c	2011-06-07 23:04:05.000000000 +0300
++++ b/miniperlmain.c	2022-12-14 03:53:54.264062900 +0300
+@@ -115,14 +115,14 @@
+     exitstatus = perl_parse(my_perl, xs_init, argc, argv, (char **)NULL);
+     if (!exitstatus)
+         perl_run(my_perl);
+-
++#ifndef PERL_MICRO
+     /* Unregister our signal handler before destroying my_perl */
+     for (i = 0; PL_sig_name[i]; i++) {
+ 	if (rsignal_state(PL_sig_num[i]) == (Sighandler_t) PL_csighandlerp) {
+ 	    rsignal(PL_sig_num[i], (Sighandler_t) SIG_DFL);
+ 	}
+     }
+-
++#endif
+     exitstatus = perl_destruct(my_perl);
+ 
+     perl_free(my_perl);
