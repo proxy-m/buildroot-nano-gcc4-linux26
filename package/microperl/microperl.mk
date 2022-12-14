@@ -15,6 +15,7 @@ MICROPERL_ARCH_DIR = $(MICROPERL_MODS_DIR)
 MICROPERL_MODS = $(call qstrip,$(BR2_PACKAGE_MICROPERL_MODULES))
 MICROPERL_DIR=$(BUILD_DIR)/perl-$(MICROPERL_VERSION)
 MICROPERL_LIBTOOL_PATCH = no
+MICROPERL_DEPENDENCIES = autoconf uclibc busybox bash
 
 # Minimal set of modules required for 'perl -V' to work
 MICROPERL_ARCH_MODS = Config.pm Config_git.pl Config_heavy.pl
@@ -23,7 +24,7 @@ MICROPERL_BASE_MODS = strict.pm
 MICROPERL_MODS += $(MICROPERL_BASE_MODS)
 
 ifeq ($(BR2_PACKAGE_AUTOMAKE),y)
-MICROPERL_MODS+=File/Basename.pm Errno.pm Config.pm IO/File.pm Symbol.pm \
+MICROPERL_MODS+=File/Basename.pm Errno.pm Config.pm IO/Zlib.pm Symbol.pm \
 	SelectSaver.pm IO/Seekable.pm IO/Handle.pm IO.pm XSLoader.pm \
 	DynaLoader.pm AutoLoader.pm Carp/Heavy.pm
 endif
@@ -98,8 +99,8 @@ endif
 define MICROPERL_BUILD_EXTENSIONS
 	cd $(MICROPERL_DIR); (cd $(TARGET_DIR)/usr/bin; ls perl;); \
 	for i in $(MICROPERL_MODS); do \
-		chroot $(TARGET_DIR) bash -c "cd $(MICROPERL_DIR); \
-		PERL5LIB=$(MICROPERL_ARCH_DIR) \
+		chroot $(TARGET_DIR) bash -c "cd $(MICROPERL_MODS_DIR); \
+		PERL5LIB=./lib \
 		/usr/bin/microperl make_ext.pl MAKE='$(MAKE)' --nonxs \
 		`echo $$i|sed -e 's/.pm//'`"; \
 	done
@@ -139,10 +140,13 @@ $(MICROPERL_DIR)/.configured: $(MICROPERL_DIR)/.host_make_fixed
 	cp -f $(@D)/uconfig.sh $(@D)/config.sh
 	echo "ccname='$(TARGET_CC)'" >>$(@D)/config.sh
 	echo "PERL_CONFIG_SH=true" >>$(@D)/config.sh
-	cd $(MICROPERL_DIR)
-	cp -a make_patchnum.pl make_ext.pl lib/ $(TARGET_DIR)/$(MICROPERL_DIR)
-	cd $(@D) ; chroot $(TARGET_DIR) bash -c 'cd $(MICROPERL_DIR); perl make_patchnum.pl || ./miniperl make_patchnum.pl' ; \
-	chroot $(TARGET_DIR) bash -c 'cd $(MICROPERL_DIR); perl configpm || ./miniperl configpm'
+	mkdir -p $(TARGET_DIR)/$(MICROPERL_MODS_DIR)
+	(cd $(MICROPERL_DIR); \
+	 cp -a *.pl make_patchnum.pl make_ext.pl lib/ dist/ cpan/ $(TARGET_DIR)/$(MICROPERL_MODS_DIR); \
+	 export PERL5LIB=$(TARGET_DIR)/$(MICROPERL_MODS_DIR)/lib; \
+	 ./miniperl make_patchnum.pl || chroot $(TARGET_DIR) bash -c 'cd $(MICROPERL_MODS_DIR); PERL5LIB=./lib perl make_patchnum.pl || PERL5LIB=./lib  ./miniperl make_patchnum.pl' ; \
+	 ./miniperl configpm || chroot $(TARGET_DIR) bash -c 'cd $(MICROPERL_MODS_DIR); PERL5LIB=./lib perl configpm || PERL5LIB=./lib ./miniperl configpm'; \
+	)
 	# we need to build a perl for the host just for Errno.pm
 	(cd $(MICROPERL_DIR); \
 	 chmod u+wx uconfig.h uconfig.sh; ./uconfig.sh; \

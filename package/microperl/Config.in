@@ -1,5 +1,9 @@
 config BR2_PACKAGE_MICROPERL
 	bool "microperl"
+	select BR2_PACKAGE_BUSYBOX
+	select BR2_PACKAGE_BUSYBOX_SKELETON
+	depends on BR2_PACKAGE_BASH
+	depends on BR2_PACKAGE_AUTOCONF
 	help
 	  Perl without operating-specific functions such as readdir.
 
